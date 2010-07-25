@@ -178,7 +178,11 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
             new MappingTester<OneToManyTarget>()
                 .ForMapping(map => map.HasMany(x => x.MapOfEnums)
                                        .AsMap<MapIndex>(
-                                           index => index.Column("IndexColumn").Type<MapIndex>(),
+                                           index =>
+                                           {
+                                               index.Column("IndexColumn");
+                                               index.Type<MapIndex>();
+                                           },
                                            element =>
                                            {
                                                element.Column("ElementColumn");
@@ -274,10 +278,11 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         {
             new MappingTester<OneToManyTarget>()
                 .ForMapping(map => map.HasMany(x => x.ListOfChildren)
-                    .AsList(index => index
-                                        .Column("ListIndex")
-                                        .Type<int>()
-                ))
+                    .AsList(index =>
+                    {
+                        index.Column("ListIndex");
+                        index.Type<int>();
+                    }))
                 .Element("class/list/index").HasAttribute("type", typeof(int).AssemblyQualifiedName)
                 .Element("class/list/index/column").HasAttribute("name", "ListIndex");
         }

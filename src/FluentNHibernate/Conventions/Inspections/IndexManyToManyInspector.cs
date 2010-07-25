@@ -15,6 +15,7 @@ namespace FluentNHibernate.Conventions.Inspections
         public IndexManyToManyInspector(IndexManyToManyMapping mapping)
         {
             this.mapping = mapping;
+            mappedProperties.Map(x => x.Class, x => x.Type);
         }
 
         public Type EntityType
@@ -24,7 +25,7 @@ namespace FluentNHibernate.Conventions.Inspections
 
         public string StringIdentifierForModel
         {
-            get { return mapping.Class.Name; }
+            get { return mapping.Type.Name; }
         }
 
         public bool IsSet(Member property)
@@ -34,7 +35,7 @@ namespace FluentNHibernate.Conventions.Inspections
         
         public TypeReference Class
         {
-            get { return mapping.Class; }
+            get { return mapping.Type; }
         }
         
         public string ForeignKey

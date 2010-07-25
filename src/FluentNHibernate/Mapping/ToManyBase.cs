@@ -27,7 +27,7 @@ namespace FluentNHibernate.Mapping
         protected ICollectionRelationshipMapping relationshipMapping;
         private readonly IList<FilterPart> filters = new List<FilterPart>();
         private Func<AttributeStore, ICollectionMapping> collectionBuilder;
-        private IndexMapping indexMapping;
+        protected IndexMapping indexMapping;
         protected Member member;
         private Type entity;
         ElementMapping elementMapping;
@@ -174,7 +174,7 @@ namespace FluentNHibernate.Mapping
         /// Use a list collection with an index
         /// </summary>
         /// <param name="customIndexMapping">Index mapping</param>
-        public T AsList(Action<IndexPart> customIndexMapping)
+        public T AsList(Action<IndexBuilder> customIndexMapping)
         {
             collectionBuilder = attrs => new ListMapping(attrs);
             CreateIndexMapping(customIndexMapping);
@@ -273,7 +273,7 @@ namespace FluentNHibernate.Mapping
         /// <typeparam name="TIndex">Index type</typeparam>
         /// <param name="indexSelector">Index property</param>
         /// <param name="customIndexMapping">Index mapping</param>
-        public T AsMap<TIndex>(Expression<Func<TChild, TIndex>> indexSelector, Action<IndexPart> customIndexMapping)
+        public T AsMap<TIndex>(Expression<Func<TChild, TIndex>> indexSelector, Action<IndexBuilder> customIndexMapping)
         {
             collectionBuilder = attrs => new MapMapping(attrs);
             return AsIndexedCollection(indexSelector, customIndexMapping);
@@ -286,7 +286,7 @@ namespace FluentNHibernate.Mapping
         /// <param name="indexSelector">Index property</param>
         /// <param name="customIndexMapping">Index mapping</param>
         /// <param name="sort">Sorting</param>
-        public T AsMap<TIndex>(Expression<Func<TChild, TIndex>> indexSelector, Action<IndexPart> customIndexMapping, SortType sort)
+        public T AsMap<TIndex>(Expression<Func<TChild, TIndex>> indexSelector, Action<IndexBuilder> customIndexMapping, SortType sort)
         {
             collectionBuilder = attrs => new MapMapping(attrs) { Sort = sort.ToString().ToLowerInvariant() };
             return AsIndexedCollection(indexSelector, customIndexMapping);
@@ -300,7 +300,7 @@ namespace FluentNHibernate.Mapping
         /// <typeparam name="TIndex">Index type</typeparam>
         /// <param name="customIndexMapping">Index mapping</param>
         /// <param name="customElementMapping">Element mapping</param>
-        public T AsMap<TIndex>(Action<IndexPart> customIndexMapping, Action<ElementBuilder> customElementMapping)
+        public T AsMap<TIndex>(Action<IndexBuilder> customIndexMapping, Action<ElementBuilder> customElementMapping)
         {
             collectionBuilder = attrs => new MapMapping(attrs);
             AsIndexedCollection<TIndex>(string.Empty, customIndexMapping);
@@ -325,7 +325,7 @@ namespace FluentNHibernate.Mapping
         /// <typeparam name="TIndex">Index type</typeparam>
         /// <param name="indexSelector">Index property</param>
         /// <param name="customIndexMapping">Index mapping</param>
-        public T AsArray<TIndex>(Expression<Func<TChild, TIndex>> indexSelector, Action<IndexPart> customIndexMapping)
+        public T AsArray<TIndex>(Expression<Func<TChild, TIndex>> indexSelector, Action<IndexBuilder> customIndexMapping)
         {
             collectionBuilder = attrs => new ArrayMapping(attrs);
             return AsIndexedCollection(indexSelector, customIndexMapping);
@@ -337,7 +337,7 @@ namespace FluentNHibernate.Mapping
         /// <typeparam name="TIndex">Index type</typeparam>
         /// <param name="indexSelector">Index property</param>
         /// <param name="customIndexMapping">Index mapping</param>
-        public T AsIndexedCollection<TIndex>(Expression<Func<TChild, TIndex>> indexSelector, Action<IndexPart> customIndexMapping)
+        public T AsIndexedCollection<TIndex>(Expression<Func<TChild, TIndex>> indexSelector, Action<IndexBuilder> customIndexMapping)
         {
             var indexMember = indexSelector.ToMember();
             return AsIndexedCollection<TIndex>(indexMember.Name, customIndexMapping);
@@ -349,7 +349,7 @@ namespace FluentNHibernate.Mapping
         /// <typeparam name="TIndex">Index type</typeparam>
         /// <param name="indexColumn">Index column</param>
         /// <param name="customIndexMapping">Index mapping</param>
-        public T AsIndexedCollection<TIndex>(string indexColumn, Action<IndexPart> customIndexMapping)
+        public T AsIndexedCollection<TIndex>(string indexColumn, Action<IndexBuilder> customIndexMapping)
         {
             CreateIndexMapping(customIndexMapping);
 
@@ -362,14 +362,13 @@ namespace FluentNHibernate.Mapping
             return (T)this;
         }
 
-        private void CreateIndexMapping(Action<IndexPart> customIndex)
+        private void CreateIndexMapping(Action<IndexBuilder> customIndex)
         {
-            var indexPart = new IndexPart(typeof(T));
+            indexMapping = new IndexMapping();
+            var builder = new IndexBuilder(indexMapping);
 
             if (customIndex != null)
-                customIndex(indexPart);
-
-            indexMapping = indexPart.GetIndexMapping();
+                customIndex(builder);
         }
 
         /// <summary>

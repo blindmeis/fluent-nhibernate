@@ -25,13 +25,13 @@ namespace FluentNHibernate.Mapping
 
         public IndexManyToManyPart Type<TIndex>()
         {
-            attributes.Set(x => x.Class, new TypeReference(typeof(TIndex)));
+            attributes.Set(x => x.Type, new TypeReference(typeof(TIndex)));
             return this;
         }
 
         public IndexManyToManyPart Type(Type indexType)
         {
-            attributes.Set(x => x.Class, new TypeReference(indexType));
+            attributes.Set(x => x.Type, new TypeReference(indexType));
             return this;
         }
 

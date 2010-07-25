@@ -48,14 +48,14 @@ namespace FluentNHibernate.Testing.ConventionsTests.Inspection
         [Test]
         public void ClassMapped()
         {
-            mapping.Class = new TypeReference(typeof(ExampleClass));
+            mapping.Type = new TypeReference(typeof(ExampleClass));
             inspector.Class.ShouldEqual(new TypeReference(typeof(ExampleClass)));
         }
 
         [Test]
         public void ClassIsSet()
         {
-            mapping.Class = new TypeReference(typeof(ExampleClass));
+            mapping.Type = new TypeReference(typeof(ExampleClass));
             inspector.IsSet(Prop(x => x.Class))
                 .ShouldBeTrue();
         }
@@ -70,9 +70,9 @@ namespace FluentNHibernate.Testing.ConventionsTests.Inspection
         [Test]
         public void StringIdentifierForModelIsTypeName()
         {
-            mapping.Class = new TypeReference(typeof(ExampleClass));
+            mapping.Type = new TypeReference(typeof(ExampleClass));
             inspector.StringIdentifierForModel
-                .ShouldEqual(mapping.Class.Name);
+                .ShouldEqual(mapping.Type.Name);
         }
 
         [Test]

@@ -29,7 +29,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
                 .ModelShouldMatch(x =>
                 {
                     var index = (IndexManyToManyMapping)((MapMapping)x).Index;
-                    index.Class.ShouldEqual(new TypeReference(typeof(SomeEntity)));
+                    index.Type.ShouldEqual(new TypeReference(typeof(SomeEntity)));
                 });
         }
 

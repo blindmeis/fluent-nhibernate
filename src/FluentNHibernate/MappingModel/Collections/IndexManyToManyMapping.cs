@@ -31,10 +31,10 @@ namespace FluentNHibernate.MappingModel.Collections
 
         public Type ContainingEntityType { get; set; }
 
-        public TypeReference Class
+        public TypeReference Type
         {
-            get { return attributes.Get(x => x.Class); }
-            set { attributes.Set(x => x.Class, value); }
+            get { return attributes.Get(x => x.Type); }
+            set { attributes.Set(x => x.Type, value); }
         }
 
         public IDefaultableEnumerable<ColumnMapping> Columns

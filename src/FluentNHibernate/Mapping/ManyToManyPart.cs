@@ -19,7 +19,6 @@ namespace FluentNHibernate.Mapping
         private readonly FetchTypeExpression<ManyToManyPart<TChild>> fetch;
         private readonly NotFoundExpression<ManyToManyPart<TChild>> notFound;
         private IndexManyToManyPart manyToManyIndex;
-        private IndexPart index;
         private readonly Type childType;
         private Type valueType;
         private bool isTernary;
@@ -192,9 +191,10 @@ namespace FluentNHibernate.Mapping
             var indexType = typeof(TChild).GetGenericArguments()[0];
             var valueType = typeof(TChild).GetGenericArguments()[1];
 
-            index = new IndexPart(indexType);
-            index.Column(indexColumn);
-            index.Type(indexType);
+            indexMapping = new IndexMapping();
+            var builder = new IndexBuilder(indexMapping);
+            builder.Column(indexColumn);
+            builder.Type(indexType);
 
             ChildKeyColumn(valueColumn);
             this.valueType = valueType;
@@ -342,8 +342,8 @@ namespace FluentNHibernate.Mapping
             var collection = base.GetCollectionMapping();
 
             // HACK: Index only on list and map - shouldn't have to do this!
-            if (index != null && collection is IIndexedCollectionMapping)
-                ((IIndexedCollectionMapping)collection).Index = index.GetIndexMapping();
+            if (indexMapping != null && collection is IIndexedCollectionMapping)
+                ((IIndexedCollectionMapping)collection).Index = indexMapping;
 
             // HACK: shouldn't have to do this!
             if (manyToManyIndex != null && collection is MapMapping)

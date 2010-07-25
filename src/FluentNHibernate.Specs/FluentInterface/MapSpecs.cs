@@ -54,9 +54,14 @@ namespace FluentNHibernate.Specs.FluentInterface
             map.Key.Columns.Select(x => x.Name).ShouldContainOnly("EntityWithDictionaries_id");
             // obsoleted by the above when implemented
 
-        It should_create_an_index;
-        It should_set_the_map_index_column_to_a_default_name;
-        It should_set_the_map_index_type_to_the_key_type;
+        It should_create_an_index = () =>
+            map.Index.ShouldNotBeNull();
+
+        It should_set_the_map_index_column_to_a_default_name = () =>
+            map.Index.Columns.Select(x => x.Name).ShouldContainOnly("Key");
+
+        It should_set_the_map_index_type_to_the_key_type = () =>
+            map.Index.Type.ShouldEqual(new TypeReference(typeof(string)));
         
         It should_create_a_element = () =>
             map.Element.ShouldNotBeNull();

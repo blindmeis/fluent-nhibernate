@@ -405,6 +405,7 @@
     <Compile Include="MappingModel\Output\XmlNaturalIdWriter.cs" />
     <Compile Include="Mapping\Access.cs" />
     <Compile Include="Mapping\Builders\ElementBuilder.cs" />
+    <Compile Include="Mapping\Builders\IndexBuilder.cs" />
     <Compile Include="Mapping\Builders\KeyBuilder.cs" />
     <Compile Include="Mapping\Builders\MapElementBuilder.cs" />
     <Compile Include="Mapping\Laziness.cs" />
@@ -658,7 +659,6 @@
     <Compile Include="Mapping\Providers\IDiscriminatorMappingProvider.cs" />
     <Compile Include="Mapping\Providers\IHibernateMappingProvider.cs" />
     <Compile Include="Mapping\IndexManyToManyPart.cs" />
-    <Compile Include="Mapping\IndexPart.cs" />
     <Compile Include="Mapping\InvalidPrefixException.cs" />
     <Compile Include="Mapping\Providers\ISubclassMappingProviders.cs" />
     <Compile Include="Mapping\ParamBuilder.cs" />

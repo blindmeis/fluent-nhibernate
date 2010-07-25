@@ -1,4 +1,5 @@
-﻿using FluentNHibernate.MappingModel;
+﻿using System;
+using FluentNHibernate.MappingModel;
 using FluentNHibernate.MappingModel.Collections;
 
 namespace FluentNHibernate.Mapping.Builders
@@ -17,10 +18,29 @@ namespace FluentNHibernate.Mapping.Builders
         /// default column name.
         /// </summary>
         /// <typeparam name="TElementType">Value type</typeparam>
-        /// <returns>Builder</returns>
         public void Type<TElementType>()
         {
             mapping.Type = new TypeReference(typeof(TElementType));
+        }
+
+        /// <summary>
+        /// Specifies the type of the values contained in the dictionary, while using the
+        /// default column name.
+        /// </summary>
+        /// <param name="type">Type</param>
+        public void Type(Type type)
+        {
+            mapping.Type = new TypeReference(type);
+        }
+
+        /// <summary>
+        /// Specifies the type of the values contained in the dictionary, while using the
+        /// default column name.
+        /// </summary>
+        /// <param name="type">Type name</param>
+        public void Type(string type)
+        {
+            mapping.Type = new TypeReference(type);
         }
 
         /// <summary>
@@ -28,7 +48,6 @@ namespace FluentNHibernate.Mapping.Builders
         /// the type inferred from the dictionary signature.
         /// </summary>
         /// <param name="elementColumnName">Value column name</param>
-        /// <returns>Builder</returns>
         public void Column(string elementColumnName)
         {
             mapping.AddColumn(new ColumnMapping { Name = elementColumnName });

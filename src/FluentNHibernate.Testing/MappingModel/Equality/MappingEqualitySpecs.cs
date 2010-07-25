@@ -575,7 +575,7 @@ namespace FluentNHibernate.Testing.MappingModel.Equality
             var mapping = new IndexManyToManyMapping
             {
                 ContainingEntityType = typeof(Target),
-                Class = new TypeReference(typeof(Target)),
+                Type = new TypeReference(typeof(Target)),
                 ForeignKey = "fk"
             };
 

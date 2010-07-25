@@ -9,12 +9,14 @@ namespace FluentNHibernate.Mapping.Builders
         readonly MapMapping mapping;
         readonly ElementMapping element;
         readonly KeyMapping key;
+        readonly IndexMapping index;
 
         public MapElementBuilder(MapMapping mapping, Member member)
         {
             this.mapping = mapping;
             this.mapping.Element = element = new ElementMapping();
             this.mapping.Key = key = new KeyMapping();
+            this.mapping.Index = index = new IndexMapping();
 
             SetDefaultsFromMember(member);
         }
@@ -25,10 +27,13 @@ namespace FluentNHibernate.Mapping.Builders
             mapping.SetDefaultValue(x => x.Name, member.Name);
             mapping.SetDefaultValue(x => x.TableName, mapping.ContainingEntityType.Name + member.Name);
 
+            key.AddDefaultColumn(new ColumnMapping { Name = mapping.ContainingEntityType.Name + "_id" });
+
+            index.AddDefaultColumn(new ColumnMapping { Name = "Key" });
+            index.SetDefaultValue(x => x.Type, new TypeReference(typeof(TKey)));
+
             element.AddDefaultColumn(new ColumnMapping { Name = "Value" });
             element.SetDefaultValue(x => x.Type, new TypeReference(typeof(TValue)));
-
-            key.AddDefaultColumn(new ColumnMapping { Name = mapping.ContainingEntityType.Name + "_id" });
         }
 
         /// <summary>
@@ -50,6 +55,17 @@ namespace FluentNHibernate.Mapping.Builders
         public MapElementBuilder<TKey, TValue> Table(string tableName)
         {
             mapping.TableName = tableName;
+            return this;
+        }
+
+        /// <summary>
+        /// Specify how the index (or key) is configured.
+        /// </summary>
+        /// <param name="indexConfiguration">Configuration <see cref="Action"/></param>
+        /// <returns>Builder</returns>
+        public MapElementBuilder<TKey, TValue> Index(Action<IndexBuilder> indexConfiguration)
+        {
+            indexConfiguration(new IndexBuilder(index));
             return this;
         }
 

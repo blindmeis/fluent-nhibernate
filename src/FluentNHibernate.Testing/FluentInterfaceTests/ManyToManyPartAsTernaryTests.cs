@@ -19,7 +19,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
                     var index = (IndexManyToManyMapping)((MapMapping)x).Index;
                     index.Columns.Count().ShouldEqual(1);
                     index.Columns.First().Name.ShouldEqual(typeof(ChildObject).Name + "_id");
-                    index.Class.ShouldEqual(new TypeReference(typeof(ChildObject)));
+                    index.Type.ShouldEqual(new TypeReference(typeof(ChildObject)));
 
                     var relationship = (ManyToManyMapping)((MapMapping)x).Relationship;
                     relationship.Columns.Count().ShouldEqual(1);
@@ -41,7 +41,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
 
                     index.Columns.Count().ShouldEqual(1);
                     index.Columns.First().Name.ShouldEqual(indexName);
-                    index.Class.ShouldEqual(new TypeReference(typeof(ChildObject)));
+                    index.Type.ShouldEqual(new TypeReference(typeof(ChildObject)));
 
                     var relationship = (ManyToManyMapping)((MapMapping)x).Relationship;
                     relationship.Columns.Count().ShouldEqual(1);
@@ -60,7 +60,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
                     var index = (IndexManyToManyMapping)((MapMapping)x).Index;
                     index.Columns.Count().ShouldEqual(1);
                     index.Columns.First().Name.ShouldEqual(typeof(ChildObject).Name + "_id");
-                    index.Class.ShouldEqual(new TypeReference(typeof(ChildObject)));
+                    index.Type.ShouldEqual(new TypeReference(typeof(ChildObject)));
 
                     var relationship = (ManyToManyMapping)((MapMapping)x).Relationship;
                     relationship.Columns.Count().ShouldEqual(1);
@@ -82,7 +82,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
 
                     index.Columns.Count().ShouldEqual(1);
                     index.Columns.First().Name.ShouldEqual(indexName);
-                    index.Class.ShouldEqual(new TypeReference(typeof(ChildObject)));
+                    index.Type.ShouldEqual(new TypeReference(typeof(ChildObject)));
 
                     var relationship = (ManyToManyMapping)((MapMapping)x).Relationship;
                     relationship.Columns.Count().ShouldEqual(1);
