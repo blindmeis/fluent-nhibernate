@@ -8,11 +8,13 @@ namespace FluentNHibernate.Mapping.Builders
     {
         readonly MapMapping mapping;
         readonly ElementMapping element;
+        readonly KeyMapping key;
 
         public MapElementBuilder(MapMapping mapping, Member member)
         {
             this.mapping = mapping;
             this.mapping.Element = element = new ElementMapping();
+            this.mapping.Key = key = new KeyMapping();
 
             SetDefaultsFromMember(member);
         }
@@ -25,6 +27,8 @@ namespace FluentNHibernate.Mapping.Builders
 
             element.AddDefaultColumn(new ColumnMapping { Name = "Value" });
             element.SetDefaultValue(x => x.Type, new TypeReference(typeof(TValue)));
+
+            key.AddDefaultColumn(new ColumnMapping { Name = mapping.ContainingEntityType.Name + "_id" });
         }
 
         /// <summary>
@@ -96,6 +100,39 @@ namespace FluentNHibernate.Mapping.Builders
         public MapElementBuilder<TKey, TValue> Element<TElementType>()
         {
             return Element(el => el.Type<TElementType>());
+        }
+
+        /// <summary>
+        /// Specifies the name of the column used for the foreign key, while using
+        /// the default type.
+        /// </summary>
+        /// <param name="keyColumnName">Key column name</param>
+        /// <returns>Builder</returns>
+        public MapElementBuilder<TKey, TValue> Key(string keyColumnName)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Specifies the name of the column used for the foreign key, and the
+        /// type of the key.
+        /// </summary>
+        /// <param name="keyColumnName">Key column name</param>
+        /// <typeparam name="TKeyType">Key type</typeparam>
+        /// <returns>Builder</returns>
+        public MapElementBuilder<TKey, TValue> Key<TKeyType>(string keyColumnName)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Specifies the type of the foreign key, while using the default column name.
+        /// </summary>
+        /// <typeparam name="TKeyType">Key type</typeparam>
+        /// <returns>Builder</returns>
+        public MapElementBuilder<TKey, TValue> Key<TKeyType>()
+        {
+            throw new NotImplementedException();
         }
     }
 }

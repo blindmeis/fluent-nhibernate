@@ -44,8 +44,16 @@ namespace FluentNHibernate.Specs.FluentInterface
             // this table name makes more sense in a real life case (User entity
             // with an Attributes collection would have a table called UserAttributes)
 
-        It should_create_an_key;
+        It should_create_an_key = () =>
+            map.Key.ShouldNotBeNull();
+
         It should_set_the_map_key_to_the_primary_key_of_the_containing_class;
+        // ignored for now, until we can sync keys properly
+
+        It should_set_the_map_key_to_a_generated_default_based_on_the_entity_name = () =>
+            map.Key.Columns.Select(x => x.Name).ShouldContainOnly("EntityWithDictionaries_id");
+            // obsoleted by the above when implemented
+
         It should_create_an_index;
         It should_set_the_map_index_column_to_a_default_name;
         It should_set_the_map_index_type_to_the_key_type;
