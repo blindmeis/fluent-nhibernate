@@ -820,46 +820,50 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         [Test]
         public void EntityMapOfValuesShouldWriteKeyElement()
         {
-            new MappingTester<OneToManyTarget>()
-                .ForMapping(map => map
-                    .HasMany(x => x.EntityMapOfValues)
-                    .Element("StringValue")
-                    .AsEntityMap())
-                .Element("class/map/key").ShouldBeInParentAtPosition(0);
+            Assert.Fail("Broke due to unimplemented AsEntityMap");
+            //new MappingTester<OneToManyTarget>()
+            //    .ForMapping(map => map
+            //        .HasMany(x => x.EntityMapOfValues)
+            //        .Element("StringValue")
+            //        .AsEntityMap())
+            //    .Element("class/map/key").ShouldBeInParentAtPosition(0);
         }
 
         [Test]
         public void EntityMapOfValuesShouldWriteIndexManyToManyElement()
         {
-            new MappingTester<OneToManyTarget>()
-                .ForMapping(map => map
-                    .HasMany(x => x.EntityMapOfValues)
-                    .Element("StringValue")
-                    .AsEntityMap())
-                .Element("class/map/index-many-to-many").ShouldBeInParentAtPosition(1);
+            Assert.Fail("Broke due to unimplemented AsEntityMap");
+            //new MappingTester<OneToManyTarget>()
+            //    .ForMapping(map => map
+            //        .HasMany(x => x.EntityMapOfValues)
+            //        .Element("StringValue")
+            //        .AsEntityMap())
+            //    .Element("class/map/index-many-to-many").ShouldBeInParentAtPosition(1);
         }
 
         [Test]
         public void EntityMapOfValuesShouldWriteCompositeElementElement()
         {
-            new MappingTester<OneToManyTarget>()
-                .ForMapping(map => map
-                    .HasMany(x => x.EntityMapOfValues)
-                    .Element("StringValue")
-                    .AsEntityMap())
-                .Element("class/map/element").ShouldBeInParentAtPosition(2);
+            Assert.Fail("Broke due to unimplemented AsEntityMap");
+            //new MappingTester<OneToManyTarget>()
+            //    .ForMapping(map => map
+            //        .HasMany(x => x.EntityMapOfValues)
+            //        .Element("StringValue")
+            //        .AsEntityMap())
+            //    .Element("class/map/element").ShouldBeInParentAtPosition(2);
         }
 
         [Test]
         public void EntityMapOfValuesShouldWriteCorrectColumnNames()
         {
-            new MappingTester<OneToManyTarget>()
-                .ForMapping(map => map
-                    .HasMany(x => x.EntityMapOfValues)
-                    .Element("StringValue")
-                    .AsEntityMap())
-                .Element("class/map/key/column").HasAttribute("name", "OneToManyTarget_id")
-                .Element("class/map/index-many-to-many/column").HasAttribute("name", "SomeEntity_id");
+            Assert.Fail("Broke due to unimplemented AsEntityMap");
+            //new MappingTester<OneToManyTarget>()
+            //    .ForMapping(map => map
+            //        .HasMany(x => x.EntityMapOfValues)
+            //        .Element("StringValue")
+            //        .AsEntityMap())
+            //    .Element("class/map/key/column").HasAttribute("name", "OneToManyTarget_id")
+            //    .Element("class/map/index-many-to-many/column").HasAttribute("name", "SomeEntity_id");
         }
 
         class Container

@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using FluentNHibernate.Mapping.Builders;
 using FluentNHibernate.Mapping.Providers;
+using FluentNHibernate.MappingModel.Collections;
 using FluentNHibernate.Utils;
 
 namespace FluentNHibernate.Mapping
@@ -278,6 +280,8 @@ namespace FluentNHibernate.Mapping
             return part;
         }
 
+        #region HasMany
+
         private OneToManyPart<TChild> MapHasMany<TChild, TReturn>(Expression<Func<T, TReturn>> expression)
         {
             return HasMany<TChild>(expression.ToMember());
@@ -305,11 +309,6 @@ namespace FluentNHibernate.Mapping
             return MapHasMany<TChild, IEnumerable<TChild>>(memberExpression);
         }
 
-        public OneToManyPart<TChild> HasMany<TKey, TChild>(Expression<Func<T, IDictionary<TKey, TChild>>> memberExpression)
-        {
-            return MapHasMany<TChild, IDictionary<TKey, TChild>>(memberExpression);
-        }
-
         /// <summary>
         /// Maps a collection of entities as a one-to-many
         /// </summary>
@@ -322,6 +321,93 @@ namespace FluentNHibernate.Mapping
         {
             return MapHasMany<TChild, object>(memberExpression);
         }
+
+        public OneToManyPart<TChild> HasMany<TKey, TChild>(Expression<Func<T, IDictionary<TKey, TChild>>> memberExpression)        {            return MapHasMany<TChild, IDictionary<TKey, TChild>>(memberExpression);        }
+        public MapElementBuilder<TKey, char> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, char>>> memberExpression)
+        {
+            return HasManyElement(memberExpression);
+        }
+
+        public MapElementBuilder<TKey, string> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, string>>> memberExpression)
+        {
+            return HasManyElement(memberExpression);
+        }
+
+        public MapElementBuilder<TKey, int> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, int>>> memberExpression)
+        {
+            return HasManyElement(memberExpression);
+        }
+
+        public MapElementBuilder<TKey, uint> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, uint>>> memberExpression)
+        {
+            return HasManyElement(memberExpression);
+        }
+
+        public MapElementBuilder<TKey, long> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, long>>> memberExpression)
+        {
+            return HasManyElement(memberExpression);
+        }
+
+        public MapElementBuilder<TKey, ulong> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, ulong>>> memberExpression)
+        {
+            return HasManyElement(memberExpression);
+        }
+
+        public MapElementBuilder<TKey, double> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, double>>> memberExpression)
+        {
+            return HasManyElement(memberExpression);
+        }
+
+        public MapElementBuilder<TKey, decimal> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, decimal>>> memberExpression)
+        {
+            return HasManyElement(memberExpression);
+        }
+
+        public MapElementBuilder<TKey, short> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, short>>> memberExpression)
+        {
+            return HasManyElement(memberExpression);
+        }
+
+        public MapElementBuilder<TKey, ushort> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, ushort>>> memberExpression)
+        {
+            return HasManyElement(memberExpression);
+        }
+
+        public MapElementBuilder<TKey, float> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, float>>> memberExpression)
+        {
+            return HasManyElement(memberExpression);
+        }
+
+        public MapElementBuilder<TKey, byte> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, byte>>> memberExpression)
+        {
+            return HasManyElement(memberExpression);
+        }
+
+        public MapElementBuilder<TKey, bool> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, bool>>> memberExpression)
+        {
+            return HasManyElement(memberExpression);
+        }
+
+        MapElementBuilder<TKey, TValue> HasManyElement<TKey, TValue>(Expression<Func<T, IDictionary<TKey, TValue>>> memberExpression)
+        {
+            return HasManyElement<TKey, TValue>(memberExpression.ToMember());
+        }
+
+        MapElementBuilder<TKey, TValue> HasManyElement<TKey, TValue>(Member member)
+        {
+            var mapping = new MapMapping
+            {
+                ContainingEntityType = typeof(T)
+            };
+
+            collections.Add(new PassThroughMappingProvider(mapping));
+
+            return new MapElementBuilder<TKey, TValue>(mapping, member);
+        }
+
+        #endregion
+
+        #region HasManyToMany
 
         private ManyToManyPart<TChild> MapHasManyToMany<TChild, TReturn>(Expression<Func<T, TReturn>> expression)
         {
@@ -362,6 +448,8 @@ namespace FluentNHibernate.Mapping
         {
             return MapHasManyToMany<TChild, object>(memberExpression);
         }
+
+        #endregion
 
         /// <summary>
         /// Specify an insert stored procedure
