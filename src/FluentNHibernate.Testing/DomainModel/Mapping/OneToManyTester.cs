@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentNHibernate.Cfg.Db;
-using FluentNHibernate.Conventions;
-using FluentNHibernate.Conventions.AcceptanceCriteria;
-using FluentNHibernate.Conventions.Instances;
-using FluentNHibernate.Conventions.Inspections;
 using FluentNHibernate.Mapping;
 using FluentNHibernate.MappingModel.Collections;
 using Iesi.Collections.Generic;
@@ -183,7 +179,11 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
                 .ForMapping(map => map.HasMany(x => x.MapOfEnums)
                                        .AsMap<MapIndex>(
                                            index => index.Column("IndexColumn").Type<MapIndex>(),
-                                           element => element.Column("ElementColumn").Type<MapContents>()))
+                                           element =>
+                                           {
+                                               element.Column("ElementColumn");
+                                               element.Type<MapContents>();
+                                           }))
                 .Element("class/map/index").HasAttribute("type", typeof(MapIndex).AssemblyQualifiedName)
                 .Element("class/map/index/column").HasAttribute("name", "IndexColumn")
                 .Element("class/map/element").HasAttribute("type", typeof(MapContents).AssemblyQualifiedName)

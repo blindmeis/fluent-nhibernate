@@ -72,7 +72,7 @@ namespace FluentNHibernate.Mapping.Builders
         /// <returns>Builder</returns>
         public MapElementBuilder<TKey, TValue> Element(string elementColumnName)
         {
-            return Element(el => el.Name(elementColumnName));
+            return Element(el => el.Column(elementColumnName));
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace FluentNHibernate.Mapping.Builders
         {
             return Element(el =>
             {
-                el.Name(elementColumnName);
+                el.Column(elementColumnName);
                 el.Type<TElementType>();
             });
         }

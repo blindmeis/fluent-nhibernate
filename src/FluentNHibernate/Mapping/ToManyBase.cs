@@ -19,7 +19,6 @@ namespace FluentNHibernate.Mapping
         private readonly FetchTypeExpression<T> fetch;
         private readonly OptimisticLockBuilder<T> optimisticLock;
         private readonly CollectionCascadeExpression<T> cascade;
-        protected ElementPart elementPart;
         protected ICompositeElementMappingProvider componentMapping;
         protected bool nextBool = true;
 
@@ -31,6 +30,7 @@ namespace FluentNHibernate.Mapping
         private IndexMapping indexMapping;
         protected Member member;
         private Type entity;
+        ElementMapping elementMapping;
 
         protected ToManyBase(Type entity, Member member, Type type)
         {
@@ -300,12 +300,12 @@ namespace FluentNHibernate.Mapping
         /// <typeparam name="TIndex">Index type</typeparam>
         /// <param name="customIndexMapping">Index mapping</param>
         /// <param name="customElementMapping">Element mapping</param>
-        public T AsMap<TIndex>(Action<IndexPart> customIndexMapping, Action<ElementPart> customElementMapping)
+        public T AsMap<TIndex>(Action<IndexPart> customIndexMapping, Action<ElementBuilder> customElementMapping)
         {
             collectionBuilder = attrs => new MapMapping(attrs);
             AsIndexedCollection<TIndex>(string.Empty, customIndexMapping);
             Element(string.Empty);
-            customElementMapping(elementPart);
+            customElementMapping(new ElementBuilder(elementMapping));
             return (T)this;
         }
 
@@ -378,11 +378,13 @@ namespace FluentNHibernate.Mapping
         /// <param name="columnName">Column name</param>
         public T Element(string columnName)
         {
-            elementPart = new ElementPart(typeof(T));
-            elementPart.Type<TChild>();
+            elementMapping = new ElementMapping { ContainingEntityType = typeof(T) };
+            
+            var builder = new ElementBuilder(elementMapping);
+            builder.Type<TChild>();
 
             if (!string.IsNullOrEmpty(columnName))
-                elementPart.Column(columnName);
+                builder.Column(columnName);
 
             return (T)this;
         }
@@ -392,10 +394,10 @@ namespace FluentNHibernate.Mapping
         /// </summary>
         /// <param name="columnName">Column name</param>
         /// <param name="customElementMapping">Custom mapping</param>
-        public T Element(string columnName, Action<ElementPart> customElementMapping)
+        public T Element(string columnName, Action<ElementBuilder> customElementMapping)
         {
             Element(columnName);
-            if (customElementMapping != null) customElementMapping(elementPart);
+            if (customElementMapping != null) customElementMapping(new ElementBuilder(elementMapping));
             return (T)this;
         }
 
@@ -689,9 +691,9 @@ namespace FluentNHibernate.Mapping
             if (indexMapping != null && mapping is IIndexedCollectionMapping)
                 ((IIndexedCollectionMapping)mapping).Index = indexMapping;
 
-            if (elementPart != null)
+            if (elementMapping != null)
             {
-                mapping.Element = ((IElementMappingProvider)elementPart).GetElementMapping();
+                mapping.Element = elementMapping;
                 mapping.Relationship = null;
             }
 

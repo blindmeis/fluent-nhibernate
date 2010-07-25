@@ -29,9 +29,35 @@ namespace FluentNHibernate.Mapping.Builders
         /// </summary>
         /// <param name="elementColumnName">Value column name</param>
         /// <returns>Builder</returns>
-        public void Name(string elementColumnName)
+        public void Column(string elementColumnName)
         {
             mapping.AddColumn(new ColumnMapping { Name = elementColumnName });
+        }
+
+        /// <summary>
+        /// Modify the columns for this element
+        /// </summary>
+        public ColumnMappingCollection Columns
+        {
+            get { return new ColumnMappingCollection(mapping); }
+        }
+
+        /// <summary>
+        /// Specify the element column length
+        /// </summary>
+        /// <param name="length">Column length</param>
+        public void Length(int length)
+        {
+            mapping.Length = length;
+        }
+
+        /// <summary>
+        /// Specify the element column formula
+        /// </summary>
+        /// <param name="formula">Formula</param>
+        public void Formula(string formula)
+        {
+            mapping.Formula = formula;
         }
     }
 }

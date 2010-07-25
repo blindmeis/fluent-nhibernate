@@ -5,6 +5,7 @@ using FluentNHibernate.MappingModel.Collections;
 
 namespace FluentNHibernate.Mapping
 {
+    [Obsolete("GONE", true)]
     public class ElementPart : IElementMappingProvider
     {
         private readonly Type entity;
