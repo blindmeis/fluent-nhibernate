@@ -8,7 +8,7 @@ using FluentNHibernate.Visitors;
 namespace FluentNHibernate.MappingModel.Collections
 {
     [Serializable]
-    public class ElementMapping : MappingBase
+    public class ElementMapping : MappingBase, IHasColumnMappings
     {
         private readonly IDefaultableList<ColumnMapping> columns = new DefaultableList<ColumnMapping>();
         private readonly AttributeStore<ElementMapping> attributes;
@@ -48,6 +48,11 @@ namespace FluentNHibernate.MappingModel.Collections
             set { attributes.Set(x => x.Length, value); }
         }
 
+        IDefaultableEnumerable<ColumnMapping> IHasColumnMappings.Columns
+        {
+            get { return columns; }
+        }
+
         public void AddColumn(ColumnMapping mapping)
         {
             columns.Add(mapping);
@@ -56,6 +61,11 @@ namespace FluentNHibernate.MappingModel.Collections
         public void AddDefaultColumn(ColumnMapping mapping)
         {
             columns.AddDefault(mapping);
+        }
+
+        public void ClearColumns()
+        {
+            columns.Clear();
         }
 
         public IEnumerable<ColumnMapping> Columns

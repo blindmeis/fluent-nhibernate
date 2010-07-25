@@ -296,7 +296,9 @@ namespace FluentNHibernate.Mapping
         [Obsolete("Inline definitions of subclasses are depreciated. Please create a derived class from SubclassMap in the same way you do with ClassMap.")]
         public virtual void JoinedSubClass<TSubclass>(string keyColumn, Action<JoinedSubClassPart<TSubclass>> action) where TSubclass : T
         {
-            var subclass = new JoinedSubClassPart<TSubclass>(keyColumn);
+            var subclass = new JoinedSubClassPart<TSubclass>();
+
+            subclass.KeyColumn(keyColumn);
 
             action(subclass);
 

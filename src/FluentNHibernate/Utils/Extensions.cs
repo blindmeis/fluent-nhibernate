@@ -8,6 +8,14 @@ namespace FluentNHibernate.Utils
 {
     public static class Extensions
     {
+        public static void As<T>(this object instance, Action<T> alterations) where T : class
+        {
+            var casted = instance as T;
+
+            if (casted != null)
+                alterations(casted);
+        }
+
         public static bool In<T>(this T instance, params T[] expected)
         {
             if(ReferenceEquals(instance, null))

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq.Expressions;
 using FluentNHibernate.Conventions;
+using FluentNHibernate.Mapping.Builders;
 using FluentNHibernate.Mapping.Providers;
 using FluentNHibernate.MappingModel;
 using FluentNHibernate.MappingModel.Collections;
@@ -23,8 +24,8 @@ namespace FluentNHibernate.Mapping
         protected bool nextBool = true;
 
         protected readonly AttributeStore<ICollectionMapping> collectionAttributes = new AttributeStore<ICollectionMapping>();
-        protected readonly KeyMapping keyMapping = new KeyMapping();
-        protected readonly AttributeStore<TRelationshipAttributes> relationshipAttributes = new AttributeStore<TRelationshipAttributes>();
+        protected readonly KeyMapping keyMapping;
+        protected ICollectionRelationshipMapping relationshipMapping;
         private readonly IList<FilterPart> filters = new List<FilterPart>();
         private Func<AttributeStore, ICollectionMapping> collectionBuilder;
         private IndexMapping indexMapping;
@@ -46,7 +47,20 @@ namespace FluentNHibernate.Mapping
             Cache = new CachePart(entity);
 
             collectionAttributes.SetDefault(x => x.Name, member.Name);
-            relationshipAttributes.SetDefault(x => x.Class, new TypeReference(typeof(TChild)));
+
+            keyMapping = new KeyMapping();
+            keyMapping.AddDefaultColumn(new ColumnMapping { Name = entity.Name + "_id" });
+        }
+
+        /// <summary>
+        /// Specify how the foreign key is configured.
+        /// </summary>
+        /// <param name="keyConfiguration">Configuration <see cref="Action"/></param>
+        /// <returns>Builder</returns>
+        public T Key(Action<KeyBuilder> keyConfiguration)
+        {
+            keyConfiguration(new KeyBuilder(keyMapping));
+            return (T)this;
         }
 
         /// <summary>
@@ -57,8 +71,7 @@ namespace FluentNHibernate.Mapping
         /// <returns>OneToManyPart</returns>
         public T PropertyRef(string propertyRef)
         {
-            keyMapping.PropertyRef = propertyRef;
-            return (T)this;
+            return Key(ke => ke.PropertyRef(propertyRef));
         }
 
         /// <summary>
@@ -416,8 +429,7 @@ namespace FluentNHibernate.Mapping
         /// </summary>
         public T ForeignKeyCascadeOnDelete()
         {
-            keyMapping.OnDelete = "cascade";
-            return (T)this;
+            return Key(ke => ke.CascadeOnDelete());
         }
 
         /// <summary>
@@ -566,7 +578,7 @@ namespace FluentNHibernate.Mapping
         /// <remarks>See http://nhforge.org/blogs/nhibernate/archive/2008/10/21/entity-name-in-action-a-strongly-typed-entity.aspx</remarks>
         public T EntityName(string entityName)
         {
-            relationshipAttributes.Set(x => x.EntityName, entityName);
+            relationshipMapping.EntityName = entityName;
             return (T)this;
         }
 
@@ -662,6 +674,7 @@ namespace FluentNHibernate.Mapping
             mapping.Key = keyMapping;
             mapping.Key.ContainingEntityType = entity;
             mapping.Relationship = GetRelationship();
+            mapping.Relationship.SetDefaultClass(new TypeReference(typeof(TChild)));
 
             if (Cache.IsDirty)
                 mapping.Cache = ((ICacheMappingProvider)Cache).GetCacheMapping();

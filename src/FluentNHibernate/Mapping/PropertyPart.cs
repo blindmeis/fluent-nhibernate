@@ -14,20 +14,25 @@ namespace FluentNHibernate.Mapping
         private readonly Type parentType;
         private readonly AccessStrategyBuilder<PropertyPart> access;
         private readonly PropertyGeneratedBuilder generated;
-        private readonly ColumnMappingCollection<PropertyPart> columns;
-        private readonly AttributeStore<PropertyMapping> attributes = new AttributeStore<PropertyMapping>();
         private readonly AttributeStore<ColumnMapping> columnAttributes = new AttributeStore<ColumnMapping>();
 
         private bool nextBool = true;
+        readonly PropertyMapping mapping;
 
         public PropertyPart(Member property, Type parentType)
         {
-            columns = new ColumnMappingCollection<PropertyPart>(this);
-            access = new AccessStrategyBuilder<PropertyPart>(this, value => attributes.Set(x => x.Access, value));
-            generated = new PropertyGeneratedBuilder(this, value => attributes.Set(x => x.Generated, value));
+            access = new AccessStrategyBuilder<PropertyPart>(this, value => mapping.Access = value);
+            generated = new PropertyGeneratedBuilder(this, value => mapping.Generated = value);
 
             this.property = property;
             this.parentType = parentType;
+
+            mapping = new PropertyMapping
+            {
+                ContainingEntityType = parentType,
+                Member = property
+            };
+            mapping.AddDefaultColumn(new ColumnMapping { Name = property.Name });
         }
 
         /// <summary>
@@ -57,7 +62,7 @@ namespace FluentNHibernate.Mapping
         /// </summary>
         public ColumnMappingCollection<PropertyPart> Columns
         {
-            get { return columns; }
+            get { return new ColumnMappingCollection<PropertyPart>(this, mapping); }
         }
 
         /// <summary>
@@ -73,7 +78,7 @@ namespace FluentNHibernate.Mapping
         /// </summary>
         public PropertyPart Insert()
         {
-            attributes.Set(x => x.Insert, nextBool);
+            mapping.Insert = nextBool;
             nextBool = true;
 
             return this;
@@ -84,7 +89,7 @@ namespace FluentNHibernate.Mapping
         /// </summary>
         public PropertyPart Update()
         {
-            attributes.Set(x => x.Update, nextBool);
+            mapping.Update = nextBool;
             nextBool = true;
 
             return this;
@@ -115,8 +120,8 @@ namespace FluentNHibernate.Mapping
         /// </summary>
         public PropertyPart ReadOnly()
         {
-            attributes.Set(x => x.Insert, !nextBool);
-            attributes.Set(x => x.Update, !nextBool);
+            mapping.Insert = !nextBool;
+            mapping.Update = !nextBool;
             nextBool = true;
             return this;
         }
@@ -127,7 +132,7 @@ namespace FluentNHibernate.Mapping
         /// <param name="formula">Formula</param>
         public PropertyPart Formula(string formula)
         {
-            attributes.Set(x => x.Formula, formula);
+            mapping.Formula = formula;
             return this;
         }
 
@@ -136,7 +141,7 @@ namespace FluentNHibernate.Mapping
         /// </summary>
         public PropertyPart LazyLoad()
         {
-            attributes.Set(x => x.Lazy, nextBool);
+            mapping.Lazy = nextBool;
             nextBool = true;
             return this;
         }
@@ -181,8 +186,7 @@ namespace FluentNHibernate.Mapping
         /// <returns>This property mapping to continue the method chain</returns>
         public PropertyPart CustomType(string type)
         {
-            attributes.Set(x => x.Type, new TypeReference(type));
-
+            mapping.Type = new TypeReference(type);
             return this;
         }
 
@@ -276,7 +280,7 @@ namespace FluentNHibernate.Mapping
         /// </summary>
         public PropertyPart OptimisticLock()
         {
-            attributes.Set(x => x.OptimisticLock, nextBool);
+            mapping.OptimisticLock = nextBool;
             nextBool = true;
             return this;
         }
@@ -306,17 +310,8 @@ namespace FluentNHibernate.Mapping
 
         PropertyMapping IPropertyMappingProvider.GetPropertyMapping()
         {
-            var mapping = new PropertyMapping(attributes.CloneInner())
-            {
-                ContainingEntityType = parentType,
-                Member = property
-            };
-
-            if (columns.Count() == 0 && !mapping.IsSpecified("Formula"))
-                mapping.AddDefaultColumn(new ColumnMapping(columnAttributes.CloneInner()) { Name = property.Name });
-
-            foreach (var column in columns)
-                mapping.AddColumn(column);
+            if (mapping.IsSpecified("Formula"))
+                mapping.ClearColumns();
 
             foreach (var column in mapping.Columns)
             {

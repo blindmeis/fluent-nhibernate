@@ -170,7 +170,7 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
                 .ForMapping(map => map
                     .HasMany(x => x.MapOfChildren)
                         .AsMap("Name")
-                        .KeyColumns.Add("ParentId"))
+                        .Key(ke => ke.Columns.Add("ParentId")))
                 .Element("class/map/key/column").HasAttribute("name", "ParentId")
                 .Element("class/map/index/column").HasAttribute("name", "Name")
                 .Element("class/map/one-to-many").HasAttribute("class", typeof(ChildObject).AssemblyQualifiedName);
@@ -226,7 +226,9 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         public void CanSpecifyForeignKeyColumnAsString()
         {
             new MappingTester<OneToManyTarget>()
-                .ForMapping(map => map.HasMany(x => x.BagOfChildren).KeyColumns.Add("ParentID"))
+                .ForMapping(map =>
+                    map.HasMany(x => x.BagOfChildren)
+                        .Key(ke => ke.Columns.Add("ParentID")))
                 .Element("class/bag/key/column").HasAttribute("name", "ParentID");
         }
 
@@ -236,7 +238,7 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
             new MappingTester<OneToManyTarget>()
                 .ForMapping(map =>
                     map.HasMany(x => x.BagOfChildren)
-                        .KeyColumns.Add("ID1", "ID2")
+                        .Key(ke => ke.Columns.Add("ID1", "ID2"))
                 )
                 .Element("class/bag/key/column").Exists()
                 .Element("class/bag/key/column[@name='ID1']").Exists()
@@ -249,9 +251,11 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
             new MappingTester<OneToManyTarget>()
                 .ForMapping(map =>
                     map.HasMany(x => x.BagOfChildren)
-                        .KeyColumns.Add("ID1")
-                        .KeyColumns.Add("ID2")
-                )
+                        .Key(ke =>
+                        {
+                            ke.Columns.Add("ID1");
+                            ke.Columns.Add("ID2");
+                        }))
                 .Element("class/bag/key/column").Exists()
                 .Element("class/bag/key/column[@name='ID1']").Exists()
                 .Element("class/bag/key/column[@name='ID2']").Exists();
@@ -937,7 +941,7 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         public void CanSpecifyUniqueKey()
         {
             new MappingTester<OneToManyTarget>()
-                .ForMapping(m => m.HasMany(x => x.MapOfChildren).KeyColumns.Add("key_col", c => c.Unique()))
+                .ForMapping(m => m.HasMany(x => x.MapOfChildren).Key(ke => ke.Columns.Add("key_col", c => c.Unique())))
                 .Element("class/bag/key/column").HasAttribute("unique", "true");                
         }
 

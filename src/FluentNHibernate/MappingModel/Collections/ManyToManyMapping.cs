@@ -95,6 +95,11 @@ namespace FluentNHibernate.MappingModel.Collections
             set { attributes.Set(x => x.EntityName, value); }
         }
 
+        public void SetDefaultClass(TypeReference type)
+        {
+            SetDefaultValue(x => x.Class, type);
+        }
+
         public string OrderBy
         {
             get { return attributes.Get(x => x.OrderBy); }

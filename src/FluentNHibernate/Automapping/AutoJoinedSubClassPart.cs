@@ -14,8 +14,9 @@ namespace FluentNHibernate.Automapping
         private readonly IList<Member> membersMapped = new List<Member>();
 
         public AutoJoinedSubClassPart(string keyColumn)
-            : base(keyColumn)
-        {}
+        {
+            KeyColumn(keyColumn);
+        }
 
         public object GetMapping()
         {

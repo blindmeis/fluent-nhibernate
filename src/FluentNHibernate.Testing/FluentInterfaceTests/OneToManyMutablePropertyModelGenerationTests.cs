@@ -89,7 +89,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
         public void KeyColumnNamesShouldAddColumnsToModelKeyColumnsCollection()
         {
             OneToMany(x => x.BagOfChildren)
-                .Mapping(m => m.KeyColumns.Add("col1", "col2"))
+                .Mapping(m => m.Key(ke => ke.Columns.Add("col1", "col2")))
                 .ModelShouldMatch(x => x.Key.Columns.Count().ShouldEqual(2));
         }
 
@@ -241,7 +241,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
         public void KeyUpdateShouldSetModelValue()
         {
             OneToMany(x => x.BagOfChildren)
-                .Mapping(m => m.KeyUpdate())
+                .Mapping(m => m.Key(ke => ke.Update()))
                 .ModelShouldMatch(x => x.Key.Update.ShouldBeTrue());
         }
 
@@ -249,7 +249,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
         public void KeyNullableShouldSetModelValue()
         {
             OneToMany(x => x.BagOfChildren)
-                .Mapping(m => m.KeyNullable())
+                .Mapping(m => m.Key(ke => ke.Nullable()))
                 .ModelShouldMatch(x => x.Key.NotNull.ShouldBeFalse());
         }
 
@@ -257,7 +257,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
         public void KeyNotNullableShouldSetModelValue()
         {
             OneToMany(x => x.BagOfChildren)
-                .Mapping(m => m.Not.KeyNullable())
+                .Mapping(m => m.Key(ke => ke.Not.Nullable()))
                 .ModelShouldMatch(x => x.Key.NotNull.ShouldBeTrue());
         }
 
