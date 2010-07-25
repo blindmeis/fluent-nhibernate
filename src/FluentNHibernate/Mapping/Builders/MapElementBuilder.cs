@@ -103,36 +103,24 @@ namespace FluentNHibernate.Mapping.Builders
         }
 
         /// <summary>
-        /// Specifies the name of the column used for the foreign key, while using
-        /// the default type.
+        /// Specify how the foreign key is configured.
+        /// </summary>
+        /// <param name="keyConfiguration">Configuration <see cref="Action"/></param>
+        /// <returns>Builder</returns>
+        public MapElementBuilder<TKey, TValue> Key(Action<KeyBuilder> keyConfiguration)
+        {
+            keyConfiguration(new KeyBuilder(key));
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the name of the column used for the foreign key.
         /// </summary>
         /// <param name="keyColumnName">Key column name</param>
         /// <returns>Builder</returns>
         public MapElementBuilder<TKey, TValue> Key(string keyColumnName)
         {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Specifies the name of the column used for the foreign key, and the
-        /// type of the key.
-        /// </summary>
-        /// <param name="keyColumnName">Key column name</param>
-        /// <typeparam name="TKeyType">Key type</typeparam>
-        /// <returns>Builder</returns>
-        public MapElementBuilder<TKey, TValue> Key<TKeyType>(string keyColumnName)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Specifies the type of the foreign key, while using the default column name.
-        /// </summary>
-        /// <typeparam name="TKeyType">Key type</typeparam>
-        /// <returns>Builder</returns>
-        public MapElementBuilder<TKey, TValue> Key<TKeyType>()
-        {
-            throw new NotImplementedException();
+            return Key(ke => ke.Column(keyColumnName));
         }
     }
 }
