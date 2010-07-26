@@ -39,6 +39,7 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         public virtual IDictionary<SomeEntity, ChildObject> EntityMapOfChildren { get; set; }
         public virtual IDictionary<SomeEntity, ValueObject> EntityMapOfComplexValues { get; set; }
         public virtual IDictionary<SomeEntity, string> EntityMapOfValues { get; set; }
+        public virtual IDictionary<string, int> MapOfValues { get; set; }
 
         private IList<ChildObject> otherChildren = new List<ChildObject>();
         public virtual IList<ChildObject> GetOtherChildren() { return otherChildren; }
@@ -924,6 +925,18 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
                 .Element("class/map/key").ShouldBeInParentAtPosition(0)
                 .Element("class/map/index-many-to-many").ShouldBeInParentAtPosition(1)
                 .Element("class/map/composite-element").ShouldBeInParentAtPosition(2);
+        }
+
+        [Test]
+        public void MapOfValuesWorks()
+        {
+            new MappingTester<OneToManyTarget>()
+                .ForMapping(map => map
+                    .HasMany(x => x.MapOfValues))
+                .Element("class/map").ShouldBeInParentAtPosition(0)
+                .Element("class/map/key").ShouldBeInParentAtPosition(0)
+                .Element("class/map/index").ShouldBeInParentAtPosition(1)
+                .Element("class/map/element").ShouldBeInParentAtPosition(2);
         }
 
         [Test]
