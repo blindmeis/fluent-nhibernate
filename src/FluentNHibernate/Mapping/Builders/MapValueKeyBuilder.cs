@@ -1,17 +1,18 @@
 ﻿using System;
+using FluentNHibernate.Mapping.Providers;
 using FluentNHibernate.MappingModel;
 using FluentNHibernate.MappingModel.Collections;
 
 namespace FluentNHibernate.Mapping.Builders
 {
-    public class MapManyToManyBuilder<TKey, TValue>
+    public class MapValueKeyBuilder<TKey, TValue>
     {
         readonly MapMapping mapping;
         readonly KeyMapping key;
         readonly IndexMapping index;
         readonly ManyToManyMapping relationship;
 
-        public MapManyToManyBuilder(MapMapping mapping, Member member)
+        public MapValueKeyBuilder(MapMapping mapping, Member member)
         {
             this.mapping = mapping;
             this.mapping.Key = key = new KeyMapping();
@@ -43,7 +44,7 @@ namespace FluentNHibernate.Mapping.Builders
         /// </summary>
         /// <param name="mapName">Map name</param>
         /// <returns>Builder</returns>
-        public MapManyToManyBuilder<TKey, TValue> Name(string mapName)
+        public MapValueKeyBuilder<TKey, TValue> Name(string mapName)
         {
             mapping.Name = mapName;
             return this;
@@ -54,7 +55,7 @@ namespace FluentNHibernate.Mapping.Builders
         /// </summary>
         /// <param name="tableName">Table name</param>
         /// <returns>Builder</returns>
-        public MapManyToManyBuilder<TKey, TValue> Table(string tableName)
+        public MapValueKeyBuilder<TKey, TValue> Table(string tableName)
         {
             mapping.TableName = tableName;
             return this;
@@ -65,7 +66,7 @@ namespace FluentNHibernate.Mapping.Builders
         /// </summary>
         /// <param name="indexConfiguration">Configuration <see cref="Action"/></param>
         /// <returns>Builder</returns>
-        public MapManyToManyBuilder<TKey, TValue> Index(Action<IndexBuilder> indexConfiguration)
+        public MapValueKeyBuilder<TKey, TValue> Index(Action<IndexBuilder> indexConfiguration)
         {
             indexConfiguration(new IndexBuilder(index));
             return this;
@@ -76,7 +77,7 @@ namespace FluentNHibernate.Mapping.Builders
         /// </summary>
         /// <param name="keyConfiguration">Configuration <see cref="Action"/></param>
         /// <returns>Builder</returns>
-        public MapManyToManyBuilder<TKey, TValue> Key(Action<KeyBuilder> keyConfiguration)
+        public MapValueKeyBuilder<TKey, TValue> Key(Action<KeyBuilder> keyConfiguration)
         {
             keyConfiguration(new KeyBuilder(key));
             return this;
@@ -87,9 +88,26 @@ namespace FluentNHibernate.Mapping.Builders
         /// </summary>
         /// <param name="keyColumnName">Key column name</param>
         /// <returns>Builder</returns>
-        public MapManyToManyBuilder<TKey, TValue> Key(string keyColumnName)
+        public MapValueKeyBuilder<TKey, TValue> Key(string keyColumnName)
         {
             return Key(ke => ke.Column(keyColumnName));
+        }
+
+        /// <summary>
+        /// Define a component (composite-element) to be used as the value of the dictionary.
+        /// </summary>
+        /// <param name="componentBuilder">Builder action</param>
+        /// <returns>Builder</returns>
+        public MapValueKeyBuilder<TKey, TValue> Component(Action<CompositeElementPart<TValue>> componentBuilder)
+        {
+            var builder = new CompositeElementPart<TValue>(mapping.ContainingEntityType);
+
+            componentBuilder(builder);
+
+            mapping.CompositeElement = ((ICompositeElementMappingProvider)builder).GetCompositeElementMapping();
+            mapping.Relationship = null;
+                
+            return this;
         }
     }
 }

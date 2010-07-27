@@ -133,6 +133,75 @@ namespace FluentNHibernate.Specs.FluentInterface
             map.Relationship.Class.ShouldEqual(new TypeReference(typeof(Target)));
     }
 
+    public class when_mapping_a_value_type_key_with_composite_element_value_dictionary : DictionarySpec
+    {
+        // Map with composite-element:
+        // IDictionary<int, Item>
+        // <map name="Items">
+        //   <key column="Store_id" /> 
+        //   <index column="Key" type="string" /> 
+        //   <composite-element class="Item">
+        //     <property name="Name" /> 
+        //     <property name="Age" /> 
+        //   </composite-element>
+        // </map>
+
+        Because of = () =>
+            mapping_for<EntityWithDictionaries>(class_map =>
+                class_map.HasMany(x => x.ValueTypeKeyEntityValue)
+                    .Component(c =>
+                    {
+                        c.Map(x => x.Name);
+                        c.Map(x => x.Age);
+                    })
+            );
+
+        It should_create_a_map = () =>
+        {
+            mapping.Collections.Count().ShouldEqual(1);
+            map.ShouldNotBeNull();
+        };
+
+        It should_use_the_property_name_as_the_map_name = () =>
+            map.Name.ShouldEqual("ValueTypeKeyEntityValue");
+
+        It should_set_the_map_table_name_to_a_default_name = () =>
+            map.TableName.ShouldEqual("EntityWithDictionariesValueTypeKeyEntityValue");
+        // this table name makes more sense in a real life case (User entity
+        // with an Attributes collection would have a table called UserAttributes)
+
+        It should_create_an_key = () =>
+            map.Key.ShouldNotBeNull();
+
+        It should_set_the_map_key_to_the_primary_key_of_the_containing_class;
+        // ignored for now, until we can sync keys properly
+
+        It should_set_the_map_key_to_a_generated_default_based_on_the_entity_name = () =>
+            map.Key.Columns.Select(x => x.Name).ShouldContainOnly("EntityWithDictionaries_id");
+        // obsoleted by the above when implemented
+
+        It should_create_an_index = () =>
+            map.Index.ShouldNotBeNull();
+
+        It should_set_the_map_index_column_to_a_default_name = () =>
+            map.Index.Columns.Select(x => x.Name).ShouldContainOnly("Key");
+
+        It should_set_the_map_index_type_to_the_key_type = () =>
+            map.Index.Type.ShouldEqual(new TypeReference(typeof(string)));
+
+        It should_not_create_a_relationship = () =>
+            map.Relationship.ShouldBeNull();
+
+        It should_create_a_composite_element = () =>
+            map.CompositeElement.ShouldNotBeNull();
+
+        It should_set_the_map_composite_element_properties = () =>
+            map.CompositeElement.Properties.Select(x => x.Name).ShouldContainOnly("Name", "Age");
+
+        It should_set_the_map_composite_element_type_to_the_value_type = () =>
+            map.CompositeElement.Class.ShouldEqual(new TypeReference(typeof(Target)));
+    }
+
     public abstract class DictionarySpec
     {
         protected static ClassMapping mapping;
@@ -154,19 +223,6 @@ namespace FluentNHibernate.Specs.FluentInterface
             map = mapping.Collections.SingleOrDefault() as MapMapping;
         }
     }
-
-    // Map with composite-element:
-    // IDictionary<int, SearchItem>
-    // <map name="SearchItems" access="field.pascalcase-m-underscore" table="SearchItems" fetch="join">
-    //   <key column="SavedSearchID" foreign-key="FK_SavedSearch_SearchItems" /> 
-    //   <index column="IndexOrder" type="Int32" /> 
-    //   <composite-element class="Basan.Model.Searches.SearchItem">
-    //     <property name="LogicalOperator" type="String" not-null="true" /> 
-    //     <property name="Field" type="String" not-null="true" /> 
-    //     <property name="ComparisonOperator" type="String" not-null="true" /> 
-    //     <property name="CriteriaValue" type="String" not-null="true" /> 
-    //   </composite-element>
-    // </map>
 
     // Map with composite-index + composite-element:
     // IDictionary<FavPlaceKey, Position>

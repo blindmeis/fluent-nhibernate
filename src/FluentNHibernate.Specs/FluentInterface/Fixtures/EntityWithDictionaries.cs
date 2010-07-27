@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq.Expressions;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FluentNHibernate.Specs.FluentInterface.Fixtures
 {
@@ -10,5 +10,8 @@ namespace FluentNHibernate.Specs.FluentInterface.Fixtures
     }
 
     class Target : EntityBase
-    {}
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+    }
 }
