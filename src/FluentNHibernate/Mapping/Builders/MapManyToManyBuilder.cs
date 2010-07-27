@@ -1,4 +1,5 @@
-﻿using FluentNHibernate.MappingModel;
+﻿using System;
+using FluentNHibernate.MappingModel;
 using FluentNHibernate.MappingModel.Collections;
 
 namespace FluentNHibernate.Mapping.Builders
@@ -35,6 +36,60 @@ namespace FluentNHibernate.Mapping.Builders
             relationship.AddDefaultColumn(new ColumnMapping { Name = typeof(TValue).Name + "_id" });
             relationship.ParentType = mapping.ContainingEntityType;
             relationship.ChildType = typeof(TValue);
+        }
+
+        /// <summary>
+        /// Sets the map name. Optional.
+        /// </summary>
+        /// <param name="mapName">Map name</param>
+        /// <returns>Builder</returns>
+        public MapManyToManyBuilder<TKey, TValue> Name(string mapName)
+        {
+            mapping.Name = mapName;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the name of the table containing the dictionary values. Optional.
+        /// </summary>
+        /// <param name="tableName">Table name</param>
+        /// <returns>Builder</returns>
+        public MapManyToManyBuilder<TKey, TValue> Table(string tableName)
+        {
+            mapping.TableName = tableName;
+            return this;
+        }
+
+        /// <summary>
+        /// Specify how the index (or key) is configured.
+        /// </summary>
+        /// <param name="indexConfiguration">Configuration <see cref="Action"/></param>
+        /// <returns>Builder</returns>
+        public MapManyToManyBuilder<TKey, TValue> Index(Action<IndexBuilder> indexConfiguration)
+        {
+            indexConfiguration(new IndexBuilder(index));
+            return this;
+        }
+
+        /// <summary>
+        /// Specify how the foreign key is configured.
+        /// </summary>
+        /// <param name="keyConfiguration">Configuration <see cref="Action"/></param>
+        /// <returns>Builder</returns>
+        public MapManyToManyBuilder<TKey, TValue> Key(Action<KeyBuilder> keyConfiguration)
+        {
+            keyConfiguration(new KeyBuilder(key));
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies the name of the column used for the foreign key.
+        /// </summary>
+        /// <param name="keyColumnName">Key column name</param>
+        /// <returns>Builder</returns>
+        public MapManyToManyBuilder<TKey, TValue> Key(string keyColumnName)
+        {
+            return Key(ke => ke.Column(keyColumnName));
         }
     }
 }
