@@ -1256,6 +1256,88 @@ namespace FluentNHibernate.Mapping
 
         #endregion
 
+        public MapManyToManyBuilder<char, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<char, TValue>>> memberExpression)
+        {
+            return HasMapManyToMany(memberExpression);
+        }
+
+        public MapManyToManyBuilder<string, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<string, TValue>>> memberExpression)
+        {
+            return HasMapManyToMany(memberExpression);
+        }
+
+        public MapManyToManyBuilder<int, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<int, TValue>>> memberExpression)
+        {
+            return HasMapManyToMany(memberExpression);
+        }
+
+        public MapManyToManyBuilder<uint, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<uint, TValue>>> memberExpression)
+        {
+            return HasMapManyToMany(memberExpression);
+        }
+
+        public MapManyToManyBuilder<long, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<long, TValue>>> memberExpression)
+        {
+            return HasMapManyToMany(memberExpression);
+        }
+
+        public MapManyToManyBuilder<ulong, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<ulong, TValue>>> memberExpression)
+        {
+            return HasMapManyToMany(memberExpression);
+        }
+
+        public MapManyToManyBuilder<double, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<double, TValue>>> memberExpression)
+        {
+            return HasMapManyToMany(memberExpression);
+        }
+
+        public MapManyToManyBuilder<decimal, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<decimal, TValue>>> memberExpression)
+        {
+            return HasMapManyToMany(memberExpression);
+        }
+
+        public MapManyToManyBuilder<short, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<short, TValue>>> memberExpression)
+        {
+            return HasMapManyToMany(memberExpression);
+        }
+
+        public MapManyToManyBuilder<ushort, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<ushort, TValue>>> memberExpression)
+        {
+            return HasMapManyToMany(memberExpression);
+        }
+
+        public MapManyToManyBuilder<float, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<float, TValue>>> memberExpression)
+        {
+            return HasMapManyToMany(memberExpression);
+        }
+
+        public MapManyToManyBuilder<byte, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<byte, TValue>>> memberExpression)
+        {
+            return HasMapManyToMany(memberExpression);
+        }
+
+        public MapManyToManyBuilder<bool, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<bool, TValue>>> memberExpression)
+        {
+            return HasMapManyToMany(memberExpression);
+        }
+
+        MapManyToManyBuilder<TKey, TValue> HasMapManyToMany<TKey, TValue>(Expression<Func<T, IDictionary<TKey, TValue>>> memberExpression)
+        {
+            return HasMapManyToMany<TKey, TValue>(memberExpression.ToMember());
+        }
+
+        MapManyToManyBuilder<TKey, TValue> HasMapManyToMany<TKey, TValue>(Member member)
+        {
+            var mapping = new MapMapping
+            {
+                ContainingEntityType = typeof(T)
+            };
+
+            collections.Add(new PassThroughMappingProvider(mapping));
+
+            return new MapManyToManyBuilder<TKey, TValue>(mapping, member);
+        }
+
         #endregion
 
         #region HasManyToMany

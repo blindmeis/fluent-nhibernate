@@ -155,22 +155,24 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         [Test]
         public void CanSpecifyCollectionTypeAsMap()
         {
-            new MappingTester<OneToManyTarget>()
-                .ForMapping(map => map.HasMany(x => x.MapOfChildren).AsMap(x => x.Name))
-                .Element("class/map").Exists();
+            Assert.Fail("Broken due to AsMap being not implemented"); 
+            //new MappingTester<OneToManyTarget>()
+            //    .ForMapping(map => map.HasMany(x => x.MapOfChildren).AsMap(x => x.Name))
+            //    .Element("class/map").Exists();
         }
 
         [Test]
         public void CanSpecifyCollectionTypeAsMapWithStringColumnName()
         {
-            new MappingTester<OneToManyTarget>()
-                .ForMapping(map => map
-                    .HasMany(x => x.MapOfChildren)
-                        .AsMap("Name")
-                        .Key(ke => ke.Columns.Add("ParentId")))
-                .Element("class/map/key/column").HasAttribute("name", "ParentId")
-                .Element("class/map/index/column").HasAttribute("name", "Name")
-                .Element("class/map/one-to-many").HasAttribute("class", typeof(ChildObject).AssemblyQualifiedName);
+            Assert.Fail("Broken due to AsMap being not implemented");
+            //new MappingTester<OneToManyTarget>()
+            //    .ForMapping(map => map
+            //        .HasMany(x => x.MapOfChildren)
+            //            .AsMap("Name")
+            //            .Key(ke => ke.Columns.Add("ParentId")))
+            //    .Element("class/map/key/column").HasAttribute("name", "ParentId")
+            //    .Element("class/map/index/column").HasAttribute("name", "Name")
+            //    .Element("class/map/one-to-many").HasAttribute("class", typeof(ChildObject).AssemblyQualifiedName);
         }
 
         [Test]
@@ -198,25 +200,28 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         [Test]
         public void CanSpecifyCollectionTypeAsNaturallySortedMap()
         {
-            new MappingTester<OneToManyTarget>()
-                .ForMapping(map => map.HasMany(x => x.MapOfChildren).AsMap("Name", SortType.Natural))
-                .Element("class/map").Exists().HasAttribute("sort", "natural");
+            Assert.Fail("Broken due to AsMap being not implemented");
+            //new MappingTester<OneToManyTarget>()
+            //    .ForMapping(map => map.HasMany(x => x.MapOfChildren).AsMap("Name", SortType.Natural))
+            //    .Element("class/map").Exists().HasAttribute("sort", "natural");
         }
 
         [Test]
         public void CanSpecifyCollectionTypeAsNaturallySortedMapAlsoWhenUsingIndexSelector()
         {
-            new MappingTester<OneToManyTarget>()
-                .ForMapping(map => map.HasMany(x => x.MapOfChildren).AsMap(x => x.Name, SortType.Natural))
-                .Element("class/map").Exists().HasAttribute("sort", "natural");
+            Assert.Fail("Broken due to AsMap being not implemented");
+            //new MappingTester<OneToManyTarget>()
+            //    .ForMapping(map => map.HasMany(x => x.MapOfChildren).AsMap(x => x.Name, SortType.Natural))
+            //    .Element("class/map").Exists().HasAttribute("sort", "natural");
         }
 
         [Test]
         public void CanSpecifyCollectionTypeAsComparerSortedMap()
         {
-            new MappingTester<OneToManyTarget>()
-                .ForMapping(map => map.HasMany(x => x.MapOfChildren).AsMap<MapIndex, SortComparer>("Name"))
-                .Element("class/map").Exists().HasAttribute("sort", typeof(SortComparer).AssemblyQualifiedName);
+            Assert.Fail("Broken due to AsMap being not implemented");
+            //new MappingTester<OneToManyTarget>()
+            //    .ForMapping(map => map.HasMany(x => x.MapOfChildren).AsMap<MapIndex, SortComparer>("Name"))
+            //    .Element("class/map").Exists().HasAttribute("sort", typeof(SortComparer).AssemblyQualifiedName);
         }
 
         [Test]
@@ -315,10 +320,11 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         [Test]
         public void MapHasIndexElement()
         {
-            new MappingTester<OneToManyTarget>()
-                .ForMapping(map => map.HasMany(x => x.MapOfChildren).AsMap(x => x.Name))
-                .Element("class/map/index").HasAttribute("type", typeof(string).AssemblyQualifiedName)
-                .Element("class/map/index/column").HasAttribute("name", "Name");
+            Assert.Fail("Broken due to AsMap being not implemented");
+            //new MappingTester<OneToManyTarget>()
+            //    .ForMapping(map => map.HasMany(x => x.MapOfChildren).AsMap(x => x.Name))
+            //    .Element("class/map/index").HasAttribute("type", typeof(string).AssemblyQualifiedName)
+            //    .Element("class/map/index/column").HasAttribute("name", "Name");
         }
 
         [Test]
@@ -332,11 +338,12 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         [Test]
         public virtual void CanOverrideMapIndexElement()
         {
-            new MappingTester<OneToManyTarget>()
-                .ForMapping(map => map.HasMany(x => x.MapOfChildren).AsMap(
-                    x => x.Name,
-                    index => index.Column("ChildObjectName")))
-                .Element("class/map/index/column").HasAttribute("name", "ChildObjectName");
+            Assert.Fail("Broken due to AsMap being not implemented");
+            //new MappingTester<OneToManyTarget>()
+            //    .ForMapping(map => map.HasMany(x => x.MapOfChildren).AsMap(
+            //        x => x.Name,
+            //        index => index.Column("ChildObjectName")))
+            //    .Element("class/map/index/column").HasAttribute("name", "ChildObjectName");
         }
 
         [Test]
@@ -718,11 +725,12 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         [Test]
         public void IndexTypeDefaultsToInt32()
         {
-            new MappingTester<OneToManyTarget>()
-                .ForMapping(map =>
-                            map.HasMany(x => x.MapOfChildren)
-                                .AsMap("indexCol"))
-                .Element("class/map/index").HasAttribute("type", typeof(Int32).AssemblyQualifiedName);
+            Assert.Fail("Broken due to AsMap being not implemented");
+            //new MappingTester<OneToManyTarget>()
+            //    .ForMapping(map =>
+            //                map.HasMany(x => x.MapOfChildren)
+            //                    .AsMap("indexCol"))
+            //    .Element("class/map/index").HasAttribute("type", typeof(Int32).AssemblyQualifiedName);
         }
 
         [Test]
@@ -950,17 +958,19 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         [Test]
         public void OrderByClauseIgnoredForUnorderableCollections()
         {
-            new MappingTester<OneToManyTarget>()
-                .ForMapping(m => m.HasMany(x => x.MapOfChildren).AsMap("indexCol"))
-                .Element("class/map").DoesntHaveAttribute("order-by");
+            Assert.Fail("Broken due to AsMap being not implemented");
+            //new MappingTester<OneToManyTarget>()
+            //    .ForMapping(m => m.HasMany(x => x.MapOfChildren).AsMap("indexCol"))
+            //    .Element("class/map").DoesntHaveAttribute("order-by");
         }
 
         [Test]
         public void CanSpecifyUniqueKey()
         {
-            new MappingTester<OneToManyTarget>()
-                .ForMapping(m => m.HasMany(x => x.MapOfChildren).Key(ke => ke.Columns.Add("key_col", c => c.Unique())))
-                .Element("class/bag/key/column").HasAttribute("unique", "true");                
+            Assert.Fail("Broken due to AsMap being not implemented");
+            //new MappingTester<OneToManyTarget>()
+            //    .ForMapping(m => m.HasMany(x => x.MapOfChildren).Key(ke => ke.Columns.Add("key_col", c => c.Unique())))
+            //    .Element("class/bag/key/column").HasAttribute("unique", "true");                
         }
 
 
@@ -978,11 +988,12 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         [Test]
         public void CanSpecifyAdditionalColumnWithSqlTypeOnElement()
         {
-            new MappingTester<OneToManyTarget>()
-                .ForMapping(m => m.HasMany(x => x.MapOfChildren)
-                    .Element("colName", e => e.Columns.Add("additionalColumn", c => c.SqlType("ntext"))))                
-                .Element("class/bag/element/column[@name='colName']").DoesntHaveAttribute("sql-type")
-                .Element("class/bag/element/column[@name='additionalColumn']").HasAttribute("sql-type", "ntext");                       
+            Assert.Fail("Broken due to AsMap being not implemented");
+            //new MappingTester<OneToManyTarget>()
+            //    .ForMapping(m => m.HasMany(x => x.MapOfChildren)
+            //        .Element("colName", e => e.Columns.Add("additionalColumn", c => c.SqlType("ntext"))))                
+            //    .Element("class/bag/element/column[@name='colName']").DoesntHaveAttribute("sql-type")
+            //    .Element("class/bag/element/column[@name='additionalColumn']").HasAttribute("sql-type", "ntext");                       
         }
 
     }

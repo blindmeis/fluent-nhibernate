@@ -39,7 +39,7 @@ namespace FluentNHibernate.Specs.FluentInterface
         It should_use_the_property_name_as_the_map_name = () =>
             map.Name.ShouldEqual("ValueTypeKeyValue");
 
-        It should_set_the_map_table_name_to_a_defualt_name = () =>
+        It should_set_the_map_table_name_to_a_default_name = () =>
             map.TableName.ShouldEqual("EntityWithDictionariesValueTypeKeyValue");
             // this table name makes more sense in a real life case (User entity
             // with an Attributes collection would have a table called UserAttributes)
@@ -71,6 +71,66 @@ namespace FluentNHibernate.Specs.FluentInterface
 
         It should_set_the_map_element_type_to_the_value_type = () =>
             map.Element.Type.ShouldEqual(new TypeReference(typeof(string)));
+    }
+
+    public class when_mapping_a_value_type_key_with_entity_value_dictionary : DictionarySpec
+    {
+        // Map with entity + entity:
+        // IDictionary<string, User>
+        // <map name="AttributeOwners" table="PostAttributeOwners">
+        //   <key column="PostId"/>
+        //   <index column="Key" type="System.String" /> 
+        //   <many-to-many class="User" column="UserId"/>
+        // </map>
+
+        Because of = () =>
+            mapping_for<EntityWithDictionaries>(class_map =>
+                class_map.HasMany(x => x.ValueTypeKeyEntityValue));
+
+        It should_create_a_map = () =>
+        {
+            mapping.Collections.Count().ShouldEqual(1);
+            map.ShouldNotBeNull();
+        };
+
+        It should_use_the_property_name_as_the_map_name = () =>
+            map.Name.ShouldEqual("ValueTypeKeyEntityValue");
+
+        It should_set_the_map_table_name_to_a_default_name = () =>
+            map.TableName.ShouldEqual("EntityWithDictionariesValueTypeKeyEntityValue");
+        // this table name makes more sense in a real life case (User entity
+        // with an Attributes collection would have a table called UserAttributes)
+
+        It should_create_an_key = () =>
+            map.Key.ShouldNotBeNull();
+
+        It should_set_the_map_key_to_the_primary_key_of_the_containing_class;
+        // ignored for now, until we can sync keys properly
+
+        It should_set_the_map_key_to_a_generated_default_based_on_the_entity_name = () =>
+            map.Key.Columns.Select(x => x.Name).ShouldContainOnly("EntityWithDictionaries_id");
+        // obsoleted by the above when implemented
+
+        It should_create_an_index = () =>
+            map.Index.ShouldNotBeNull();
+
+        It should_set_the_map_index_column_to_a_default_name = () =>
+            map.Index.Columns.Select(x => x.Name).ShouldContainOnly("Key");
+
+        It should_set_the_map_index_type_to_the_key_type = () =>
+            map.Index.Type.ShouldEqual(new TypeReference(typeof(string)));
+
+        It should_create_a_many_to_many = () =>
+        {
+            map.Relationship.ShouldNotBeNull();
+            map.Relationship.ShouldBeOfType<ManyToManyMapping>();
+        };
+
+        It should_set_the_map_many_to_many_column_to_a_default_foreign_key_value = () =>
+            map.Relationship.As<ManyToManyMapping>().Columns.Select(x => x.Name).ShouldContainOnly("Target_id");
+
+        It should_set_the_map_many_to_many_type_to_the_value_entity_type = () =>
+            map.Relationship.Class.ShouldEqual(new TypeReference(typeof(Target)));
     }
 
     public abstract class DictionarySpec

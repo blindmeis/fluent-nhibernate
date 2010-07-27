@@ -408,6 +408,7 @@
     <Compile Include="Mapping\Builders\IndexBuilder.cs" />
     <Compile Include="Mapping\Builders\KeyBuilder.cs" />
     <Compile Include="Mapping\Builders\MapElementBuilder.cs" />
+    <Compile Include="Mapping\Builders\MapManyToManyBuilder.cs" />
     <Compile Include="Mapping\Laziness.cs" />
     <Compile Include="Mapping\NaturalIdPart.cs" />
     <Compile Include="Mapping\PassThroughMappingProvider.cs" />
