@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Linq.Expressions;
 using FluentNHibernate.Mapping.Providers;
 using FluentNHibernate.MappingModel;
 using FluentNHibernate.MappingModel.Collections;
-using FluentNHibernate.MappingModel.Identity;
 using FluentNHibernate.Utils;
 
 namespace FluentNHibernate.Mapping.Builders
@@ -13,6 +11,7 @@ namespace FluentNHibernate.Mapping.Builders
         readonly MapMapping mapping;
         KeyMapping key;
         IndexMapping index;
+        CompositeIndexMapping compositeIndex;
         ManyToManyMapping relationship;
         ElementMapping element;
 
@@ -33,8 +32,11 @@ namespace FluentNHibernate.Mapping.Builders
             key.AddDefaultColumn(new ColumnMapping { Name = mapping.ContainingEntityType.Name + "_id" });
 
             mapping.Index = index = new IndexMapping();
-            index.AddDefaultColumn(new ColumnMapping { Name = "Key" });
-            index.SetDefaultValue(x => x.Type, new TypeReference(KeyType));
+            mapping.Index.As<IndexMapping>(ix =>
+            {
+                ix.AddDefaultColumn(new ColumnMapping { Name = "Key" });
+                ix.SetDefaultValue(x => x.Type, new TypeReference(KeyType));
+            });
 
             if (ValueType.IsSimpleType())
             {
@@ -87,7 +89,9 @@ namespace FluentNHibernate.Mapping.Builders
         /// <returns>Builder</returns>
         public MapBuilder<TKey, TValue> Index(Action<IndexBuilder> indexConfiguration)
         {
-            mapping.Index = index = index ?? new IndexMapping();
+            if (!(mapping.Index is IndexMapping))
+                mapping.Index = index;
+
             indexConfiguration(new IndexBuilder(index));
             return this;
         }
@@ -138,6 +142,7 @@ namespace FluentNHibernate.Mapping.Builders
         public MapBuilder<TKey, TValue> Element(Action<ElementBuilder> elementConfiguration)
         {
             mapping.Element = element = element ?? new ElementMapping();
+            mapping.Relationship = null;
             elementConfiguration(new ElementBuilder(element));
             return this;
         }
@@ -214,19 +219,25 @@ namespace FluentNHibernate.Mapping.Builders
             componentBuilder(builder);
 
             mapping.CompositeElement = ((ICompositeElementMappingProvider)builder).GetCompositeElementMapping();
+            mapping.Element = null;
             mapping.Relationship = null;
                 
             return this;
         }
 
         /// <summary>
-        /// Define a component for use as the index (composite-index).or dictionary key.
+        /// Define a component for use as the index (composite-index) or dictionary key.
         /// </summary>
         /// <param name="componentBuilder">Builder action</param>
         /// <returns>Builder</returns>
         public MapBuilder<TKey, TValue> ComponentIndex(Action<CompositeIndexBuilder<TKey>> componentBuilder)
         {
-            throw new NotImplementedException();
+            if (!(mapping.Index is CompositeIndexMapping))
+                mapping.Index = compositeIndex = compositeIndex ?? new CompositeIndexMapping();
+
+            componentBuilder(new CompositeIndexBuilder<TKey>(compositeIndex));
+
+            return this;
         }
 
         /// <summary>
@@ -245,59 +256,6 @@ namespace FluentNHibernate.Mapping.Builders
         static Type ValueType
         {
             get { return typeof(TValue); }
-        }
-    }
-
-    public class SortBuilder<T>
-    {
-        readonly T parent;
-        readonly Action<string> setter;
-
-        public SortBuilder(T parent, Action<string> setter)
-        {
-            this.parent = parent;
-            this.setter = setter;
-        }
-
-        public T Natural()
-        {
-            setter("natural");
-            return parent;
-        }
-
-        public T Unsorted()
-        {
-            setter("unsorted");
-            return parent;
-        }
-
-        public T WithComparer<TComparer>()
-        {
-            return WithComparer(typeof(TComparer));
-        }
-
-        public T WithComparer(Type comparer)
-        {
-            return WithComparer(comparer.AssemblyQualifiedName);
-        }
-
-        public T WithComparer(string comparer)
-        {
-            setter(comparer);
-            return parent;
-        }
-    }
-
-    public class CompositeIndexBuilder<T>
-    {
-        public KeyPropertyPart Map(Expression<Func<T, object>> memberExpression)
-        {
-            return new KeyPropertyPart(new KeyPropertyMapping());
-        }
-
-        public KeyManyToOnePart References(Expression<Func<T, object>> memberExpression)
-        {
-            return new KeyManyToOnePart(new KeyManyToOneMapping());
         }
     }
 }

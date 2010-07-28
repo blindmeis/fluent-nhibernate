@@ -58,7 +58,7 @@ namespace FluentNHibernate.Specs.FluentInterface
             map.Index.ShouldNotBeNull();
 
         It should_set_the_map_index_column_to_a_default_name = () =>
-            map.Index.Columns.Select(x => x.Name).ShouldContainOnly("Key");
+            map.Index.As<IndexMapping>().Columns.Select(x => x.Name).ShouldContainOnly("Key");
 
         It should_set_the_map_index_type_to_the_key_type = () =>
             map.Index.Type.ShouldEqual(new TypeReference(typeof(string)));
@@ -115,7 +115,7 @@ namespace FluentNHibernate.Specs.FluentInterface
             map.Index.ShouldNotBeNull();
 
         It should_set_the_map_index_column_to_a_default_name = () =>
-            map.Index.Columns.Select(x => x.Name).ShouldContainOnly("Key");
+            map.Index.As<IndexMapping>().Columns.Select(x => x.Name).ShouldContainOnly("Key");
 
         It should_set_the_map_index_type_to_the_key_type = () =>
             map.Index.Type.ShouldEqual(new TypeReference(typeof(string)));
@@ -184,7 +184,7 @@ namespace FluentNHibernate.Specs.FluentInterface
             map.Index.ShouldNotBeNull();
 
         It should_set_the_map_index_column_to_a_default_name = () =>
-            map.Index.Columns.Select(x => x.Name).ShouldContainOnly("Key");
+            map.Index.As<IndexMapping>().Columns.Select(x => x.Name).ShouldContainOnly("Key");
 
         It should_set_the_map_index_type_to_the_key_type = () =>
             map.Index.Type.ShouldEqual(new TypeReference(typeof(string)));
@@ -240,10 +240,10 @@ namespace FluentNHibernate.Specs.FluentInterface
         };
 
         It should_use_the_property_name_as_the_map_name = () =>
-            map.Name.ShouldEqual("ValueTypeKeyEntityValue");
+            map.Name.ShouldEqual("EntityKeyEntityValue");
 
         It should_set_the_map_table_name_to_a_default_name = () =>
-            map.TableName.ShouldEqual("EntityWithDictionariesValueTypeKeyEntityValue");
+            map.TableName.ShouldEqual("EntityWithDictionariesEntityKeyEntityValue");
         // this table name makes more sense in a real life case (User entity
         // with an Attributes collection would have a table called UserAttributes)
 
@@ -260,11 +260,11 @@ namespace FluentNHibernate.Specs.FluentInterface
         It should_create_an_index = () =>
             map.Index.ShouldNotBeNull();
 
-        It should_set_the_map_index_column_to_a_default_name = () =>
-            map.Index.Columns.Select(x => x.Name).ShouldContainOnly("Key");
-
         It should_set_the_map_index_type_to_the_key_type = () =>
-            map.Index.Type.ShouldEqual(new TypeReference(typeof(string)));
+            map.Index.Type.ShouldEqual(new TypeReference(typeof(Target)));
+
+        It should_set_the_map_index_properties = () =>
+            map.Index.As<CompositeIndexMapping>().Properties.Select(x => x.Name).ShouldContainOnly("Name", "Age");
 
         It should_not_create_a_relationship = () =>
             map.Relationship.ShouldBeNull();

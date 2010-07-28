@@ -228,7 +228,7 @@ namespace FluentNHibernate.Testing.ConventionsTests
                 .Collections.First();
 
             ((ArrayMapping)collection).Index
-                .Columns.First().Name.ShouldEqual("test");
+                .As<IndexMapping>().Columns.First().Name.ShouldEqual("test");
         }
 
         [Test]

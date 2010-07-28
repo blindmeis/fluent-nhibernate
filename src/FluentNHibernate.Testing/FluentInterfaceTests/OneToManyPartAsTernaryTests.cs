@@ -83,7 +83,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
                     x.ShouldBeOfType(typeof(MapMapping));
                     IIndexMapping index = ((MapMapping)x).Index;
                     index.ShouldBeOfType(typeof(IndexManyToManyMapping));
-                    index.Columns.Single().Name.ShouldEqual(indexName);
+                    index.As<IndexManyToManyMapping>().Columns.Single().Name.ShouldEqual(indexName);
                 });
         }
     }

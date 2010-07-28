@@ -46,6 +46,9 @@ namespace FluentNHibernate.MappingModel.Output
             RegisterWriter<ParentMapping>(c =>
                 new XmlParentWriter());
 
+            RegisterWriter<CompositeIndexMapping>(c =>
+                new XmlCompositeIndexWriter(c.Resolve<IXmlWriterServiceLocator>()));
+
             RegisterWriter<CompositeElementMapping>(c =>
                 new XmlCompositeElementWriter(c.Resolve<IXmlWriterServiceLocator>()));
 

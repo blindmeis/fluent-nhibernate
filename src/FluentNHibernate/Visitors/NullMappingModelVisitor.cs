@@ -129,6 +129,11 @@ namespace FluentNHibernate.Visitors
             
         }
 
+        public virtual void ProcessCompositeIndex(CompositeIndexMapping compositeIndexMapping)
+        {
+
+        }
+
         public virtual void ProcessVersion(VersionMapping mapping)
         {
             

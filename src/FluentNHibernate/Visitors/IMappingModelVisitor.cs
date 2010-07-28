@@ -36,6 +36,7 @@ namespace FluentNHibernate.Visitors
         void ProcessParent(ParentMapping parentMapping);
         void ProcessJoin(JoinMapping joinMapping);
         void ProcessCompositeElement(CompositeElementMapping compositeElementMapping);
+        void ProcessCompositeIndex(CompositeIndexMapping compositeIndexMapping);
         void ProcessVersion(VersionMapping mapping);
         void ProcessOneToOne(OneToOneMapping mapping);
         void ProcessAny(AnyMapping mapping);

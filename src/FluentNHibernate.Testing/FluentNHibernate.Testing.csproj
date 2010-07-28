@@ -462,6 +462,7 @@
     <Compile Include="DomainModel\Mapping\UnionSubclassTester.cs" />
     <Compile Include="FluentInterfaceTests\NaturalIdPartTests.cs" />
     <Compile Include="MappingModel\Identity\CompositeIdMappingTester.cs" />
+    <Compile Include="MappingModel\Output\XmlCompositeIndexWriterTester.cs" />
     <Compile Include="MappingModel\Output\XmlNaturalIdWriterTester.cs" />
     <Compile Include="MappingModel\SortingTests.cs" />
   </ItemGroup>

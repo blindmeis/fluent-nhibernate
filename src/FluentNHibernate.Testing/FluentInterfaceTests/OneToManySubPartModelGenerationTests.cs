@@ -31,7 +31,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
                     var list = (ListMapping)x;
 
                     list.Index.ShouldNotBeNull();
-                    list.Index.Columns.Count().ShouldEqual(1);
+                    list.Index.As<IndexMapping>().Columns.Count().ShouldEqual(1);
                     ((IndexMapping)list.Index).Type.ShouldEqual(new TypeReference(typeof(int)));
                 });
         }
