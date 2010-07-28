@@ -34,9 +34,8 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
                     HasMany(x => x.ListOfChildren).AsList();
                     HasMany(x => x.BagOfChildren).AsBag();
                     HasMany(x => x.SetOfChildren).AsSet();
-                    throw new NotImplementedException("Broken due to AsMap being not implemented");
-                    //HasMany(x => x.MapOfChildren).AsMap( x => x.Name);
-                    //HasMany(x => x.ArrayOfChildren).AsArray(x => x.Position);
+                    HasMany(x => x.MapOfChildren);
+                    HasMany(x => x.ArrayOfChildren).AsArray(x => x.Position);
                 }
             }
         }

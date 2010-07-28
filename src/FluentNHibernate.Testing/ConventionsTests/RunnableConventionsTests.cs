@@ -309,19 +309,17 @@ namespace FluentNHibernate.Testing.ConventionsTests
         [Test]
         public void ShouldApplyIMapConvention()
         {
-            Assert.Fail("Broken due to AsMap being not implemented"); 
-            //TestConvention(new MapConvention(), () =>
-            //{
-            //    var map = new ClassMap<Target>();
+            TestConvention(new MapConvention(), () =>
+            {
+                var map = new ClassMap<Target>();
 
-            //    map.Id(x => x.Id);
-            //    map.HasMany(x => x.DictionaryBag)
-            //        .AsMap("index");
+                map.Id(x => x.Id);
+                map.HasMany(x => x.DictionaryBag);
 
-            //    return map;
-            //})
-            //    .Collections.First()
-            //    .Access.ShouldEqual("field");
+                return map;
+            })
+                .Collections.First()
+                .Access.ShouldEqual("field");
         }
 
         [Test]

@@ -7,6 +7,7 @@ namespace FluentNHibernate.Specs.FluentInterface.Fixtures
     {
         public IDictionary<string, string> ValueTypeKeyValue { get; set; }
         public IDictionary<string, Target> ValueTypeKeyEntityValue { get; set; }
+        public IDictionary<Target, Target> EntityKeyEntityValue { get; set; }
     }
 
     class Target : EntityBase

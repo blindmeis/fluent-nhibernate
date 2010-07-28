@@ -322,927 +322,928 @@ namespace FluentNHibernate.Mapping
             return MapHasMany<TChild, object>(memberExpression);
         }
 
-        public OneToManyPart<TChild> HasMany<TKey, TChild>(Expression<Func<T, IDictionary<TKey, TChild>>> memberExpression)        {            return MapHasMany<TChild, IDictionary<TKey, TChild>>(memberExpression);
+        public MapBuilder<TKey, TChild> HasMany<TKey, TChild>(Expression<Func<T, IDictionary<TKey, TChild>>> memberExpression)        {
+            return HasManyElement(memberExpression);
         }
 
         #region Element Maps
 
-        public MapElementBuilder<TKey, char> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, char>>> memberExpression)
+        public MapBuilder<TKey, char> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, char>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<TKey, string> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, string>>> memberExpression)
+        public MapBuilder<TKey, string> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, string>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<TKey, int> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, int>>> memberExpression)
+        public MapBuilder<TKey, int> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, int>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<TKey, uint> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, uint>>> memberExpression)
+        public MapBuilder<TKey, uint> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, uint>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<TKey, long> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, long>>> memberExpression)
+        public MapBuilder<TKey, long> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, long>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<TKey, ulong> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, ulong>>> memberExpression)
+        public MapBuilder<TKey, ulong> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, ulong>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<TKey, double> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, double>>> memberExpression)
+        public MapBuilder<TKey, double> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, double>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<TKey, decimal> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, decimal>>> memberExpression)
+        public MapBuilder<TKey, decimal> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, decimal>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<TKey, short> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, short>>> memberExpression)
+        public MapBuilder<TKey, short> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, short>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<TKey, ushort> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, ushort>>> memberExpression)
+        public MapBuilder<TKey, ushort> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, ushort>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<TKey, float> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, float>>> memberExpression)
+        public MapBuilder<TKey, float> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, float>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<TKey, byte> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, byte>>> memberExpression)
+        public MapBuilder<TKey, byte> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, byte>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<TKey, bool> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, bool>>> memberExpression)
+        public MapBuilder<TKey, bool> HasMany<TKey>(Expression<Func<T, IDictionary<TKey, bool>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<char, char> HasMany(Expression<Func<T, IDictionary<char, char>>> memberExpression)
+        public MapBuilder<char, char> HasMany(Expression<Func<T, IDictionary<char, char>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<char, string> HasMany(Expression<Func<T, IDictionary<char, string>>> memberExpression)
+        public MapBuilder<char, string> HasMany(Expression<Func<T, IDictionary<char, string>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<char, int> HasMany(Expression<Func<T, IDictionary<char, int>>> memberExpression)
+        public MapBuilder<char, int> HasMany(Expression<Func<T, IDictionary<char, int>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<char, uint> HasMany(Expression<Func<T, IDictionary<char, uint>>> memberExpression)
+        public MapBuilder<char, uint> HasMany(Expression<Func<T, IDictionary<char, uint>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<char, long> HasMany(Expression<Func<T, IDictionary<char, long>>> memberExpression)
+        public MapBuilder<char, long> HasMany(Expression<Func<T, IDictionary<char, long>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<char, ulong> HasMany(Expression<Func<T, IDictionary<char, ulong>>> memberExpression)
+        public MapBuilder<char, ulong> HasMany(Expression<Func<T, IDictionary<char, ulong>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<char, double> HasMany(Expression<Func<T, IDictionary<char, double>>> memberExpression)
+        public MapBuilder<char, double> HasMany(Expression<Func<T, IDictionary<char, double>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<char, decimal> HasMany(Expression<Func<T, IDictionary<char, decimal>>> memberExpression)
+        public MapBuilder<char, decimal> HasMany(Expression<Func<T, IDictionary<char, decimal>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<char, short> HasMany(Expression<Func<T, IDictionary<char, short>>> memberExpression)
+        public MapBuilder<char, short> HasMany(Expression<Func<T, IDictionary<char, short>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<char, ushort> HasMany(Expression<Func<T, IDictionary<char, ushort>>> memberExpression)
+        public MapBuilder<char, ushort> HasMany(Expression<Func<T, IDictionary<char, ushort>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<char, float> HasMany(Expression<Func<T, IDictionary<char, float>>> memberExpression)
+        public MapBuilder<char, float> HasMany(Expression<Func<T, IDictionary<char, float>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<char, byte> HasMany(Expression<Func<T, IDictionary<char, byte>>> memberExpression)
+        public MapBuilder<char, byte> HasMany(Expression<Func<T, IDictionary<char, byte>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<char, bool> HasMany(Expression<Func<T, IDictionary<char, bool>>> memberExpression)
+        public MapBuilder<char, bool> HasMany(Expression<Func<T, IDictionary<char, bool>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<string, char> HasMany(Expression<Func<T, IDictionary<string, char>>> memberExpression)
+        public MapBuilder<string, char> HasMany(Expression<Func<T, IDictionary<string, char>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<string, string> HasMany(Expression<Func<T, IDictionary<string, string>>> memberExpression)
+        public MapBuilder<string, string> HasMany(Expression<Func<T, IDictionary<string, string>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<string, int> HasMany(Expression<Func<T, IDictionary<string, int>>> memberExpression)
+        public MapBuilder<string, int> HasMany(Expression<Func<T, IDictionary<string, int>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<string, uint> HasMany(Expression<Func<T, IDictionary<string, uint>>> memberExpression)
+        public MapBuilder<string, uint> HasMany(Expression<Func<T, IDictionary<string, uint>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<string, long> HasMany(Expression<Func<T, IDictionary<string, long>>> memberExpression)
+        public MapBuilder<string, long> HasMany(Expression<Func<T, IDictionary<string, long>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<string, ulong> HasMany(Expression<Func<T, IDictionary<string, ulong>>> memberExpression)
+        public MapBuilder<string, ulong> HasMany(Expression<Func<T, IDictionary<string, ulong>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<string, double> HasMany(Expression<Func<T, IDictionary<string, double>>> memberExpression)
+        public MapBuilder<string, double> HasMany(Expression<Func<T, IDictionary<string, double>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<string, decimal> HasMany(Expression<Func<T, IDictionary<string, decimal>>> memberExpression)
+        public MapBuilder<string, decimal> HasMany(Expression<Func<T, IDictionary<string, decimal>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<string, short> HasMany(Expression<Func<T, IDictionary<string, short>>> memberExpression)
+        public MapBuilder<string, short> HasMany(Expression<Func<T, IDictionary<string, short>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<string, ushort> HasMany(Expression<Func<T, IDictionary<string, ushort>>> memberExpression)
+        public MapBuilder<string, ushort> HasMany(Expression<Func<T, IDictionary<string, ushort>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<string, float> HasMany(Expression<Func<T, IDictionary<string, float>>> memberExpression)
+        public MapBuilder<string, float> HasMany(Expression<Func<T, IDictionary<string, float>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<string, byte> HasMany(Expression<Func<T, IDictionary<string, byte>>> memberExpression)
+        public MapBuilder<string, byte> HasMany(Expression<Func<T, IDictionary<string, byte>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<string, bool> HasMany(Expression<Func<T, IDictionary<string, bool>>> memberExpression)
+        public MapBuilder<string, bool> HasMany(Expression<Func<T, IDictionary<string, bool>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<int, char> HasMany(Expression<Func<T, IDictionary<int, char>>> memberExpression)
+        public MapBuilder<int, char> HasMany(Expression<Func<T, IDictionary<int, char>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<int, string> HasMany(Expression<Func<T, IDictionary<int, string>>> memberExpression)
+        public MapBuilder<int, string> HasMany(Expression<Func<T, IDictionary<int, string>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<int, int> HasMany(Expression<Func<T, IDictionary<int, int>>> memberExpression)
+        public MapBuilder<int, int> HasMany(Expression<Func<T, IDictionary<int, int>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<int, uint> HasMany(Expression<Func<T, IDictionary<int, uint>>> memberExpression)
+        public MapBuilder<int, uint> HasMany(Expression<Func<T, IDictionary<int, uint>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<int, long> HasMany(Expression<Func<T, IDictionary<int, long>>> memberExpression)
+        public MapBuilder<int, long> HasMany(Expression<Func<T, IDictionary<int, long>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<int, ulong> HasMany(Expression<Func<T, IDictionary<int, ulong>>> memberExpression)
+        public MapBuilder<int, ulong> HasMany(Expression<Func<T, IDictionary<int, ulong>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<int, double> HasMany(Expression<Func<T, IDictionary<int, double>>> memberExpression)
+        public MapBuilder<int, double> HasMany(Expression<Func<T, IDictionary<int, double>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<int, decimal> HasMany(Expression<Func<T, IDictionary<int, decimal>>> memberExpression)
+        public MapBuilder<int, decimal> HasMany(Expression<Func<T, IDictionary<int, decimal>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<int, short> HasMany(Expression<Func<T, IDictionary<int, short>>> memberExpression)
+        public MapBuilder<int, short> HasMany(Expression<Func<T, IDictionary<int, short>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<int, ushort> HasMany(Expression<Func<T, IDictionary<int, ushort>>> memberExpression)
+        public MapBuilder<int, ushort> HasMany(Expression<Func<T, IDictionary<int, ushort>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<int, float> HasMany(Expression<Func<T, IDictionary<int, float>>> memberExpression)
+        public MapBuilder<int, float> HasMany(Expression<Func<T, IDictionary<int, float>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<int, byte> HasMany(Expression<Func<T, IDictionary<int, byte>>> memberExpression)
+        public MapBuilder<int, byte> HasMany(Expression<Func<T, IDictionary<int, byte>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<int, bool> HasMany(Expression<Func<T, IDictionary<int, bool>>> memberExpression)
+        public MapBuilder<int, bool> HasMany(Expression<Func<T, IDictionary<int, bool>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<uint, char> HasMany(Expression<Func<T, IDictionary<uint, char>>> memberExpression)
+        public MapBuilder<uint, char> HasMany(Expression<Func<T, IDictionary<uint, char>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<uint, string> HasMany(Expression<Func<T, IDictionary<uint, string>>> memberExpression)
+        public MapBuilder<uint, string> HasMany(Expression<Func<T, IDictionary<uint, string>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<uint, int> HasMany(Expression<Func<T, IDictionary<uint, int>>> memberExpression)
+        public MapBuilder<uint, int> HasMany(Expression<Func<T, IDictionary<uint, int>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<uint, uint> HasMany(Expression<Func<T, IDictionary<uint, uint>>> memberExpression)
+        public MapBuilder<uint, uint> HasMany(Expression<Func<T, IDictionary<uint, uint>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<uint, long> HasMany(Expression<Func<T, IDictionary<uint, long>>> memberExpression)
+        public MapBuilder<uint, long> HasMany(Expression<Func<T, IDictionary<uint, long>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<uint, ulong> HasMany(Expression<Func<T, IDictionary<uint, ulong>>> memberExpression)
+        public MapBuilder<uint, ulong> HasMany(Expression<Func<T, IDictionary<uint, ulong>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<uint, double> HasMany(Expression<Func<T, IDictionary<uint, double>>> memberExpression)
+        public MapBuilder<uint, double> HasMany(Expression<Func<T, IDictionary<uint, double>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<uint, decimal> HasMany(Expression<Func<T, IDictionary<uint, decimal>>> memberExpression)
+        public MapBuilder<uint, decimal> HasMany(Expression<Func<T, IDictionary<uint, decimal>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<uint, short> HasMany(Expression<Func<T, IDictionary<uint, short>>> memberExpression)
+        public MapBuilder<uint, short> HasMany(Expression<Func<T, IDictionary<uint, short>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<uint, ushort> HasMany(Expression<Func<T, IDictionary<uint, ushort>>> memberExpression)
+        public MapBuilder<uint, ushort> HasMany(Expression<Func<T, IDictionary<uint, ushort>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<uint, float> HasMany(Expression<Func<T, IDictionary<uint, float>>> memberExpression)
+        public MapBuilder<uint, float> HasMany(Expression<Func<T, IDictionary<uint, float>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<uint, byte> HasMany(Expression<Func<T, IDictionary<uint, byte>>> memberExpression)
+        public MapBuilder<uint, byte> HasMany(Expression<Func<T, IDictionary<uint, byte>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<uint, bool> HasMany(Expression<Func<T, IDictionary<uint, bool>>> memberExpression)
+        public MapBuilder<uint, bool> HasMany(Expression<Func<T, IDictionary<uint, bool>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<long, char> HasMany(Expression<Func<T, IDictionary<long, char>>> memberExpression)
+        public MapBuilder<long, char> HasMany(Expression<Func<T, IDictionary<long, char>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<long, string> HasMany(Expression<Func<T, IDictionary<long, string>>> memberExpression)
+        public MapBuilder<long, string> HasMany(Expression<Func<T, IDictionary<long, string>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<long, int> HasMany(Expression<Func<T, IDictionary<long, int>>> memberExpression)
+        public MapBuilder<long, int> HasMany(Expression<Func<T, IDictionary<long, int>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<long, uint> HasMany(Expression<Func<T, IDictionary<long, uint>>> memberExpression)
+        public MapBuilder<long, uint> HasMany(Expression<Func<T, IDictionary<long, uint>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<long, long> HasMany(Expression<Func<T, IDictionary<long, long>>> memberExpression)
+        public MapBuilder<long, long> HasMany(Expression<Func<T, IDictionary<long, long>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<long, ulong> HasMany(Expression<Func<T, IDictionary<long, ulong>>> memberExpression)
+        public MapBuilder<long, ulong> HasMany(Expression<Func<T, IDictionary<long, ulong>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<long, double> HasMany(Expression<Func<T, IDictionary<long, double>>> memberExpression)
+        public MapBuilder<long, double> HasMany(Expression<Func<T, IDictionary<long, double>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<long, decimal> HasMany(Expression<Func<T, IDictionary<long, decimal>>> memberExpression)
+        public MapBuilder<long, decimal> HasMany(Expression<Func<T, IDictionary<long, decimal>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<long, short> HasMany(Expression<Func<T, IDictionary<long, short>>> memberExpression)
+        public MapBuilder<long, short> HasMany(Expression<Func<T, IDictionary<long, short>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<long, ushort> HasMany(Expression<Func<T, IDictionary<long, ushort>>> memberExpression)
+        public MapBuilder<long, ushort> HasMany(Expression<Func<T, IDictionary<long, ushort>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<long, float> HasMany(Expression<Func<T, IDictionary<long, float>>> memberExpression)
+        public MapBuilder<long, float> HasMany(Expression<Func<T, IDictionary<long, float>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<long, byte> HasMany(Expression<Func<T, IDictionary<long, byte>>> memberExpression)
+        public MapBuilder<long, byte> HasMany(Expression<Func<T, IDictionary<long, byte>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<long, bool> HasMany(Expression<Func<T, IDictionary<long, bool>>> memberExpression)
+        public MapBuilder<long, bool> HasMany(Expression<Func<T, IDictionary<long, bool>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ulong, char> HasMany(Expression<Func<T, IDictionary<ulong, char>>> memberExpression)
+        public MapBuilder<ulong, char> HasMany(Expression<Func<T, IDictionary<ulong, char>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ulong, string> HasMany(Expression<Func<T, IDictionary<ulong, string>>> memberExpression)
+        public MapBuilder<ulong, string> HasMany(Expression<Func<T, IDictionary<ulong, string>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ulong, int> HasMany(Expression<Func<T, IDictionary<ulong, int>>> memberExpression)
+        public MapBuilder<ulong, int> HasMany(Expression<Func<T, IDictionary<ulong, int>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ulong, uint> HasMany(Expression<Func<T, IDictionary<ulong, uint>>> memberExpression)
+        public MapBuilder<ulong, uint> HasMany(Expression<Func<T, IDictionary<ulong, uint>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ulong, long> HasMany(Expression<Func<T, IDictionary<ulong, long>>> memberExpression)
+        public MapBuilder<ulong, long> HasMany(Expression<Func<T, IDictionary<ulong, long>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ulong, ulong> HasMany(Expression<Func<T, IDictionary<ulong, ulong>>> memberExpression)
+        public MapBuilder<ulong, ulong> HasMany(Expression<Func<T, IDictionary<ulong, ulong>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ulong, double> HasMany(Expression<Func<T, IDictionary<ulong, double>>> memberExpression)
+        public MapBuilder<ulong, double> HasMany(Expression<Func<T, IDictionary<ulong, double>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ulong, decimal> HasMany(Expression<Func<T, IDictionary<ulong, decimal>>> memberExpression)
+        public MapBuilder<ulong, decimal> HasMany(Expression<Func<T, IDictionary<ulong, decimal>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ulong, short> HasMany(Expression<Func<T, IDictionary<ulong, short>>> memberExpression)
+        public MapBuilder<ulong, short> HasMany(Expression<Func<T, IDictionary<ulong, short>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ulong, ushort> HasMany(Expression<Func<T, IDictionary<ulong, ushort>>> memberExpression)
+        public MapBuilder<ulong, ushort> HasMany(Expression<Func<T, IDictionary<ulong, ushort>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ulong, float> HasMany(Expression<Func<T, IDictionary<ulong, float>>> memberExpression)
+        public MapBuilder<ulong, float> HasMany(Expression<Func<T, IDictionary<ulong, float>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ulong, byte> HasMany(Expression<Func<T, IDictionary<ulong, byte>>> memberExpression)
+        public MapBuilder<ulong, byte> HasMany(Expression<Func<T, IDictionary<ulong, byte>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ulong, bool> HasMany(Expression<Func<T, IDictionary<ulong, bool>>> memberExpression)
+        public MapBuilder<ulong, bool> HasMany(Expression<Func<T, IDictionary<ulong, bool>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<double, char> HasMany(Expression<Func<T, IDictionary<double, char>>> memberExpression)
+        public MapBuilder<double, char> HasMany(Expression<Func<T, IDictionary<double, char>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<double, string> HasMany(Expression<Func<T, IDictionary<double, string>>> memberExpression)
+        public MapBuilder<double, string> HasMany(Expression<Func<T, IDictionary<double, string>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<double, int> HasMany(Expression<Func<T, IDictionary<double, int>>> memberExpression)
+        public MapBuilder<double, int> HasMany(Expression<Func<T, IDictionary<double, int>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<double, uint> HasMany(Expression<Func<T, IDictionary<double, uint>>> memberExpression)
+        public MapBuilder<double, uint> HasMany(Expression<Func<T, IDictionary<double, uint>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<double, long> HasMany(Expression<Func<T, IDictionary<double, long>>> memberExpression)
+        public MapBuilder<double, long> HasMany(Expression<Func<T, IDictionary<double, long>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<double, ulong> HasMany(Expression<Func<T, IDictionary<double, ulong>>> memberExpression)
+        public MapBuilder<double, ulong> HasMany(Expression<Func<T, IDictionary<double, ulong>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<double, double> HasMany(Expression<Func<T, IDictionary<double, double>>> memberExpression)
+        public MapBuilder<double, double> HasMany(Expression<Func<T, IDictionary<double, double>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<double, decimal> HasMany(Expression<Func<T, IDictionary<double, decimal>>> memberExpression)
+        public MapBuilder<double, decimal> HasMany(Expression<Func<T, IDictionary<double, decimal>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<double, short> HasMany(Expression<Func<T, IDictionary<double, short>>> memberExpression)
+        public MapBuilder<double, short> HasMany(Expression<Func<T, IDictionary<double, short>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<double, ushort> HasMany(Expression<Func<T, IDictionary<double, ushort>>> memberExpression)
+        public MapBuilder<double, ushort> HasMany(Expression<Func<T, IDictionary<double, ushort>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<double, float> HasMany(Expression<Func<T, IDictionary<double, float>>> memberExpression)
+        public MapBuilder<double, float> HasMany(Expression<Func<T, IDictionary<double, float>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<double, byte> HasMany(Expression<Func<T, IDictionary<double, byte>>> memberExpression)
+        public MapBuilder<double, byte> HasMany(Expression<Func<T, IDictionary<double, byte>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<double, bool> HasMany(Expression<Func<T, IDictionary<double, bool>>> memberExpression)
+        public MapBuilder<double, bool> HasMany(Expression<Func<T, IDictionary<double, bool>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<decimal, char> HasMany(Expression<Func<T, IDictionary<decimal, char>>> memberExpression)
+        public MapBuilder<decimal, char> HasMany(Expression<Func<T, IDictionary<decimal, char>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<decimal, string> HasMany(Expression<Func<T, IDictionary<decimal, string>>> memberExpression)
+        public MapBuilder<decimal, string> HasMany(Expression<Func<T, IDictionary<decimal, string>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<decimal, int> HasMany(Expression<Func<T, IDictionary<decimal, int>>> memberExpression)
+        public MapBuilder<decimal, int> HasMany(Expression<Func<T, IDictionary<decimal, int>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<decimal, uint> HasMany(Expression<Func<T, IDictionary<decimal, uint>>> memberExpression)
+        public MapBuilder<decimal, uint> HasMany(Expression<Func<T, IDictionary<decimal, uint>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<decimal, long> HasMany(Expression<Func<T, IDictionary<decimal, long>>> memberExpression)
+        public MapBuilder<decimal, long> HasMany(Expression<Func<T, IDictionary<decimal, long>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<decimal, ulong> HasMany(Expression<Func<T, IDictionary<decimal, ulong>>> memberExpression)
+        public MapBuilder<decimal, ulong> HasMany(Expression<Func<T, IDictionary<decimal, ulong>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<decimal, double> HasMany(Expression<Func<T, IDictionary<decimal, double>>> memberExpression)
+        public MapBuilder<decimal, double> HasMany(Expression<Func<T, IDictionary<decimal, double>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<decimal, decimal> HasMany(Expression<Func<T, IDictionary<decimal, decimal>>> memberExpression)
+        public MapBuilder<decimal, decimal> HasMany(Expression<Func<T, IDictionary<decimal, decimal>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<decimal, short> HasMany(Expression<Func<T, IDictionary<decimal, short>>> memberExpression)
+        public MapBuilder<decimal, short> HasMany(Expression<Func<T, IDictionary<decimal, short>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<decimal, ushort> HasMany(Expression<Func<T, IDictionary<decimal, ushort>>> memberExpression)
+        public MapBuilder<decimal, ushort> HasMany(Expression<Func<T, IDictionary<decimal, ushort>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<decimal, float> HasMany(Expression<Func<T, IDictionary<decimal, float>>> memberExpression)
+        public MapBuilder<decimal, float> HasMany(Expression<Func<T, IDictionary<decimal, float>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<decimal, byte> HasMany(Expression<Func<T, IDictionary<decimal, byte>>> memberExpression)
+        public MapBuilder<decimal, byte> HasMany(Expression<Func<T, IDictionary<decimal, byte>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<decimal, bool> HasMany(Expression<Func<T, IDictionary<decimal, bool>>> memberExpression)
+        public MapBuilder<decimal, bool> HasMany(Expression<Func<T, IDictionary<decimal, bool>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<short, char> HasMany(Expression<Func<T, IDictionary<short, char>>> memberExpression)
+        public MapBuilder<short, char> HasMany(Expression<Func<T, IDictionary<short, char>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<short, string> HasMany(Expression<Func<T, IDictionary<short, string>>> memberExpression)
+        public MapBuilder<short, string> HasMany(Expression<Func<T, IDictionary<short, string>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<short, int> HasMany(Expression<Func<T, IDictionary<short, int>>> memberExpression)
+        public MapBuilder<short, int> HasMany(Expression<Func<T, IDictionary<short, int>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<short, uint> HasMany(Expression<Func<T, IDictionary<short, uint>>> memberExpression)
+        public MapBuilder<short, uint> HasMany(Expression<Func<T, IDictionary<short, uint>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<short, long> HasMany(Expression<Func<T, IDictionary<short, long>>> memberExpression)
+        public MapBuilder<short, long> HasMany(Expression<Func<T, IDictionary<short, long>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<short, ulong> HasMany(Expression<Func<T, IDictionary<short, ulong>>> memberExpression)
+        public MapBuilder<short, ulong> HasMany(Expression<Func<T, IDictionary<short, ulong>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<short, double> HasMany(Expression<Func<T, IDictionary<short, double>>> memberExpression)
+        public MapBuilder<short, double> HasMany(Expression<Func<T, IDictionary<short, double>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<short, decimal> HasMany(Expression<Func<T, IDictionary<short, decimal>>> memberExpression)
+        public MapBuilder<short, decimal> HasMany(Expression<Func<T, IDictionary<short, decimal>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<short, short> HasMany(Expression<Func<T, IDictionary<short, short>>> memberExpression)
+        public MapBuilder<short, short> HasMany(Expression<Func<T, IDictionary<short, short>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<short, ushort> HasMany(Expression<Func<T, IDictionary<short, ushort>>> memberExpression)
+        public MapBuilder<short, ushort> HasMany(Expression<Func<T, IDictionary<short, ushort>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<short, float> HasMany(Expression<Func<T, IDictionary<short, float>>> memberExpression)
+        public MapBuilder<short, float> HasMany(Expression<Func<T, IDictionary<short, float>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<short, byte> HasMany(Expression<Func<T, IDictionary<short, byte>>> memberExpression)
+        public MapBuilder<short, byte> HasMany(Expression<Func<T, IDictionary<short, byte>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<short, bool> HasMany(Expression<Func<T, IDictionary<short, bool>>> memberExpression)
+        public MapBuilder<short, bool> HasMany(Expression<Func<T, IDictionary<short, bool>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ushort, char> HasMany(Expression<Func<T, IDictionary<ushort, char>>> memberExpression)
+        public MapBuilder<ushort, char> HasMany(Expression<Func<T, IDictionary<ushort, char>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ushort, string> HasMany(Expression<Func<T, IDictionary<ushort, string>>> memberExpression)
+        public MapBuilder<ushort, string> HasMany(Expression<Func<T, IDictionary<ushort, string>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ushort, int> HasMany(Expression<Func<T, IDictionary<ushort, int>>> memberExpression)
+        public MapBuilder<ushort, int> HasMany(Expression<Func<T, IDictionary<ushort, int>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ushort, uint> HasMany(Expression<Func<T, IDictionary<ushort, uint>>> memberExpression)
+        public MapBuilder<ushort, uint> HasMany(Expression<Func<T, IDictionary<ushort, uint>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ushort, long> HasMany(Expression<Func<T, IDictionary<ushort, long>>> memberExpression)
+        public MapBuilder<ushort, long> HasMany(Expression<Func<T, IDictionary<ushort, long>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ushort, ulong> HasMany(Expression<Func<T, IDictionary<ushort, ulong>>> memberExpression)
+        public MapBuilder<ushort, ulong> HasMany(Expression<Func<T, IDictionary<ushort, ulong>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ushort, double> HasMany(Expression<Func<T, IDictionary<ushort, double>>> memberExpression)
+        public MapBuilder<ushort, double> HasMany(Expression<Func<T, IDictionary<ushort, double>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ushort, decimal> HasMany(Expression<Func<T, IDictionary<ushort, decimal>>> memberExpression)
+        public MapBuilder<ushort, decimal> HasMany(Expression<Func<T, IDictionary<ushort, decimal>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ushort, short> HasMany(Expression<Func<T, IDictionary<ushort, short>>> memberExpression)
+        public MapBuilder<ushort, short> HasMany(Expression<Func<T, IDictionary<ushort, short>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ushort, ushort> HasMany(Expression<Func<T, IDictionary<ushort, ushort>>> memberExpression)
+        public MapBuilder<ushort, ushort> HasMany(Expression<Func<T, IDictionary<ushort, ushort>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ushort, float> HasMany(Expression<Func<T, IDictionary<ushort, float>>> memberExpression)
+        public MapBuilder<ushort, float> HasMany(Expression<Func<T, IDictionary<ushort, float>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ushort, byte> HasMany(Expression<Func<T, IDictionary<ushort, byte>>> memberExpression)
+        public MapBuilder<ushort, byte> HasMany(Expression<Func<T, IDictionary<ushort, byte>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<ushort, bool> HasMany(Expression<Func<T, IDictionary<ushort, bool>>> memberExpression)
+        public MapBuilder<ushort, bool> HasMany(Expression<Func<T, IDictionary<ushort, bool>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<float, char> HasMany(Expression<Func<T, IDictionary<float, char>>> memberExpression)
+        public MapBuilder<float, char> HasMany(Expression<Func<T, IDictionary<float, char>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<float, string> HasMany(Expression<Func<T, IDictionary<float, string>>> memberExpression)
+        public MapBuilder<float, string> HasMany(Expression<Func<T, IDictionary<float, string>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<float, int> HasMany(Expression<Func<T, IDictionary<float, int>>> memberExpression)
+        public MapBuilder<float, int> HasMany(Expression<Func<T, IDictionary<float, int>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<float, uint> HasMany(Expression<Func<T, IDictionary<float, uint>>> memberExpression)
+        public MapBuilder<float, uint> HasMany(Expression<Func<T, IDictionary<float, uint>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<float, long> HasMany(Expression<Func<T, IDictionary<float, long>>> memberExpression)
+        public MapBuilder<float, long> HasMany(Expression<Func<T, IDictionary<float, long>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<float, ulong> HasMany(Expression<Func<T, IDictionary<float, ulong>>> memberExpression)
+        public MapBuilder<float, ulong> HasMany(Expression<Func<T, IDictionary<float, ulong>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<float, double> HasMany(Expression<Func<T, IDictionary<float, double>>> memberExpression)
+        public MapBuilder<float, double> HasMany(Expression<Func<T, IDictionary<float, double>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<float, decimal> HasMany(Expression<Func<T, IDictionary<float, decimal>>> memberExpression)
+        public MapBuilder<float, decimal> HasMany(Expression<Func<T, IDictionary<float, decimal>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<float, short> HasMany(Expression<Func<T, IDictionary<float, short>>> memberExpression)
+        public MapBuilder<float, short> HasMany(Expression<Func<T, IDictionary<float, short>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<float, ushort> HasMany(Expression<Func<T, IDictionary<float, ushort>>> memberExpression)
+        public MapBuilder<float, ushort> HasMany(Expression<Func<T, IDictionary<float, ushort>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<float, float> HasMany(Expression<Func<T, IDictionary<float, float>>> memberExpression)
+        public MapBuilder<float, float> HasMany(Expression<Func<T, IDictionary<float, float>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<float, byte> HasMany(Expression<Func<T, IDictionary<float, byte>>> memberExpression)
+        public MapBuilder<float, byte> HasMany(Expression<Func<T, IDictionary<float, byte>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<float, bool> HasMany(Expression<Func<T, IDictionary<float, bool>>> memberExpression)
+        public MapBuilder<float, bool> HasMany(Expression<Func<T, IDictionary<float, bool>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<byte, char> HasMany(Expression<Func<T, IDictionary<byte, char>>> memberExpression)
+        public MapBuilder<byte, char> HasMany(Expression<Func<T, IDictionary<byte, char>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<byte, string> HasMany(Expression<Func<T, IDictionary<byte, string>>> memberExpression)
+        public MapBuilder<byte, string> HasMany(Expression<Func<T, IDictionary<byte, string>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<byte, int> HasMany(Expression<Func<T, IDictionary<byte, int>>> memberExpression)
+        public MapBuilder<byte, int> HasMany(Expression<Func<T, IDictionary<byte, int>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<byte, uint> HasMany(Expression<Func<T, IDictionary<byte, uint>>> memberExpression)
+        public MapBuilder<byte, uint> HasMany(Expression<Func<T, IDictionary<byte, uint>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<byte, long> HasMany(Expression<Func<T, IDictionary<byte, long>>> memberExpression)
+        public MapBuilder<byte, long> HasMany(Expression<Func<T, IDictionary<byte, long>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<byte, ulong> HasMany(Expression<Func<T, IDictionary<byte, ulong>>> memberExpression)
+        public MapBuilder<byte, ulong> HasMany(Expression<Func<T, IDictionary<byte, ulong>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<byte, double> HasMany(Expression<Func<T, IDictionary<byte, double>>> memberExpression)
+        public MapBuilder<byte, double> HasMany(Expression<Func<T, IDictionary<byte, double>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<byte, decimal> HasMany(Expression<Func<T, IDictionary<byte, decimal>>> memberExpression)
+        public MapBuilder<byte, decimal> HasMany(Expression<Func<T, IDictionary<byte, decimal>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<byte, short> HasMany(Expression<Func<T, IDictionary<byte, short>>> memberExpression)
+        public MapBuilder<byte, short> HasMany(Expression<Func<T, IDictionary<byte, short>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<byte, ushort> HasMany(Expression<Func<T, IDictionary<byte, ushort>>> memberExpression)
+        public MapBuilder<byte, ushort> HasMany(Expression<Func<T, IDictionary<byte, ushort>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<byte, float> HasMany(Expression<Func<T, IDictionary<byte, float>>> memberExpression)
+        public MapBuilder<byte, float> HasMany(Expression<Func<T, IDictionary<byte, float>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<byte, byte> HasMany(Expression<Func<T, IDictionary<byte, byte>>> memberExpression)
+        public MapBuilder<byte, byte> HasMany(Expression<Func<T, IDictionary<byte, byte>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<byte, bool> HasMany(Expression<Func<T, IDictionary<byte, bool>>> memberExpression)
+        public MapBuilder<byte, bool> HasMany(Expression<Func<T, IDictionary<byte, bool>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<bool, char> HasMany(Expression<Func<T, IDictionary<bool, char>>> memberExpression)
+        public MapBuilder<bool, char> HasMany(Expression<Func<T, IDictionary<bool, char>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<bool, string> HasMany(Expression<Func<T, IDictionary<bool, string>>> memberExpression)
+        public MapBuilder<bool, string> HasMany(Expression<Func<T, IDictionary<bool, string>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<bool, int> HasMany(Expression<Func<T, IDictionary<bool, int>>> memberExpression)
+        public MapBuilder<bool, int> HasMany(Expression<Func<T, IDictionary<bool, int>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<bool, uint> HasMany(Expression<Func<T, IDictionary<bool, uint>>> memberExpression)
+        public MapBuilder<bool, uint> HasMany(Expression<Func<T, IDictionary<bool, uint>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<bool, long> HasMany(Expression<Func<T, IDictionary<bool, long>>> memberExpression)
+        public MapBuilder<bool, long> HasMany(Expression<Func<T, IDictionary<bool, long>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<bool, ulong> HasMany(Expression<Func<T, IDictionary<bool, ulong>>> memberExpression)
+        public MapBuilder<bool, ulong> HasMany(Expression<Func<T, IDictionary<bool, ulong>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<bool, double> HasMany(Expression<Func<T, IDictionary<bool, double>>> memberExpression)
+        public MapBuilder<bool, double> HasMany(Expression<Func<T, IDictionary<bool, double>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<bool, decimal> HasMany(Expression<Func<T, IDictionary<bool, decimal>>> memberExpression)
+        public MapBuilder<bool, decimal> HasMany(Expression<Func<T, IDictionary<bool, decimal>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<bool, short> HasMany(Expression<Func<T, IDictionary<bool, short>>> memberExpression)
+        public MapBuilder<bool, short> HasMany(Expression<Func<T, IDictionary<bool, short>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<bool, ushort> HasMany(Expression<Func<T, IDictionary<bool, ushort>>> memberExpression)
+        public MapBuilder<bool, ushort> HasMany(Expression<Func<T, IDictionary<bool, ushort>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<bool, float> HasMany(Expression<Func<T, IDictionary<bool, float>>> memberExpression)
+        public MapBuilder<bool, float> HasMany(Expression<Func<T, IDictionary<bool, float>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<bool, byte> HasMany(Expression<Func<T, IDictionary<bool, byte>>> memberExpression)
+        public MapBuilder<bool, byte> HasMany(Expression<Func<T, IDictionary<bool, byte>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        public MapElementBuilder<bool, bool> HasMany(Expression<Func<T, IDictionary<bool, bool>>> memberExpression)
+        public MapBuilder<bool, bool> HasMany(Expression<Func<T, IDictionary<bool, bool>>> memberExpression)
         {
             return HasManyElement(memberExpression);
         }
 
-        MapElementBuilder<TKey, TValue> HasManyElement<TKey, TValue>(Expression<Func<T, IDictionary<TKey, TValue>>> memberExpression)
+        MapBuilder<TKey, TValue> HasManyElement<TKey, TValue>(Expression<Func<T, IDictionary<TKey, TValue>>> memberExpression)
         {
             return HasManyElement<TKey, TValue>(memberExpression.ToMember());
         }
 
-        MapElementBuilder<TKey, TValue> HasManyElement<TKey, TValue>(Member member)
+        MapBuilder<TKey, TValue> HasManyElement<TKey, TValue>(Member member)
         {
             var mapping = new MapMapping
             {
@@ -1251,82 +1252,82 @@ namespace FluentNHibernate.Mapping
 
             collections.Add(new PassThroughMappingProvider(mapping));
 
-            return new MapElementBuilder<TKey, TValue>(mapping, member);
+            return new MapBuilder<TKey, TValue>(mapping, member);
         }
 
         #endregion
 
-        public MapValueKeyBuilder<char, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<char, TValue>>> memberExpression)
+        public MapBuilder<char, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<char, TValue>>> memberExpression)
         {
             return HasMapManyToMany(memberExpression);
         }
 
-        public MapValueKeyBuilder<string, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<string, TValue>>> memberExpression)
+        public MapBuilder<string, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<string, TValue>>> memberExpression)
         {
             return HasMapManyToMany(memberExpression);
         }
 
-        public MapValueKeyBuilder<int, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<int, TValue>>> memberExpression)
+        public MapBuilder<int, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<int, TValue>>> memberExpression)
         {
             return HasMapManyToMany(memberExpression);
         }
 
-        public MapValueKeyBuilder<uint, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<uint, TValue>>> memberExpression)
+        public MapBuilder<uint, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<uint, TValue>>> memberExpression)
         {
             return HasMapManyToMany(memberExpression);
         }
 
-        public MapValueKeyBuilder<long, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<long, TValue>>> memberExpression)
+        public MapBuilder<long, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<long, TValue>>> memberExpression)
         {
             return HasMapManyToMany(memberExpression);
         }
 
-        public MapValueKeyBuilder<ulong, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<ulong, TValue>>> memberExpression)
+        public MapBuilder<ulong, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<ulong, TValue>>> memberExpression)
         {
             return HasMapManyToMany(memberExpression);
         }
 
-        public MapValueKeyBuilder<double, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<double, TValue>>> memberExpression)
+        public MapBuilder<double, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<double, TValue>>> memberExpression)
         {
             return HasMapManyToMany(memberExpression);
         }
 
-        public MapValueKeyBuilder<decimal, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<decimal, TValue>>> memberExpression)
+        public MapBuilder<decimal, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<decimal, TValue>>> memberExpression)
         {
             return HasMapManyToMany(memberExpression);
         }
 
-        public MapValueKeyBuilder<short, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<short, TValue>>> memberExpression)
+        public MapBuilder<short, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<short, TValue>>> memberExpression)
         {
             return HasMapManyToMany(memberExpression);
         }
 
-        public MapValueKeyBuilder<ushort, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<ushort, TValue>>> memberExpression)
+        public MapBuilder<ushort, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<ushort, TValue>>> memberExpression)
         {
             return HasMapManyToMany(memberExpression);
         }
 
-        public MapValueKeyBuilder<float, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<float, TValue>>> memberExpression)
+        public MapBuilder<float, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<float, TValue>>> memberExpression)
         {
             return HasMapManyToMany(memberExpression);
         }
 
-        public MapValueKeyBuilder<byte, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<byte, TValue>>> memberExpression)
+        public MapBuilder<byte, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<byte, TValue>>> memberExpression)
         {
             return HasMapManyToMany(memberExpression);
         }
 
-        public MapValueKeyBuilder<bool, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<bool, TValue>>> memberExpression)
+        public MapBuilder<bool, TValue> HasMany<TValue>(Expression<Func<T, IDictionary<bool, TValue>>> memberExpression)
         {
             return HasMapManyToMany(memberExpression);
         }
 
-        MapValueKeyBuilder<TKey, TValue> HasMapManyToMany<TKey, TValue>(Expression<Func<T, IDictionary<TKey, TValue>>> memberExpression)
+        MapBuilder<TKey, TValue> HasMapManyToMany<TKey, TValue>(Expression<Func<T, IDictionary<TKey, TValue>>> memberExpression)
         {
             return HasMapManyToMany<TKey, TValue>(memberExpression.ToMember());
         }
 
-        MapValueKeyBuilder<TKey, TValue> HasMapManyToMany<TKey, TValue>(Member member)
+        MapBuilder<TKey, TValue> HasMapManyToMany<TKey, TValue>(Member member)
         {
             var mapping = new MapMapping
             {
@@ -1335,7 +1336,7 @@ namespace FluentNHibernate.Mapping
 
             collections.Add(new PassThroughMappingProvider(mapping));
 
-            return new MapValueKeyBuilder<TKey, TValue>(mapping, member);
+            return new MapBuilder<TKey, TValue>(mapping, member);
         }
 
         #endregion
