@@ -239,9 +239,7 @@ namespace FluentNHibernate.Testing.ConventionsTests
                 var map = new ClassMap<Target>();
 
                 map.Id(x => x.Id);
-                map.HasManyToMany(x => x.DictionaryBag)
-                    .AsMap("index")
-                    .AsTernaryAssociation("index", "value");
+                map.HasManyToMany(x => x.EntityDictionary);
 
                 return map;
             })
@@ -314,7 +312,7 @@ namespace FluentNHibernate.Testing.ConventionsTests
                 var map = new ClassMap<Target>();
 
                 map.Id(x => x.Id);
-                map.HasMany(x => x.DictionaryBag);
+                map.HasMany(x => x.Dictionary);
 
                 return map;
             })
@@ -722,7 +720,8 @@ namespace FluentNHibernate.Testing.ConventionsTests
             public IDictionary DynamicComponent { get; set; }
             public OtherObject Other { get; set; }
             public int Id { get; set; }
-            public IDictionary<string, OtherObject> DictionaryBag { get; set; }
+            public IDictionary<string, OtherObject> Dictionary { get; set; }
+            public IDictionary<OtherObject, OtherObject> EntityDictionary { get; set; }
         }
 
         private class TargetSubclass : Target

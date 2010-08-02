@@ -126,9 +126,8 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
 			new MappingTester<ManyToManyTarget>()
 				.ForMapping(map => map
 					.HasManyToMany(x => x.MapOfChildren)
-						.AsMap(null)
-						.AsSimpleAssociation("Name", "ChildObject")
-						.ParentKeyColumn("ParentId"))
+                        .Key("ParentId")
+                        .Index("Name"))
 				.Element("class/map/key/column").HasAttribute("name", "ParentId")
 				.Element("class/map/index/column").HasAttribute("name", "Name")
 				.Element("class/map/many-to-many").HasAttribute("class", typeof(ChildObject).AssemblyQualifiedName);
@@ -228,9 +227,7 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         {
             new MappingTester<ManyToManyTarget>()
                 .ForMapping(map =>
-                            map.HasManyToMany(x => x.GenericTernaryMapOfChildren)
-                            .AsMap("keyColumn")
-                            .AsTernaryAssociation())
+                            map.HasManyToMany(x => x.GenericTernaryMapOfChildren))
                 .Element("class/map/index-many-to-many").ShouldBeInParentAtPosition(0 + 1);
         }
 
@@ -239,9 +236,7 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         {
             new MappingTester<ManyToManyTarget>()
                 .ForMapping(map =>
-                            map.HasManyToMany(x => x.GenericTernaryMapOfChildren)
-                            .AsMap("keyColumn")
-                            .AsTernaryAssociation())
+                            map.HasManyToMany(x => x.GenericTernaryMapOfChildren))
                 .Element("class/map/many-to-many").ShouldBeInParentAtPosition(0 + 2);
         }
 
@@ -251,8 +246,8 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
             new MappingTester<ManyToManyTarget>()
                 .ForMapping(map =>
                     map.HasManyToMany(x => x.GenericTernaryMapOfChildren)
-                        .AsMap("keyColumn")
-                        .AsTernaryAssociation("index1", "index2"))
+                        .Index("index1")
+                        .ManyToMany("index2"))
                 .Element("class/map/index-many-to-many/column").HasAttribute("name", "index1")
                 .Element("class/map/many-to-many/column").HasAttribute("name", "index2");
         }
@@ -262,9 +257,7 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         {
             new MappingTester<ManyToManyTarget>()
                 .ForMapping(map =>
-                            map.HasManyToMany<IDictionary>(x => x.NonGenericTernaryMapOfChildren)
-                            .AsMap("keyColumn")
-                            .AsTernaryAssociation(typeof(ChildObject), typeof(ChildObject)))
+                            map.HasManyToMany<ChildObject, ChildObject>(x => x.NonGenericTernaryMapOfChildren))
                 .Element("class/map/index-many-to-many").ShouldBeInParentAtPosition(0 + 1);
         }
 
@@ -273,9 +266,7 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         {
             new MappingTester<ManyToManyTarget>()
                 .ForMapping(map =>
-                            map.HasManyToMany<IDictionary>(x => x.NonGenericTernaryMapOfChildren)
-                            .AsMap("keyColumn")
-                            .AsTernaryAssociation(typeof(ChildObject), typeof(ChildObject)))
+                            map.HasManyToMany<ChildObject, ChildObject>(x => x.NonGenericTernaryMapOfChildren))
                 .Element("class/map/many-to-many").ShouldBeInParentAtPosition(0 + 2);
         }
 
@@ -284,9 +275,9 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         {
             new MappingTester<ManyToManyTarget>()
                 .ForMapping(map =>
-                    map.HasManyToMany<IDictionary>(x => x.NonGenericTernaryMapOfChildren)
-                        .AsMap("keyColumn")
-                        .AsTernaryAssociation(typeof(ChildObject), "index1", typeof(ChildObject), "index2"))
+                    map.HasManyToMany<ChildObject, ChildObject>(x => x.NonGenericTernaryMapOfChildren)
+                        .Index("index1")
+                        .ManyToMany("index2"))
                 .Element("class/map/index-many-to-many/column").HasAttribute("name", "index1")
                 .Element("class/map/many-to-many/column").HasAttribute("name", "index2");
         }
@@ -297,9 +288,7 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
             new MappingTester<ManyToManyTarget>()
                 .ForMapping(map =>
                     map.HasManyToMany(x => x.MapOfChildrenToBools)
-                        .AsMap(null)
-                        .AsTernaryAssociation()
-                        .Element("IsManager", ep => ep.Type<bool>()))
+                        .Element<bool>("IsManager"))
                 .Element("class/map/index-many-to-many").HasAttribute("class", typeof(ChildObject).AssemblyQualifiedName)
                 .Element("class/map/element").HasAttribute("type", typeof(bool).AssemblyQualifiedName);
         }
@@ -316,7 +305,7 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         public void OrderByClauseIgnoredForUnorderableCollections()
         {
             new MappingTester<ManyToManyTarget>()
-                .ForMapping(m => m.HasManyToMany(x => x.MapOfChildren).AsMap("indexCol"))
+                .ForMapping(m => m.HasManyToMany(x => x.MapOfChildren))
                 .Element("class/map").DoesntHaveAttribute("order-by");
         }
 

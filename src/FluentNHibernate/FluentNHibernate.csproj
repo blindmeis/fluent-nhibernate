@@ -410,6 +410,7 @@
     <Compile Include="Mapping\Builders\ElementBuilder.cs" />
     <Compile Include="Mapping\Builders\IndexBuilder.cs" />
     <Compile Include="Mapping\Builders\KeyBuilder.cs" />
+    <Compile Include="Mapping\Builders\ManyToManyBuilder.cs" />
     <Compile Include="Mapping\Builders\MapBuilder.cs" />
     <Compile Include="Mapping\Builders\SortBuilder.cs" />
     <Compile Include="Mapping\Laziness.cs" />

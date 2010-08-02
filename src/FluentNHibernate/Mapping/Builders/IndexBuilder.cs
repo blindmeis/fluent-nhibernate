@@ -73,5 +73,14 @@ namespace FluentNHibernate.Mapping.Builders
         {
             mapping.Type = new TypeReference(type);
         }
+
+        /// <summary>
+        /// Specifies a foreign key constraint name
+        /// </summary>
+        /// <param name="constraint">Constraint name</param>
+        public void ForeignKey(string constraint)
+        {
+            mapping.ForeignKey = constraint;
+        }
     }
 }

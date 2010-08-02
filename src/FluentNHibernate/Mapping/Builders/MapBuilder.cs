@@ -279,8 +279,36 @@ namespace FluentNHibernate.Mapping.Builders
         /// <returns>Builder</returns>
         public MapBuilder<TKey, TValue> ManyToMany()
         {
-            mapping.Relationship = manyToMany;
+            ManyToMany(mm => {});
             return this;
+        }
+
+        public MapBuilder<TKey, TValue> ManyToMany(Action<ManyToManyBuilder> relationshipConfiguration)
+        {
+            mapping.Element = null;
+            mapping.CompositeElement = null;
+            mapping.Relationship = manyToMany;
+            relationshipConfiguration(new ManyToManyBuilder(manyToMany));
+            return this;
+        }
+
+        public MapBuilder<TKey, TValue> ManyToMany<TChild>(string relationshipColumn)
+        {
+            return ManyToMany(el =>
+            {
+                el.Column(relationshipColumn);
+                el.Type<TChild>();
+            });
+        }
+
+        public MapBuilder<TKey, TValue> ManyToMany(string relationshipColumn)
+        {
+            return ManyToMany(el => el.Column(relationshipColumn));
+        }
+
+        public MapBuilder<TKey, TValue> ManyToMany<TElementType>()
+        {
+            return ManyToMany(el => el.Type<TElementType>());
         }
 
         static Type KeyType

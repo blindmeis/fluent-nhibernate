@@ -322,25 +322,31 @@ namespace FluentNHibernate.Mapping
             return MapHasMany<TChild, object>(memberExpression);
         }
 
-        public MapBuilder<TKey, TChild> HasMany<TKey, TChild>(Expression<Func<T, IDictionary<TKey, TChild>>> memberExpression)        {
-            return HasMapManyToMany(memberExpression);
+        /// <summary>
+        /// Maps a dictionary
+        /// </summary>
+        /// <typeparam name="TKey">Key type</typeparam>
+        /// <typeparam name="TValue">Value type</typeparam>
+        /// <param name="memberExpression">Collection property</param>
+        /// <example>
+        /// HasMany(x => x.Locations);
+        /// </example>
+        public MapBuilder<TKey, TValue> HasMany<TKey, TValue>(Expression<Func<T, IDictionary<TKey, TValue>>> memberExpression)        {
+            return HasManyMap(memberExpression);
         }
 
-        MapBuilder<TKey, TValue> HasMapManyToMany<TKey, TValue>(Expression<Func<T, IDictionary<TKey, TValue>>> memberExpression)
+        /// <summary>
+        /// Maps a dictionary
+        /// </summary>
+        /// <typeparam name="TKey">Key type</typeparam>
+        /// <typeparam name="TValue">Value type</typeparam>
+        /// <param name="memberExpression">Collection property</param>
+        /// <example>
+        /// HasMany(x => x.Locations);
+        /// </example>
+        public MapBuilder<TKey, TValue> HasMany<TKey, TValue>(Expression<Func<T, IDictionary>> memberExpression)
         {
-            return HasMapManyToMany<TKey, TValue>(memberExpression.ToMember());
-        }
-
-        MapBuilder<TKey, TValue> HasMapManyToMany<TKey, TValue>(Member member)
-        {
-            var mapping = new MapMapping
-            {
-                ContainingEntityType = typeof(T)
-            };
-
-            collections.Add(new PassThroughMappingProvider(mapping));
-
-            return new MapBuilder<TKey, TValue>(mapping, member);
+            return HasManyMap<TKey, TValue>(memberExpression.ToMember());
         }
 
         #endregion
@@ -387,7 +393,52 @@ namespace FluentNHibernate.Mapping
             return MapHasManyToMany<TChild, object>(memberExpression);
         }
 
+        /// <summary>
+        /// Maps a generic dictionary
+        /// </summary>
+        /// <typeparam name="TKey">Key type</typeparam>
+        /// <typeparam name="TValue">Value type</typeparam>
+        /// <param name="memberExpression">Collection property</param>
+        /// <example>
+        /// HasManyToMany(x => x.Locations);
+        /// </example>
+        public MapBuilder<TKey, TValue> HasManyToMany<TKey, TValue>(Expression<Func<T, IDictionary<TKey, TValue>>> memberExpression)
+        {
+            return HasManyMap(memberExpression);
+        }
+
+        /// <summary>
+        /// Maps a dictionary
+        /// </summary>
+        /// <typeparam name="TKey">Key type</typeparam>
+        /// <typeparam name="TValue">Value type</typeparam>
+        /// <param name="memberExpression">Collection property</param>
+        /// <example>
+        /// HasManyToMany(x => x.Locations);
+        /// </example>
+        public MapBuilder<TKey, TValue> HasManyToMany<TKey, TValue>(Expression<Func<T, IDictionary>> memberExpression)
+        {
+            return HasManyMap<TKey, TValue>(memberExpression.ToMember());
+        }
+
         #endregion
+
+        MapBuilder<TKey, TValue> HasManyMap<TKey, TValue>(Expression<Func<T, IDictionary<TKey, TValue>>> memberExpression)
+        {
+            return HasManyMap<TKey, TValue>(memberExpression.ToMember());
+        }
+
+        MapBuilder<TKey, TValue> HasManyMap<TKey, TValue>(Member member)
+        {
+            var mapping = new MapMapping
+            {
+                ContainingEntityType = typeof(T)
+            };
+
+            collections.Add(new PassThroughMappingProvider(mapping));
+
+            return new MapBuilder<TKey, TValue>(mapping, member);
+        }
 
         /// <summary>
         /// Specify an insert stored procedure
