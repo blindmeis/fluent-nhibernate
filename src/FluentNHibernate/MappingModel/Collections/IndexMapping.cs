@@ -33,6 +33,19 @@ namespace FluentNHibernate.MappingModel.Collections
             set { attributes.Set(x => x.Type, value); }
         }
 
+        public string ForeignKey
+        {
+            get { return attributes.Get(x => x.ForeignKey); }
+            set { attributes.Set(x => x.ForeignKey, value); }
+        }
+
+        public string EntityName
+        {
+            get { return attributes.Get(x => x.EntityName); }
+            set { attributes.Set(x => x.EntityName, value); }
+        }
+
+        public bool IsManyToMany { get; set; }
         public Type ContainingEntityType { get; set; }
 
         public IDefaultableEnumerable<ColumnMapping> Columns

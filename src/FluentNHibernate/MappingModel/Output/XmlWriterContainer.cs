@@ -86,9 +86,6 @@ namespace FluentNHibernate.MappingModel.Output
             RegisterWriter<IndexMapping>(c =>
                 new XmlIndexWriter(c.Resolve<IXmlWriterServiceLocator>()));
 
-            RegisterWriter<IndexManyToManyMapping>(c =>
-                new XmlIndexManyToManyWriter(c.Resolve<IXmlWriterServiceLocator>()));
-
             RegisterWriter<ElementMapping>(c =>
                 new XmlElementWriter(c.Resolve<IXmlWriterServiceLocator>()));
 

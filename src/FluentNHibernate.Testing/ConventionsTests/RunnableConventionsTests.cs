@@ -247,7 +247,7 @@ namespace FluentNHibernate.Testing.ConventionsTests
             })
                 .Collections.First();
 
-            ((IndexManyToManyMapping)((MapMapping)collection).Index).ForeignKey.ShouldEqual("fk");
+            ((IndexMapping)((MapMapping)collection).Index).ForeignKey.ShouldEqual("fk");
         }
 
         [Test]

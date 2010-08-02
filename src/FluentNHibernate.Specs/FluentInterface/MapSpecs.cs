@@ -27,8 +27,8 @@ namespace FluentNHibernate.Specs.FluentInterface
         //</map>
 
         Because of = () =>
-            mapping_for<EntityWithDictionaries>(class_map =>
-                class_map.HasMany(x => x.ValueTypeKeyValue));
+            mapping_for<Blog>(class_map =>
+                class_map.HasMany(x => x.UrlAliases));
 
         It should_create_a_map = () =>
         {
@@ -37,21 +37,21 @@ namespace FluentNHibernate.Specs.FluentInterface
         };
 
         It should_use_the_property_name_as_the_map_name = () =>
-            map.Name.ShouldEqual("ValueTypeKeyValue");
+            map.Name.ShouldEqual("UrlAliases");
 
         It should_set_the_map_table_name_to_a_default_name = () =>
-            map.TableName.ShouldEqual("EntityWithDictionariesValueTypeKeyValue");
+            map.TableName.ShouldEqual("BlogUrlAliases");
             // this table name makes more sense in a real life case (User entity
             // with an Attributes collection would have a table called UserAttributes)
 
-        It should_create_an_key = () =>
+        It should_create_a_key = () =>
             map.Key.ShouldNotBeNull();
 
         It should_set_the_map_key_to_the_primary_key_of_the_containing_class;
         // ignored for now, until we can sync keys properly
 
         It should_set_the_map_key_to_a_generated_default_based_on_the_entity_name = () =>
-            map.Key.Columns.Select(x => x.Name).ShouldContainOnly("EntityWithDictionaries_id");
+            map.Key.Columns.Select(x => x.Name).ShouldContainOnly("Blog_id");
             // obsoleted by the above when implemented
 
         It should_create_an_index = () =>
@@ -84,8 +84,8 @@ namespace FluentNHibernate.Specs.FluentInterface
         // </map>
 
         Because of = () =>
-            mapping_for<EntityWithDictionaries>(class_map =>
-                class_map.HasMany(x => x.ValueTypeKeyEntityValue));
+            mapping_for<Blog>(class_map =>
+                class_map.HasMany(x => x.Permalinks));
 
         It should_create_a_map = () =>
         {
@@ -94,21 +94,21 @@ namespace FluentNHibernate.Specs.FluentInterface
         };
 
         It should_use_the_property_name_as_the_map_name = () =>
-            map.Name.ShouldEqual("ValueTypeKeyEntityValue");
+            map.Name.ShouldEqual("Permalinks");
 
         It should_set_the_map_table_name_to_a_default_name = () =>
-            map.TableName.ShouldEqual("EntityWithDictionariesValueTypeKeyEntityValue");
+            map.TableName.ShouldEqual("BlogPermalinks");
         // this table name makes more sense in a real life case (User entity
         // with an Attributes collection would have a table called UserAttributes)
 
-        It should_create_an_key = () =>
+        It should_create_a_key = () =>
             map.Key.ShouldNotBeNull();
 
         It should_set_the_map_key_to_the_primary_key_of_the_containing_class;
         // ignored for now, until we can sync keys properly
 
         It should_set_the_map_key_to_a_generated_default_based_on_the_entity_name = () =>
-            map.Key.Columns.Select(x => x.Name).ShouldContainOnly("EntityWithDictionaries_id");
+            map.Key.Columns.Select(x => x.Name).ShouldContainOnly("Blog_id");
         // obsoleted by the above when implemented
 
         It should_create_an_index = () =>
@@ -127,10 +127,10 @@ namespace FluentNHibernate.Specs.FluentInterface
         };
 
         It should_set_the_map_many_to_many_column_to_a_default_foreign_key_value = () =>
-            map.Relationship.As<ManyToManyMapping>().Columns.Select(x => x.Name).ShouldContainOnly("Target_id");
+            map.Relationship.As<ManyToManyMapping>().Columns.Select(x => x.Name).ShouldContainOnly("Post_id");
 
         It should_set_the_map_many_to_many_type_to_the_value_entity_type = () =>
-            map.Relationship.Class.ShouldEqual(new TypeReference(typeof(Target)));
+            map.Relationship.Class.ShouldEqual(new TypeReference(typeof(Post)));
     }
 
     public class when_mapping_a_value_type_key_with_composite_element_value_dictionary : DictionarySpec
@@ -147,8 +147,8 @@ namespace FluentNHibernate.Specs.FluentInterface
         // </map>
 
         Because of = () =>
-            mapping_for<EntityWithDictionaries>(class_map =>
-                class_map.HasMany(x => x.ValueTypeKeyEntityValue)
+            mapping_for<Blog>(class_map =>
+                class_map.HasMany(x => x.Permalinks)
                     .Component(c =>
                     {
                         c.Map(x => x.Name);
@@ -163,21 +163,21 @@ namespace FluentNHibernate.Specs.FluentInterface
         };
 
         It should_use_the_property_name_as_the_map_name = () =>
-            map.Name.ShouldEqual("ValueTypeKeyEntityValue");
+            map.Name.ShouldEqual("Permalinks");
 
         It should_set_the_map_table_name_to_a_default_name = () =>
-            map.TableName.ShouldEqual("EntityWithDictionariesValueTypeKeyEntityValue");
+            map.TableName.ShouldEqual("BlogPermalinks");
         // this table name makes more sense in a real life case (User entity
         // with an Attributes collection would have a table called UserAttributes)
 
-        It should_create_an_key = () =>
+        It should_create_a_key = () =>
             map.Key.ShouldNotBeNull();
 
         It should_set_the_map_key_to_the_primary_key_of_the_containing_class;
         // ignored for now, until we can sync keys properly
 
         It should_set_the_map_key_to_a_generated_default_based_on_the_entity_name = () =>
-            map.Key.Columns.Select(x => x.Name).ShouldContainOnly("EntityWithDictionaries_id");
+            map.Key.Columns.Select(x => x.Name).ShouldContainOnly("Blog_id");
         // obsoleted by the above when implemented
 
         It should_create_an_index = () =>
@@ -199,7 +199,7 @@ namespace FluentNHibernate.Specs.FluentInterface
             map.CompositeElement.Properties.Select(x => x.Name).ShouldContainOnly("Name", "Age");
 
         It should_set_the_map_composite_element_type_to_the_value_type = () =>
-            map.CompositeElement.Class.ShouldEqual(new TypeReference(typeof(Target)));
+            map.CompositeElement.Class.ShouldEqual(new TypeReference(typeof(Post)));
     }
 
     public class when_mapping_a_composite_index_key_with_composite_element_value_dictionary : DictionarySpec
@@ -219,8 +219,8 @@ namespace FluentNHibernate.Specs.FluentInterface
         // </map>
 
         Because of = () =>
-            mapping_for<EntityWithDictionaries>(class_map =>
-                class_map.HasMany(x => x.EntityKeyEntityValue)
+            mapping_for<Blog>(class_map =>
+                class_map.HasMany(x => x.Commentors)
                     .ComponentIndex(c =>
                     {
                         c.Map(x => x.Name);
@@ -240,28 +240,28 @@ namespace FluentNHibernate.Specs.FluentInterface
         };
 
         It should_use_the_property_name_as_the_map_name = () =>
-            map.Name.ShouldEqual("EntityKeyEntityValue");
+            map.Name.ShouldEqual("Commentors");
 
         It should_set_the_map_table_name_to_a_default_name = () =>
-            map.TableName.ShouldEqual("EntityWithDictionariesEntityKeyEntityValue");
+            map.TableName.ShouldEqual("BlogCommentors");
         // this table name makes more sense in a real life case (User entity
         // with an Attributes collection would have a table called UserAttributes)
 
-        It should_create_an_key = () =>
+        It should_create_a_key = () =>
             map.Key.ShouldNotBeNull();
 
         It should_set_the_map_key_to_the_primary_key_of_the_containing_class;
         // ignored for now, until we can sync keys properly
 
         It should_set_the_map_key_to_a_generated_default_based_on_the_entity_name = () =>
-            map.Key.Columns.Select(x => x.Name).ShouldContainOnly("EntityWithDictionaries_id");
+            map.Key.Columns.Select(x => x.Name).ShouldContainOnly("Blog_id");
         // obsoleted by the above when implemented
 
         It should_create_an_index = () =>
             map.Index.ShouldNotBeNull();
 
         It should_set_the_map_index_type_to_the_key_type = () =>
-            map.Index.Type.ShouldEqual(new TypeReference(typeof(Target)));
+            map.Index.Type.ShouldEqual(new TypeReference(typeof(Post)));
 
         It should_set_the_map_index_properties = () =>
             map.Index.As<CompositeIndexMapping>().Properties.Select(x => x.Name).ShouldContainOnly("Name", "Age");
@@ -276,7 +276,70 @@ namespace FluentNHibernate.Specs.FluentInterface
             map.CompositeElement.Properties.Select(x => x.Name).ShouldContainOnly("Name", "Age");
 
         It should_set_the_map_composite_element_type_to_the_value_type = () =>
-            map.CompositeElement.Class.ShouldEqual(new TypeReference(typeof(Target)));
+            map.CompositeElement.Class.ShouldEqual(new TypeReference(typeof(User)));
+    }
+
+    public class when_mapping_a_entity_key_with_an_entity_value_dictionary : DictionarySpec
+    {
+        // Map with entity + entity:
+        // IDictionary<Post, User>
+        // <map name="Commentors" table="PostCommentors">
+        //   <key column="BlogId"/>
+        //   <index-many-to-many column="PostId" class="Post"/>
+        //   <many-to-many class="User" column="UserId"/>
+        // </map>
+
+        Because of = () =>
+            mapping_for<Blog>(class_map =>
+                class_map.HasMany(x => x.Commentors));
+
+        It should_create_a_map = () =>
+        {
+            mapping.Collections.Count().ShouldEqual(1);
+            map.ShouldNotBeNull();
+        };
+
+        It should_use_the_property_name_as_the_map_name = () =>
+            map.Name.ShouldEqual("Commentors");
+
+        It should_set_the_map_table_name_to_a_default_name = () =>
+            map.TableName.ShouldEqual("BlogCommentors");
+        // this table name makes more sense in a real life case (User entity
+        // with an Attributes collection would have a table called UserAttributes)
+
+        It should_create_a_key = () =>
+            map.Key.ShouldNotBeNull();
+
+        It should_set_the_map_key_to_the_primary_key_of_the_containing_class;
+        // ignored for now, until we can sync keys properly
+
+        It should_set_the_map_key_to_a_generated_default_based_on_the_entity_name = () =>
+            map.Key.Columns.Select(x => x.Name).ShouldContainOnly("Blog_id");
+        // obsoleted by the above when implemented
+
+        It should_create_a_many_to_many_index = () =>
+        {
+            map.Index.As<IndexMapping>().ShouldNotBeNull();
+            map.Index.As<IndexMapping>().IsManyToMany.ShouldBeTrue();
+        };
+
+        It should_set_the_map_index_type_to_the_key_type = () =>
+            map.Index.Type.ShouldEqual(new TypeReference(typeof(Post)));
+
+        It should_set_the_map_index_properties = () =>
+            map.Index.As<IndexMapping>().Columns.Select(x => x.Name).ShouldContainOnly("Post_id");
+
+        It should_create_a_many_to_many = () =>
+        {
+            map.Relationship.ShouldNotBeNull();
+            map.Relationship.ShouldBeOfType<ManyToManyMapping>();
+        };
+
+        It should_set_the_map_many_to_many_column_to_a_default_foreign_key_value = () =>
+            map.Relationship.As<ManyToManyMapping>().Columns.Select(x => x.Name).ShouldContainOnly("User_id");
+
+        It should_set_the_map_many_to_many_type_to_the_value_entity_type = () =>
+            map.Relationship.Class.ShouldEqual(new TypeReference(typeof(User)));
     }
 
     public abstract class DictionarySpec
@@ -300,12 +363,4 @@ namespace FluentNHibernate.Specs.FluentInterface
             map = mapping.Collections.SingleOrDefault() as MapMapping;
         }
     }
-
-    // Map with entity + entity:
-    // IDictionary<User, Post>
-    // <map name="CommentorsOnMyPosts" table="UserCommentorsOnPosts">
-    //   <key column="UserId"/>
-    //   <index-many-to-many column="CommentorUserId" class="User"/>
-    //   <many-to-many class="Post" column="PostId"/>
-    // </map>
 }

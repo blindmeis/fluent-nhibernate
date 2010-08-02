@@ -17,7 +17,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
                 .ModelShouldMatch(x =>
                 {
                     IIndexMapping index = ((MapMapping)x).Index;
-                    index.ShouldBeOfType(typeof(IndexManyToManyMapping));
+                    index.ShouldBeOfType(typeof(IndexMapping));
                 });
         }
 
@@ -28,7 +28,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
                 .Mapping(m => m.AsMap("irrelevant-value").AsTernaryAssociation())
                 .ModelShouldMatch(x =>
                 {
-                    var index = (IndexManyToManyMapping)((MapMapping)x).Index;
+                    var index = (IndexMapping)((MapMapping)x).Index;
                     index.Type.ShouldEqual(new TypeReference(typeof(SomeEntity)));
                 });
         }
@@ -40,7 +40,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
                 .Mapping(m => m.AsMap("irrelevant-value").AsTernaryAssociation())
                 .ModelShouldMatch(x =>
                 {
-                    var index = (IndexManyToManyMapping)((MapMapping)x).Index;
+                    var index = (IndexMapping)((MapMapping)x).Index;
                     index.Columns.Single().Name.ShouldEqual(typeof(SomeEntity).Name + "_id");
                 });
         }
@@ -53,7 +53,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
                 .Mapping(m => m.AsMap("irrelevant-value").AsTernaryAssociation(indexName))
                 .ModelShouldMatch(x =>
                 {
-                    var index = (IndexManyToManyMapping)((MapMapping)x).Index;
+                    var index = (IndexMapping)((MapMapping)x).Index;
                     index.Columns.Single().Name.ShouldEqual(indexName);
                 });
         }
@@ -67,7 +67,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
                 {
                     x.ShouldBeOfType(typeof(MapMapping));
                     IIndexMapping index = ((MapMapping)x).Index;
-                    index.ShouldBeOfType(typeof(IndexManyToManyMapping));
+                    index.ShouldBeOfType(typeof(IndexMapping));
                 });
         }
 
@@ -82,8 +82,8 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
                 {
                     x.ShouldBeOfType(typeof(MapMapping));
                     IIndexMapping index = ((MapMapping)x).Index;
-                    index.ShouldBeOfType(typeof(IndexManyToManyMapping));
-                    index.As<IndexManyToManyMapping>().Columns.Single().Name.ShouldEqual(indexName);
+                    index.ShouldBeOfType(typeof(IndexMapping));
+                    index.As<IndexMapping>().Columns.Single().Name.ShouldEqual(indexName);
                 });
         }
     }

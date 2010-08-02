@@ -569,7 +569,6 @@
     <Compile Include="MappingModel\Collections\CompositeElementMapping.cs" />
     <Compile Include="MappingModel\Collections\ElementMapping.cs" />
     <Compile Include="MappingModel\Collections\IIndexMapping.cs" />
-    <Compile Include="MappingModel\Collections\IndexManyToManyMapping.cs" />
     <Compile Include="MappingModel\Collections\MapMapping.cs" />
     <Compile Include="MappingModel\Identity\KeyManyToOneMapping.cs" />
     <Compile Include="MappingModel\Identity\KeyPropertyMapping.cs" />
@@ -593,7 +592,6 @@
     <Compile Include="MappingModel\Output\XmlIdentityBasedWriter.cs" />
     <Compile Include="MappingModel\Output\XmlIdWriter.cs" />
     <Compile Include="MappingModel\Output\XmlIIndexWriter.cs" />
-    <Compile Include="MappingModel\Output\XmlIndexManyToManyWriter.cs" />
     <Compile Include="MappingModel\Output\XmlIndexWriter.cs" />
     <Compile Include="MappingModel\Output\XmlKeyManyToOneWriter.cs" />
     <Compile Include="MappingModel\Output\XmlKeyPropertyWriter.cs" />

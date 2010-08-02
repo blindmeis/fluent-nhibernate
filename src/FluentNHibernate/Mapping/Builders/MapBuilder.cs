@@ -12,7 +12,8 @@ namespace FluentNHibernate.Mapping.Builders
         KeyMapping key;
         IndexMapping index;
         CompositeIndexMapping compositeIndex;
-        ManyToManyMapping relationship;
+        ManyToManyMapping manyToMany;
+        OneToManyMapping oneToMany;
         ElementMapping element;
 
         public MapBuilder(MapMapping mapping, Member member)
@@ -33,30 +34,37 @@ namespace FluentNHibernate.Mapping.Builders
 
             mapping.Index = index = new IndexMapping();
             mapping.Index.As<IndexMapping>(ix =>
-            {
-                ix.AddDefaultColumn(new ColumnMapping { Name = "Key" });
-                ix.SetDefaultValue(x => x.Type, new TypeReference(KeyType));
-            });
+                ix.SetDefaultValue(x => x.Type, new TypeReference(KeyType)));
 
             if (ValueType.IsSimpleType())
             {
-                // element mapping
+                // value type value (element)
                 mapping.Element = element = new ElementMapping();
-                element.AddDefaultColumn(new ColumnMapping { Name = "Value" });
+                element.AddDefaultColumn(new ColumnMapping {Name = "Value"});
                 element.SetDefaultValue(x => x.Type, new TypeReference(typeof(TValue)));
-            }
-            else if (KeyType.IsSimpleType())
-            {
-                // value/entity mapping
-                mapping.Relationship = relationship = new ManyToManyMapping();
-                relationship.Class = new TypeReference(ValueType);
-                relationship.AddDefaultColumn(new ColumnMapping { Name = ValueType.Name + "_id" });
-                relationship.ParentType = mapping.ContainingEntityType;
-                relationship.ChildType = ValueType;
             }
             else
             {
-                // entity/entity or ambiguous
+                // entity value
+                mapping.Relationship = manyToMany = new ManyToManyMapping();
+                manyToMany.Class = new TypeReference(ValueType);
+                manyToMany.AddDefaultColumn(new ColumnMapping { Name = ValueType.Name + "_id" });
+                manyToMany.ParentType = mapping.ContainingEntityType;
+                manyToMany.ChildType = ValueType;
+            }
+
+            if (KeyType.IsSimpleType())
+            {
+                mapping.Index.As<IndexMapping>(ix =>
+                    ix.AddDefaultColumn(new ColumnMapping { Name = "Key" }));
+            }
+            else
+            {
+                mapping.Index.As<IndexMapping>(ix =>
+                {
+                    ix.IsManyToMany = true;
+                    ix.AddDefaultColumn(new ColumnMapping { Name = KeyType.Name + "_id" });
+                });
             }
         }
 
@@ -248,6 +256,33 @@ namespace FluentNHibernate.Mapping.Builders
             get { return new SortBuilder<MapBuilder<TKey,TValue>>(this, value => mapping.Sort = value); }
         }
 
+        /// <summary>
+        /// Specify the relationship is a one-to-many, this implies the key and value columns of the
+        /// dictionary will be stored in the child table.
+        /// </summary>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> OneToMany()
+        {
+            mapping.Relationship = oneToMany = oneToMany ?? new OneToManyMapping();
+            mapping.Relationship.As<OneToManyMapping>(re =>
+            {
+                re.Class = new TypeReference(ValueType);
+                re.ChildType = ValueType;
+            });
+            return this;
+        }
+
+        /// <summary>
+        /// Specify the relationship is a many-to-many, this implies that the key and value columns of the
+        /// dictionary will be stored in a separate table.
+        /// </summary>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> ManyToMany()
+        {
+            mapping.Relationship = manyToMany;
+            return this;
+        }
+
         static Type KeyType
         {
             get { return typeof(TKey); }
@@ -257,5 +292,15 @@ namespace FluentNHibernate.Mapping.Builders
         {
             get { return typeof(TValue); }
         }
+
+        #region obsolete members
+
+        [Obsolete("This bugger does nothing now")]
+        public MapBuilder<TKey, TValue> AsEntityMap()
+        {
+            return this;
+        }
+
+        #endregion
     }
 }

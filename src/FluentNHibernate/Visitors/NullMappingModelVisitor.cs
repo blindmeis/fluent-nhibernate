@@ -199,11 +199,6 @@ namespace FluentNHibernate.Visitors
             
         }
 
-        public virtual void ProcessIndex(IndexManyToManyMapping indexMapping)
-        {
-
-        }
-
         public virtual void ProcessParent(ParentMapping parentMapping)
         {
             

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using FluentNHibernate.MappingModel;
 using FluentNHibernate.MappingModel.Collections;
 
@@ -9,10 +8,10 @@ namespace FluentNHibernate.Conventions.Inspections
 {
     public class IndexManyToManyInspector : IIndexManyToManyInspector
     {
-        private readonly InspectorModelMapper<IIndexManyToManyInspector, IndexManyToManyMapping> mappedProperties = new InspectorModelMapper<IIndexManyToManyInspector, IndexManyToManyMapping>();
-        private readonly IndexManyToManyMapping mapping;
+        private readonly InspectorModelMapper<IIndexManyToManyInspector, IndexMapping> mappedProperties = new InspectorModelMapper<IIndexManyToManyInspector, IndexMapping>();
+        private readonly IndexMapping mapping;
 
-        public IndexManyToManyInspector(IndexManyToManyMapping mapping)
+        public IndexManyToManyInspector(IndexMapping mapping)
         {
             this.mapping = mapping;
             mappedProperties.Map(x => x.Class, x => x.Type);

@@ -15,13 +15,13 @@ namespace FluentNHibernate.Testing.ConventionsTests.Inspection
     [TestFixture, Category("Inspection DSL")]
     public class IndexManyToManyInspectorMapsToIndexManyToManyMapping
     {
-        private IndexManyToManyMapping mapping;
+        private IndexMapping mapping;
         private IIndexManyToManyInspector inspector;
 
         [SetUp]
         public void CreateDsl()
         {
-            mapping = new IndexManyToManyMapping();
+            mapping = new IndexMapping();
             inspector = new IndexManyToManyInspector(mapping);
         }
 

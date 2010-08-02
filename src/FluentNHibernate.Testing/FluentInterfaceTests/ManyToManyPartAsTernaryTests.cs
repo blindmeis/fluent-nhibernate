@@ -16,7 +16,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
                 .Mapping(m => m.AsMap("index").AsTernaryAssociation())
                 .ModelShouldMatch(x =>
                 {
-                    var index = (IndexManyToManyMapping)((MapMapping)x).Index;
+                    var index = (IndexMapping)((MapMapping)x).Index;
                     index.Columns.Count().ShouldEqual(1);
                     index.Columns.First().Name.ShouldEqual(typeof(ChildObject).Name + "_id");
                     index.Type.ShouldEqual(new TypeReference(typeof(ChildObject)));
@@ -37,7 +37,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
                 .Mapping(m => m.AsMap("index").AsTernaryAssociation(indexName, valueName))
                 .ModelShouldMatch(x =>
                 {
-                    var index = (IndexManyToManyMapping)((MapMapping)x).Index;
+                    var index = (IndexMapping)((MapMapping)x).Index;
 
                     index.Columns.Count().ShouldEqual(1);
                     index.Columns.First().Name.ShouldEqual(indexName);
@@ -57,7 +57,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
                 .Mapping(m => m.AsMap("index").AsTernaryAssociation(typeof(ChildObject), typeof(ChildObject)))
                 .ModelShouldMatch(x =>
                 {
-                    var index = (IndexManyToManyMapping)((MapMapping)x).Index;
+                    var index = (IndexMapping)((MapMapping)x).Index;
                     index.Columns.Count().ShouldEqual(1);
                     index.Columns.First().Name.ShouldEqual(typeof(ChildObject).Name + "_id");
                     index.Type.ShouldEqual(new TypeReference(typeof(ChildObject)));
@@ -78,7 +78,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
                 .Mapping(m => m.AsMap("index").AsTernaryAssociation(typeof(ChildObject), indexName, typeof(ChildObject), valueName))
                 .ModelShouldMatch(x =>
                 {
-                    var index = (IndexManyToManyMapping)((MapMapping)x).Index;
+                    var index = (IndexMapping)((MapMapping)x).Index;
 
                     index.Columns.Count().ShouldEqual(1);
                     index.Columns.First().Name.ShouldEqual(indexName);
@@ -100,7 +100,7 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
                 {
                     x.ShouldBeOfType(typeof(MapMapping));
                     IIndexMapping index = ((MapMapping)x).Index;
-                    index.ShouldBeOfType(typeof(IndexManyToManyMapping));
+                    index.ShouldBeOfType(typeof(IndexMapping));
                 });
         }
 
@@ -115,8 +115,8 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
                 {
                     x.ShouldBeOfType(typeof(MapMapping));
                     IIndexMapping index = ((MapMapping)x).Index;
-                    index.ShouldBeOfType(typeof(IndexManyToManyMapping));
-                    index.As<IndexManyToManyMapping>().Columns.Single().Name.ShouldEqual(indexName);
+                    index.ShouldBeOfType(typeof(IndexMapping));
+                    index.As<IndexMapping>().Columns.Single().Name.ShouldEqual(indexName);
 
                     var relationship = (ManyToManyMapping)((MapMapping)x).Relationship;
                     relationship.Columns.Count().ShouldEqual(1);

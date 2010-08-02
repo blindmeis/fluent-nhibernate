@@ -14,6 +14,23 @@ namespace FluentNHibernate.Mapping.Builders
         }
 
         /// <summary>
+        /// Specifies that this index is a many-to-many index.
+        /// </summary>
+        public void AsManyToMany()
+        {
+            mapping.IsManyToMany = true;
+        }
+
+        /// <summary>
+        /// Specifies that this index is a one-to-many index. Note: some methods aren't available
+        /// for one-to-many indexes.
+        /// </summary>
+        public void AsOneToMany()
+        {
+            mapping.IsManyToMany = false;
+        }
+
+        /// <summary>
         /// Specifies the column name for the index or key of the dictionary.
         /// </summary>
         /// <param name="indexColumnName">Column name</param>

@@ -10,7 +10,7 @@ namespace FluentNHibernate.Mapping
     {
         private readonly Type entity;
         private readonly IList<string> columns = new List<string>();
-        private readonly AttributeStore<IndexManyToManyMapping> attributes = new AttributeStore<IndexManyToManyMapping>();
+        private readonly AttributeStore<IndexMapping> attributes = new AttributeStore<IndexMapping>();
 
         public IndexManyToManyPart(Type entity)
         {
@@ -45,10 +45,11 @@ namespace FluentNHibernate.Mapping
             return this;
         }
 
-        public IndexManyToManyMapping GetIndexMapping()
+        public IndexMapping GetIndexMapping()
         {
-            var mapping = new IndexManyToManyMapping(attributes.CloneInner());
+            var mapping = new IndexMapping(attributes.CloneInner());
 
+            mapping.IsManyToMany = true;
             mapping.ContainingEntityType = entity;
 
             columns.Each(x => mapping.AddColumn(new ColumnMapping { Name = x }));
