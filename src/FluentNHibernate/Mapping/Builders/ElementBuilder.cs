@@ -9,6 +9,7 @@ namespace FluentNHibernate.Mapping.Builders
     {
         readonly ElementMapping mapping;
         bool nextBool = true;
+        readonly AttributeStore sharedColumnAttributes = new AttributeStore();
 
         public ElementBuilder(ElementMapping mapping)
         {
@@ -65,7 +66,7 @@ namespace FluentNHibernate.Mapping.Builders
         /// <param name="elementColumnName">Value column name</param>
         public void Column(string elementColumnName)
         {
-            mapping.AddColumn(new ColumnMapping { Name = elementColumnName });
+            mapping.AddColumn(new ColumnMapping(sharedColumnAttributes) { Name = elementColumnName });
         }
 
         /// <summary>
@@ -73,7 +74,7 @@ namespace FluentNHibernate.Mapping.Builders
         /// </summary>
         public ColumnMappingCollection Columns
         {
-            get { return new ColumnMappingCollection(mapping); }
+            get { return new ColumnMappingCollection(mapping, sharedColumnAttributes); }
         }
 
         /// <summary>

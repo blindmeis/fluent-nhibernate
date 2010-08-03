@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using FluentNHibernate.Automapping.TestFixtures;
 using FluentNHibernate.Mapping;
+using FluentNHibernate.Mapping.Builders;
 using FluentNHibernate.Mapping.Providers;
 using FluentNHibernate.MappingModel;
 using FluentNHibernate.MappingModel.ClassBased;
@@ -85,14 +86,16 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
             return new ModelTester<OneToOnePart<PropertyReferenceTarget>, OneToOneMapping>(() => new OneToOnePart<PropertyReferenceTarget>(typeof(PropertyTarget), ReflectionHelper.GetMember<PropertyTarget>(x => x.Reference)), x => ((IOneToOneMappingProvider)x).GetOneToOneMapping());
         }
 
-        protected ModelTester<PropertyPart, PropertyMapping> Property()
+        protected ModelTester<PropertyBuilder, PropertyMapping> Property()
         {
-            return new ModelTester<PropertyPart, PropertyMapping>(() => new PropertyPart(ReflectionHelper.GetMember<PropertyTarget>(x => x.Name), typeof(PropertyTarget)), x => ((IPropertyMappingProvider)x).GetPropertyMapping());
+            var mapping = new PropertyMapping();
+            return new ModelTester<PropertyBuilder, PropertyMapping>(() => new PropertyBuilder(mapping, typeof(PropertyTarget), ReflectionHelper.GetMember<PropertyTarget>(x => x.Name)), x => mapping);
         }
 
-        protected ModelTester<PropertyPart, PropertyMapping> Property<T>(Expression<Func<T, object>> property)
+        protected ModelTester<PropertyBuilder, PropertyMapping> Property<T>(Expression<Func<T, object>> property)
         {
-            return new ModelTester<PropertyPart, PropertyMapping>(() => new PropertyPart(ReflectionHelper.GetMember(property), typeof(T)), x => ((IPropertyMappingProvider)x).GetPropertyMapping());
+            var mapping = new PropertyMapping();
+            return new ModelTester<PropertyBuilder, PropertyMapping>(() => new PropertyBuilder(mapping, typeof(T), ReflectionHelper.GetMember(property)), x => mapping);
         }
 
         protected ModelTester<OneToManyPart<T>, ICollectionMapping> OneToMany<T>(Expression<Func<OneToManyTarget, IEnumerable<T>>> property)
@@ -115,9 +118,10 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
             return new ModelTester<ManyToManyPart<IDictionary<TIndex, TValue>>, ICollectionMapping>(() => new ManyToManyPart<IDictionary<TIndex, TValue>>(typeof(ManyToManyTarget), ReflectionHelper.GetMember(property)), x => ((ICollectionMappingProvider)x).GetCollectionMapping());
         }
 
-        protected ModelTester<ManyToOnePart<PropertyReferenceTarget>, ManyToOneMapping> ManyToOne()
+        protected ModelTester<ManyToOneBuilder<PropertyReferenceTarget>, ManyToOneMapping> ManyToOne()
         {
-            return new ModelTester<ManyToOnePart<PropertyReferenceTarget>, ManyToOneMapping>(() => new ManyToOnePart<PropertyReferenceTarget>(typeof(PropertyTarget), ReflectionHelper.GetMember<PropertyTarget>(x => x.Reference)), x => ((IManyToOneMappingProvider)x).GetManyToOneMapping());
+            var mapping = new ManyToOneMapping();
+            return new ModelTester<ManyToOneBuilder<PropertyReferenceTarget>, ManyToOneMapping>(() => new ManyToOneBuilder<PropertyReferenceTarget>(mapping, typeof(PropertyTarget), ReflectionHelper.GetMember<PropertyTarget>(x => x.Reference)), x => mapping);
         }
 
         protected ModelTester<AnyPart<T>, AnyMapping> Any<T>()
@@ -135,9 +139,10 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
             return new ModelTester<HibernateMappingPart, HibernateMapping>(() => new HibernateMappingPart(), x => ((IHibernateMappingProvider)x).GetHibernateMapping());
         }
 
-        protected ModelTester<CompositeElementPart<T>, CompositeElementMapping> CompositeElement<T>()
+        protected ModelTester<CompositeElementBuilder<T>, CompositeElementMapping> CompositeElement<T>()
         {
-            return new ModelTester<CompositeElementPart<T>, CompositeElementMapping>(() => new CompositeElementPart<T>(typeof(MappedObject)), x => ((ICompositeElementMappingProvider)x).GetCompositeElementMapping());
+            var mapping = new CompositeElementMapping();
+            return new ModelTester<CompositeElementBuilder<T>, CompositeElementMapping>(() => new CompositeElementBuilder<T>(mapping, typeof(MappedObject)), x => mapping);
         }
 
         protected ModelTester<StoredProcedurePart, StoredProcedureMapping> StoredProcedure()

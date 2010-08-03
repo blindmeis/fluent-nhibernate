@@ -7,6 +7,7 @@ namespace FluentNHibernate.Mapping.Builders
     public class ManyToManyBuilder
     {
         readonly ManyToManyMapping mapping;
+        readonly AttributeStore sharedColumnAttributes = new AttributeStore();
 
         public ManyToManyBuilder(ManyToManyMapping mapping)
         {
@@ -50,7 +51,7 @@ namespace FluentNHibernate.Mapping.Builders
         /// <param name="relationshipColumn">Value column name</param>
         public void Column(string relationshipColumn)
         {
-            mapping.AddColumn(new ColumnMapping { Name = relationshipColumn });
+            mapping.AddColumn(new ColumnMapping(sharedColumnAttributes) { Name = relationshipColumn });
         }
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace FluentNHibernate.Mapping.Builders
         /// </summary>
         public ColumnMappingCollection Columns
         {
-            get { return new ColumnMappingCollection(mapping); }
+            get { return new ColumnMappingCollection(mapping, sharedColumnAttributes); }
         }
     }
 }

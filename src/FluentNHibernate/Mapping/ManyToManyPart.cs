@@ -22,6 +22,7 @@ namespace FluentNHibernate.Mapping
         private readonly Type childType;
         private Type valueType;
         private bool isTernary;
+        readonly AttributeStore sharedColumnAttributes = new AttributeStore();
 
         public ManyToManyPart(Type entity, Member property)
             : this(entity, property, property.PropertyType)
@@ -70,12 +71,12 @@ namespace FluentNHibernate.Mapping
 
         public ColumnMappingCollection<ManyToManyPart<TChild>> ChildKeyColumns
         {
-            get { return new ColumnMappingCollection<ManyToManyPart<TChild>>(this, relationshipMapping as ManyToManyMapping); }
+            get { return new ColumnMappingCollection<ManyToManyPart<TChild>>(this, relationshipMapping as ManyToManyMapping, sharedColumnAttributes); }
         }
 
         public ColumnMappingCollection<ManyToManyPart<TChild>> ParentKeyColumns
         {
-            get { return new ColumnMappingCollection<ManyToManyPart<TChild>>(this, keyMapping); }
+            get { return new ColumnMappingCollection<ManyToManyPart<TChild>>(this, keyMapping, sharedColumnAttributes); }
         }
 
         public ManyToManyPart<TChild> ForeignKeyConstraintNames(string parentForeignKeyName, string childForeignKeyName)

@@ -7,12 +7,13 @@ namespace FluentNHibernate.Mapping.Builders
     public class KeyBuilder
     {
         readonly KeyMapping mapping;
+        readonly AttributeStore sharedColumnAttributes = new AttributeStore();
         bool nextBool = true;
 
         public KeyBuilder(KeyMapping mapping)
         {
             this.mapping = mapping;
-            Columns = new ColumnMappingCollection(mapping);
+            Columns = new ColumnMappingCollection(mapping, sharedColumnAttributes);
         }
 
         /// <summary>
@@ -36,7 +37,7 @@ namespace FluentNHibernate.Mapping.Builders
         /// <param name="keyColumnName"></param>
         public void Column(string keyColumnName)
         {
-            mapping.AddColumn(new ColumnMapping { Name = keyColumnName });
+            mapping.AddColumn(new ColumnMapping(sharedColumnAttributes) { Name = keyColumnName });
         }
 
         /// <summary>

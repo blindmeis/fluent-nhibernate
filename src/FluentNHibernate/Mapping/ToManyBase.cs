@@ -404,13 +404,14 @@ namespace FluentNHibernate.Mapping
         /// Maps this collection as a collection of components.
         /// </summary>
         /// <param name="action">Component mapping</param>
-        public T Component(Action<CompositeElementPart<TChild>> action)
+        public T Component(Action<CompositeElementBuilder<TChild>> action)
         {
-            var part = new CompositeElementPart<TChild>(typeof(T));
+            var compositeElementMapping = new CompositeElementMapping();
+            var part = new CompositeElementBuilder<TChild>(compositeElementMapping, typeof(T));
 
             action(part);
 
-            componentMapping = part;
+            componentMapping = new PassThroughMappingProvider(compositeElementMapping);
 
             return (T)this;
         }

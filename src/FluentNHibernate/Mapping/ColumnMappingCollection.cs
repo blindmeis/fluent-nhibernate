@@ -7,15 +7,17 @@ namespace FluentNHibernate.Mapping
     public class ColumnMappingCollection
     {
         readonly IHasColumnMappings mapping;
+        readonly AttributeStore sharedAttributes;
 
-        public ColumnMappingCollection(IHasColumnMappings mapping)
+        public ColumnMappingCollection(IHasColumnMappings mapping, AttributeStore sharedAttributes)
         {
             this.mapping = mapping;
+            this.sharedAttributes = sharedAttributes;
         }
 
         public void Add(string name)
         {
-            mapping.AddColumn(new ColumnMapping { Name = name });
+            mapping.AddColumn(new ColumnMapping(sharedAttributes) { Name = name });
         }
 
         public void Add(params string[] names)
@@ -28,7 +30,7 @@ namespace FluentNHibernate.Mapping
 
         public void Add(string columnName, Action<ColumnPart> customColumnMapping)
         {
-            var column = new ColumnMapping { Name = columnName };
+            var column = new ColumnMapping(sharedAttributes) { Name = columnName };
             var part = new ColumnPart(column);
             customColumnMapping(part);
             mapping.AddColumn(column);
@@ -55,8 +57,8 @@ namespace FluentNHibernate.Mapping
         private readonly TParent parent;
         readonly ColumnMappingCollection collection;
 
-        public ColumnMappingCollection(TParent parent, IHasColumnMappings mapping)
-            : this(parent, new ColumnMappingCollection(mapping))
+        public ColumnMappingCollection(TParent parent, IHasColumnMappings mapping, AttributeStore sharedAttributes)
+            : this(parent, new ColumnMappingCollection(mapping, sharedAttributes))
         {}
 
         public ColumnMappingCollection(TParent parent, ColumnMappingCollection collection)

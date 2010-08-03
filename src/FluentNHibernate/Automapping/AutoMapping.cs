@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using FluentNHibernate.Mapping;
+using FluentNHibernate.Mapping.Builders;
 using FluentNHibernate.Mapping.Providers;
 using FluentNHibernate.MappingModel.ClassBased;
 using FluentNHibernate.Utils;
@@ -135,13 +136,13 @@ namespace FluentNHibernate.Automapping
             return part;
         }
 
-        protected override PropertyPart Map(Member property, string columnName)
+        protected override PropertyBuilder Map(Member property, string columnName)
         {
             mappedMembers.Add(property);
             return base.Map(property, columnName);
         }
 
-        protected override ManyToOnePart<TOther> References<TOther>(Member property, string columnName)
+        protected override ManyToOneBuilder<TOther> References<TOther>(Member property, string columnName)
         {
             mappedMembers.Add(property);
             return base.References<TOther>(property, columnName);

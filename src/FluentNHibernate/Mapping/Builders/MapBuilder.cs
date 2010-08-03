@@ -220,13 +220,14 @@ namespace FluentNHibernate.Mapping.Builders
         /// </summary>
         /// <param name="componentBuilder">Builder action</param>
         /// <returns>Builder</returns>
-        public MapBuilder<TKey, TValue> Component(Action<CompositeElementPart<TValue>> componentBuilder)
+        public MapBuilder<TKey, TValue> Component(Action<CompositeElementBuilder<TValue>> componentBuilder)
         {
-            var builder = new CompositeElementPart<TValue>(mapping.ContainingEntityType);
+            var compositeElementMapping = new CompositeElementMapping();
+            var builder = new CompositeElementBuilder<TValue>(compositeElementMapping, mapping.ContainingEntityType);
 
             componentBuilder(builder);
 
-            mapping.CompositeElement = ((ICompositeElementMappingProvider)builder).GetCompositeElementMapping();
+            mapping.CompositeElement = compositeElementMapping;
             mapping.Element = null;
             mapping.Relationship = null;
                 

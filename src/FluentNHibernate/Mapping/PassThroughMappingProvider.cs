@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FluentNHibernate.Mapping.Providers;
 using FluentNHibernate.MappingModel;
 using FluentNHibernate.MappingModel.ClassBased;
@@ -6,7 +7,7 @@ using FluentNHibernate.MappingModel.Collections;
 
 namespace FluentNHibernate.Mapping
 {
-    public class PassThroughMappingProvider : IMappingProvider, ICollectionMappingProvider
+    public class PassThroughMappingProvider : IMappingProvider, ICollectionMappingProvider, IManyToOneMappingProvider, ICompositeElementMappingProvider, IPropertyMappingProvider
     {
         private readonly object mapping;
 
@@ -25,6 +26,11 @@ namespace FluentNHibernate.Mapping
             return (ICollectionMapping)mapping;
         }
 
+        public ManyToOneMapping GetManyToOneMapping()
+        {
+            return (ManyToOneMapping)mapping;
+        }
+
         public HibernateMapping GetHibernateMapping()
         {
             return new HibernateMapping();
@@ -33,6 +39,16 @@ namespace FluentNHibernate.Mapping
         public IEnumerable<Member> GetIgnoredProperties()
         {
             return new Member[0];
+        }
+
+        public CompositeElementMapping GetCompositeElementMapping()
+        {
+            return (CompositeElementMapping)mapping;
+        }
+
+        public PropertyMapping GetPropertyMapping()
+        {
+            return (PropertyMapping)mapping;
         }
     }
 }

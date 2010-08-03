@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using FluentNHibernate.Mapping.Builders;
 using FluentNHibernate.Mapping.Providers;
+using FluentNHibernate.MappingModel;
 using FluentNHibernate.MappingModel.Collections;
 using FluentNHibernate.Utils;
 
@@ -28,7 +29,7 @@ namespace FluentNHibernate.Mapping
         /// <example>
         /// Map(x => x.Name);
         /// </example>
-        public PropertyPart Map(Expression<Func<T, object>> memberExpression)
+        public PropertyBuilder Map(Expression<Func<T, object>> memberExpression)
         {
             return Map(memberExpression, null);
         }
@@ -41,21 +42,22 @@ namespace FluentNHibernate.Mapping
         /// <example>
         /// Map(x => x.Name, "person_name");
         /// </example>
-        public PropertyPart Map(Expression<Func<T, object>> memberExpression, string columnName)
+        public PropertyBuilder Map(Expression<Func<T, object>> memberExpression, string columnName)
         {
             return Map(memberExpression.ToMember(), columnName);
         }
 
-        protected virtual PropertyPart Map(Member property, string columnName)
+        protected virtual PropertyBuilder Map(Member property, string columnName)
         {
-            var propertyMap = new PropertyPart(property, typeof(T));
+            var propertyMapping = new PropertyMapping();
+            var builder = new PropertyBuilder(propertyMapping, typeof(T), property);
 
             if (!string.IsNullOrEmpty(columnName))
-                propertyMap.Column(columnName);
+                builder.Column(columnName);
 
-            properties.Add(propertyMap);
+            properties.Add(new PassThroughMappingProvider(propertyMapping));
 
-            return propertyMap;
+            return builder;
         }
 
         /// <summary>
@@ -67,7 +69,7 @@ namespace FluentNHibernate.Mapping
         /// <example>
         /// References(x => x.Company);
         /// </example>
-        public ManyToOnePart<TOther> References<TOther>(Expression<Func<T, TOther>> memberExpression)
+        public ManyToOneBuilder<TOther> References<TOther>(Expression<Func<T, TOther>> memberExpression)
         {
             return References(memberExpression, null);
         }
@@ -82,7 +84,7 @@ namespace FluentNHibernate.Mapping
         /// <example>
         /// References(x => x.Company, "company_id");
         /// </example>
-        public ManyToOnePart<TOther> References<TOther>(Expression<Func<T, TOther>> memberExpression, string columnName)
+        public ManyToOneBuilder<TOther> References<TOther>(Expression<Func<T, TOther>> memberExpression, string columnName)
         {
             return References<TOther>(memberExpression.ToMember(), columnName);
         }
@@ -96,7 +98,7 @@ namespace FluentNHibernate.Mapping
         /// <example>
         /// References(x => x.Company, "company_id");
         /// </example>
-        public ManyToOnePart<TOther> References<TOther>(Expression<Func<T, object>> memberExpression)
+        public ManyToOneBuilder<TOther> References<TOther>(Expression<Func<T, object>> memberExpression)
         {
             return References<TOther>(memberExpression, null);
         }
@@ -111,19 +113,20 @@ namespace FluentNHibernate.Mapping
         /// <example>
         /// References(x => x.Company, "company_id");
         /// </example>
-        public ManyToOnePart<TOther> References<TOther>(Expression<Func<T, object>> memberExpression, string columnName)
+        public ManyToOneBuilder<TOther> References<TOther>(Expression<Func<T, object>> memberExpression, string columnName)
         {
             return References<TOther>(memberExpression.ToMember(), columnName);
         }
 
-        protected virtual ManyToOnePart<TOther> References<TOther>(Member property, string columnName)
+        protected virtual ManyToOneBuilder<TOther> References<TOther>(Member property, string columnName)
         {
-            var part = new ManyToOnePart<TOther>(EntityType, property);
+            var manyToOneMapping = new ManyToOneMapping();
+            var part = new ManyToOneBuilder<TOther>(manyToOneMapping, EntityType, property);
 
             if (columnName != null)
                 part.Column(columnName);
 
-            references.Add(part);
+            references.Add(new PassThroughMappingProvider(manyToOneMapping));
 
             return part;
         }

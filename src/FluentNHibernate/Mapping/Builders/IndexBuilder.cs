@@ -7,6 +7,7 @@ namespace FluentNHibernate.Mapping.Builders
     public class IndexBuilder
     {
         readonly IndexMapping mapping;
+        readonly AttributeStore sharedColumnAttributes = new AttributeStore();
 
         public IndexBuilder(IndexMapping mapping)
         {
@@ -37,7 +38,7 @@ namespace FluentNHibernate.Mapping.Builders
         /// <param name="indexColumnName">Column name</param>
         public void Column(string indexColumnName)
         {
-            mapping.AddColumn(new ColumnMapping { Name = indexColumnName });
+            mapping.AddColumn(new ColumnMapping(sharedColumnAttributes) { Name = indexColumnName });
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace FluentNHibernate.Mapping.Builders
         /// </summary>
         public ColumnMappingCollection Columns
         {
-            get { return new ColumnMappingCollection(mapping); }
+            get { return new ColumnMappingCollection(mapping, sharedColumnAttributes); }
         }
 
         /// <summary>
