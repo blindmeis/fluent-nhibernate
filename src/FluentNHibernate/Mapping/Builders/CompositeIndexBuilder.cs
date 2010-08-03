@@ -18,6 +18,34 @@ namespace FluentNHibernate.Mapping.Builders
             this.mapping.SetDefaultValue(x => x.Type, new TypeReference(typeof(T)));
         }
 
+
+        /// <summary>
+        /// Specifies the type of the element
+        /// </summary>
+        /// <typeparam name="TElementType">Value type</typeparam>
+        public void Type<TElementType>()
+        {
+            mapping.Type = new TypeReference(typeof(TElementType));
+        }
+
+        /// <summary>
+        /// Specifies the type of the element
+        /// </summary>
+        /// <param name="type">Type</param>
+        public void Type(Type type)
+        {
+            mapping.Type = new TypeReference(type);
+        }
+
+        /// <summary>
+        /// Specifies the type of the element
+        /// </summary>
+        /// <param name="type">Type name</param>
+        public void Type(string type)
+        {
+            mapping.Type = new TypeReference(type);
+        }
+
         /// <summary>
         /// Defines a property to be used as a key for this composite-id.
         /// </summary>
