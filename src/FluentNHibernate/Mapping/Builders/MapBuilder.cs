@@ -264,13 +264,37 @@ namespace FluentNHibernate.Mapping.Builders
         /// <returns>Builder</returns>
         public MapBuilder<TKey, TValue> OneToMany()
         {
+            return OneToMany(om => {});
+        }
+
+        /// <summary>
+        /// Specify the relationship is a one-to-many, this implies the key and value columns of the
+        /// dictionary will be stored in the child table.
+        /// </summary>
+        /// <param name="relationshipConfiguration">Builder for one-to-many</param>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> OneToMany(Action<OneToManyBuilder> relationshipConfiguration)
+        {
+            mapping.Element = null;
+            mapping.CompositeElement = null;
             mapping.Relationship = oneToMany = oneToMany ?? new OneToManyMapping();
             mapping.Relationship.As<OneToManyMapping>(re =>
             {
                 re.Class = new TypeReference(ValueType);
                 re.ChildType = ValueType;
             });
+            relationshipConfiguration(new OneToManyBuilder(oneToMany));
             return this;
+        }
+
+        /// <summary>
+        /// Specify this relationship as a one-to-many of <typeparamref name="TChild"/>
+        /// </summary>
+        /// <typeparam name="TChild">Child type</typeparam>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> OneToMany<TChild>()
+        {
+            return OneToMany(om => om.Type<TChild>());
         }
 
         /// <summary>
@@ -284,6 +308,12 @@ namespace FluentNHibernate.Mapping.Builders
             return this;
         }
 
+        /// <summary>
+        /// Specify the relationship is a many-to-many, this implies that the key and value columns of the
+        /// dictionary will be stored in a separate table.
+        /// </summary>
+        /// <param name="relationshipConfiguration">Builder for many-to-many</param>
+        /// <returns>Builder</returns>
         public MapBuilder<TKey, TValue> ManyToMany(Action<ManyToManyBuilder> relationshipConfiguration)
         {
             mapping.Element = null;
@@ -293,23 +323,40 @@ namespace FluentNHibernate.Mapping.Builders
             return this;
         }
 
+        /// <summary>
+        /// Specify this relationship as a many-to-many with the <see cref="relationshipColumn"/> column name,
+        /// and type of <typeparam name="TChild" />
+        /// </summary>
+        /// <param name="relationshipColumn">Column name</param>
+        /// <typeparam name="TChild">Child type</typeparam>
+        /// <returns>Builder</returns>
         public MapBuilder<TKey, TValue> ManyToMany<TChild>(string relationshipColumn)
         {
-            return ManyToMany(el =>
+            return ManyToMany(mm =>
             {
-                el.Column(relationshipColumn);
-                el.Type<TChild>();
+                mm.Column(relationshipColumn);
+                mm.Type<TChild>();
             });
         }
 
+        /// <summary>
+        /// Specify this relationship as a many-to-many with the <see cref="relationshipColumn"/> column name
+        /// </summary>
+        /// <param name="relationshipColumn">Column name</param>
+        /// <returns>Builder</returns>
         public MapBuilder<TKey, TValue> ManyToMany(string relationshipColumn)
         {
-            return ManyToMany(el => el.Column(relationshipColumn));
+            return ManyToMany(mm => mm.Column(relationshipColumn));
         }
 
-        public MapBuilder<TKey, TValue> ManyToMany<TElementType>()
+        /// <summary>
+        /// Specify this relationship as a many-to-many of <typeparamref name="TChild"/>
+        /// </summary>
+        /// <typeparam name="TChild">Child type</typeparam>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> ManyToMany<TChild>()
         {
-            return ManyToMany(el => el.Type<TElementType>());
+            return ManyToMany(mm => mm.Type<TChild>());
         }
 
         static Type KeyType

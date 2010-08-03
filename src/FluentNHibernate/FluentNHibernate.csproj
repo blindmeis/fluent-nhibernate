@@ -414,6 +414,8 @@
     <Compile Include="Mapping\Builders\ManyToManyBuilder.cs" />
     <Compile Include="Mapping\Builders\ManyToOneBuilder.cs" />
     <Compile Include="Mapping\Builders\MapBuilder.cs" />
+    <Compile Include="Mapping\Builders\NotFoundBuilder.cs" />
+    <Compile Include="Mapping\Builders\OneToManyBuilder.cs" />
     <Compile Include="Mapping\Builders\PropertyGeneratedBuilder.cs" />
     <Compile Include="Mapping\Builders\PropertyBuilder.cs" />
     <Compile Include="Mapping\Builders\SortBuilder.cs" />
