@@ -50,8 +50,8 @@ namespace FluentNHibernate.Automapping
                 if (discriminator != null)
                     classMapping.Discriminator = ((IDiscriminatorMappingProvider)discriminator).GetDiscriminatorMapping();
 
-                if (Cache.IsDirty)
-                    classMapping.Cache = ((ICacheMappingProvider)Cache).GetCacheMapping();
+                if (cache != null)
+                    classMapping.Cache = cache;
 
                 foreach (var join in joins)
                     classMapping.AddJoin(join);

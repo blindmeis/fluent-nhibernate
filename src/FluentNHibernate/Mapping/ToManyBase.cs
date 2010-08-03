@@ -25,12 +25,13 @@ namespace FluentNHibernate.Mapping
         protected readonly AttributeStore<ICollectionMapping> collectionAttributes = new AttributeStore<ICollectionMapping>();
         protected readonly KeyMapping keyMapping;
         protected ICollectionRelationshipMapping relationshipMapping;
-        private readonly IList<FilterPart> filters = new List<FilterPart>();
+        private readonly IList<FilterMapping> filters = new List<FilterMapping>();
         private Func<AttributeStore, ICollectionMapping> collectionBuilder;
         protected IndexMapping indexMapping;
         protected Member member;
         private Type entity;
         ElementMapping elementMapping;
+        CacheMapping cache;
 
         protected ToManyBase(Type entity, Member member, Type type)
         {
@@ -44,7 +45,6 @@ namespace FluentNHibernate.Mapping
 
             SetDefaultCollectionType(type);
             SetCustomCollectionType(type);
-            Cache = new CachePart(entity);
 
             collectionAttributes.SetDefault(x => x.Name, member.Name);
 
@@ -77,7 +77,14 @@ namespace FluentNHibernate.Mapping
         /// <summary>
         /// Specify caching for this entity.
         /// </summary>
-        public CachePart Cache { get; private set; }
+        public CacheBuilder Cache
+        {
+            get
+            {
+                cache = cache ?? new CacheMapping();
+                return new CacheBuilder(cache, entity);
+            }
+        }
 
         /// <summary>
         /// Specify the lazy-load behaviour
@@ -594,8 +601,13 @@ namespace FluentNHibernate.Mapping
         /// <param name="condition">The condition to apply</param>
         public T ApplyFilter(string name, string condition)
         {
-            var part = new FilterPart(name, condition);
-            filters.Add(part);
+            var filterMapping = new FilterMapping();
+            var builder = new FilterBuilder(filterMapping);
+            
+            builder.Name(name);
+            builder.Condition(condition);
+            
+            filters.Add(filterMapping);
             return (T)this;
         }
 
@@ -639,11 +651,6 @@ namespace FluentNHibernate.Mapping
             return this.ApplyFilter<TFilter>(null);
         }
 
-        protected IList<FilterPart> Filters
-        {
-            get { return filters; }
-        }
-
         void SetDefaultCollectionType(Type type)
         {
             if (type.Namespace == "Iesi.Collections.Generic" || type.Closes(typeof(HashSet<>)))
@@ -678,8 +685,8 @@ namespace FluentNHibernate.Mapping
             mapping.Relationship = GetRelationship();
             mapping.Relationship.SetDefaultClass(new TypeReference(typeof(TChild)));
 
-            if (Cache.IsDirty)
-                mapping.Cache = ((ICacheMappingProvider)Cache).GetCacheMapping();
+            if (cache != null)
+                mapping.Cache = cache;
 
             if (componentMapping != null)
             {
@@ -697,8 +704,8 @@ namespace FluentNHibernate.Mapping
                 mapping.Relationship = null;
             }
 
-            foreach (var filterPart in Filters)
-                mapping.Filters.Add(filterPart.GetFilterMapping());
+            foreach (var filterMapping in filters)
+                mapping.Filters.Add(filterMapping);
 
             return mapping;
         }

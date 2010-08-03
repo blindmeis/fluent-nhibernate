@@ -1,7 +1,8 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq.Expressions;
+using FluentNHibernate.Mapping.Builders;
 using FluentNHibernate.Mapping.Providers;
 using FluentNHibernate.MappingModel;
 using FluentNHibernate.MappingModel.ClassBased;
@@ -45,13 +46,13 @@ namespace FluentNHibernate.Mapping
         private readonly PolymorphismBuilder<ClassMap<T>> polymorphism;
         private SchemaActionBuilder<ClassMap<T>> schemaAction;
         protected TuplizerMapping tuplizerMapping;
+        protected CacheMapping cache;
 
         public ClassMap()
         {
             optimisticLock = new OptimisticLockBuilder<ClassMap<T>>(this, value => attributes.Set(x => x.OptimisticLock, value));
             polymorphism = new PolymorphismBuilder<ClassMap<T>>(this, value => attributes.Set(x => x.Polymorphism, value));
             schemaAction = new SchemaActionBuilder<ClassMap<T>>(this, value => attributes.Set(x => x.SchemaAction, value));
-            Cache = new CachePart(typeof(T));
         }
 
         /// <summary>
@@ -60,7 +61,14 @@ namespace FluentNHibernate.Mapping
         /// <example>
         /// Cache.ReadWrite();
         /// </example>
-        public CachePart Cache { get; private set; }
+        public CacheBuilder Cache
+        {
+            get
+            {
+                cache = cache ?? new CacheMapping();
+                return new CacheBuilder(cache, typeof(T));
+            }
+        }
 
         /// <summary>
         /// Specify settings for the container/hibernate-mapping for this class.
@@ -550,8 +558,13 @@ namespace FluentNHibernate.Mapping
         /// <param name="condition">The condition to apply</param>
         public ClassMap<T> ApplyFilter(string name, string condition)
         {
-            var part = new FilterPart(name, condition);
-            filters.Add(part);
+            var filterMapping = new FilterMapping();
+            var builder = new FilterBuilder(filterMapping);
+            
+            builder.Name(name);
+            builder.Condition(condition);
+            
+            filters.Add(new PassThroughMappingProvider(filterMapping));
             return this;
         }
 
@@ -650,8 +663,8 @@ namespace FluentNHibernate.Mapping
             if (discriminator != null)
                 mapping.Discriminator = ((IDiscriminatorMappingProvider)discriminator).GetDiscriminatorMapping();
 
-            if (Cache.IsDirty)
-                mapping.Cache = ((ICacheMappingProvider)Cache).GetCacheMapping();
+            if (cache != null)
+                mapping.Cache = cache;
 
             if (id != null)
                 mapping.Id = id.GetIdentityMapping();

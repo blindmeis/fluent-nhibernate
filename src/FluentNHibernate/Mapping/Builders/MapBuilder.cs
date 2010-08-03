@@ -1,5 +1,6 @@
 ﻿using System;
-using FluentNHibernate.Mapping.Providers;
+using System.Collections.Generic;
+using System.Diagnostics;
 using FluentNHibernate.MappingModel;
 using FluentNHibernate.MappingModel.Collections;
 using FluentNHibernate.Utils;
@@ -15,6 +16,7 @@ namespace FluentNHibernate.Mapping.Builders
         ManyToManyMapping manyToMany;
         OneToManyMapping oneToMany;
         ElementMapping element;
+        bool nextBool = true;
 
         public MapBuilder(MapMapping mapping, Member member)
         {
@@ -69,6 +71,43 @@ namespace FluentNHibernate.Mapping.Builders
         }
 
         /// <summary>
+        /// Inverts the next boolean operation
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public MapBuilder<TKey, TValue> Not
+        {
+            get
+            {
+                nextBool = !nextBool;
+                return this;
+            }
+        }
+
+        /// <summary>
+        /// Specify the access strategy for the map property
+        /// </summary>
+        public AccessStrategyBuilder<MapBuilder<TKey, TValue>> Access
+        {
+            get { return new AccessStrategyBuilder<MapBuilder<TKey, TValue>>(this, value => mapping.Access = value); }
+        }
+
+        /// <summary>
+        /// Specify the cascade strategy for the collection
+        /// </summary>
+        public CollectionCascadeExpression<MapBuilder<TKey, TValue>> Cascade
+        {
+            get { return new CollectionCascadeExpression<MapBuilder<TKey, TValue>>(this, value => mapping.Cascade = value); }
+        }
+
+        /// <summary>
+        /// Specify the cascade strategy for the collection
+        /// </summary>
+        public FetchTypeExpression<MapBuilder<TKey, TValue>> Fetch
+        {
+            get { return new FetchTypeExpression<MapBuilder<TKey, TValue>>(this, value => mapping.Fetch = value); }
+        }
+
+        /// <summary>
         /// Sets the map name. Optional.
         /// </summary>
         /// <param name="mapName">Map name</param>
@@ -88,6 +127,274 @@ namespace FluentNHibernate.Mapping.Builders
         {
             mapping.TableName = tableName;
             return this;
+        }
+
+        /// <summary>
+        /// Sets the name of the schema containing the map table.
+        /// </summary>
+        /// <param name="schema">Schema name</param>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> Schema(string schema)
+        {
+            mapping.Schema = schema;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the name of the catalog containing the map table.
+        /// </summary>
+        /// <param name="catalog">Catalog name</param>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> Catalog(string catalog)
+        {
+            mapping.Catalog = catalog;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies whether this collection is lazy
+        /// </summary>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> Lazy()
+        {
+            mapping.Lazy = nextBool ? MappingModel.Collections.Lazy.True : MappingModel.Collections.Lazy.False;
+            nextBool = true;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies whether this collection is extra lazy
+        /// </summary>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> ExtraLazy()
+        {
+            mapping.Lazy = MappingModel.Collections.Lazy.Extra;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies whether this collection is inverse
+        /// </summary>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> Inverse()
+        {
+            mapping.Inverse = nextBool;
+            nextBool = true;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies whether this collection is read-only (mutable=false)
+        /// </summary>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> ReadOnly()
+        {
+            mapping.Mutable = !nextBool;
+            nextBool = true;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the order by clause
+        /// </summary>
+        /// <param name="clause">Order by</param>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> OrderBy(string clause)
+        {
+            mapping.OrderBy = clause;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the where clause
+        /// </summary>
+        /// <param name="clause">Order by</param>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> Where(string clause)
+        {
+            mapping.Where = clause;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the batch size
+        /// </summary>
+        /// <param name="batchSize">Batch size</param>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> BatchSize(int batchSize)
+        {
+            mapping.BatchSize = batchSize;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the collection persister
+        /// </summary>
+        /// <typeparam name="TPersister">Persister type</typeparam>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> Persister<TPersister>()
+        {
+            return Persister(typeof(TPersister));
+        }
+
+        /// <summary>
+        /// Sets the collection persister
+        /// </summary>
+        /// <param name="persister">Persister type</param>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> Persister(Type persister)
+        {
+            mapping.Persister = new TypeReference(persister);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the collection persister
+        /// </summary>
+        /// <param name="persister">Persister type</param>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> Persister(string persister)
+        {
+            mapping.Persister = new TypeReference(persister);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the collection type
+        /// </summary>
+        /// <typeparam name="TCollection">Collection type</typeparam>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> CollectionType<TCollection>()
+        {
+            return CollectionType(typeof(TCollection));
+        }
+
+        /// <summary>
+        /// Sets the collection type
+        /// </summary>
+        /// <param name="collectionType">Collection type</param>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> CollectionType(Type collectionType)
+        {
+            mapping.CollectionType = new TypeReference(collectionType);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the collection type
+        /// </summary>
+        /// <param name="collectionType">Collection type</param>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> CollectionType(string collectionType)
+        {
+            mapping.CollectionType = new TypeReference(collectionType);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the check constraint name
+        /// </summary>
+        /// <param name="constraint">Constraint name</param>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> Check(string constraint)
+        {
+            mapping.Check = constraint;
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies whether this collection is optimistically locked
+        /// </summary>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> OptimisticLock()
+        {
+            mapping.OptimisticLock = nextBool.ToString();
+            nextBool = true;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the subselect query
+        /// </summary>
+        /// <param name="query">Subselect query</param>
+        /// <returns>Builder</returns>
+        public MapBuilder<TKey, TValue> Subselect(string query)
+        {
+            mapping.Subselect = query;
+            return this;
+        }
+
+        /// <summary>
+        /// Configure the caching of this collection
+        /// </summary>
+        /// <param name="cacheConfiguration">Cache configuration</param>
+        public MapBuilder<TKey, TValue> Cache(Action<CacheBuilder> cacheConfiguration)
+        {
+            mapping.Cache = mapping.Cache ?? new CacheMapping();
+
+            cacheConfiguration(new CacheBuilder(mapping.Cache, mapping.ContainingEntityType));
+
+            return this;
+        }
+
+        /// <overloads>
+        /// Applies a filter to this entity given it's name.
+        /// </overloads>
+        /// <summary>
+        /// Applies a filter to this entity given it's name.
+        /// </summary>
+        /// <param name="name">The filter's name</param>
+        /// <param name="condition">The condition to apply</param>
+        public MapBuilder<TKey, TValue> ApplyFilter(string name, string condition)
+        {
+            var filterMapping = new FilterMapping();
+            var builder = new FilterBuilder(filterMapping);
+            
+            builder.Name(name);
+            builder.Condition(condition);
+
+            mapping.Filters.Add(filterMapping);
+            return this;
+        }
+
+        /// <overloads>
+        /// Applies a filter to this entity given it's name.
+        /// </overloads>
+        /// <summary>
+        /// Applies a filter to this entity given it's name.
+        /// </summary>
+        /// <param name="name">The filter's name</param>
+        public MapBuilder<TKey, TValue> ApplyFilter(string name)
+        {
+            return ApplyFilter(name, null);
+        }
+
+        /// <overloads>
+        /// Applies a named filter to this one-to-many.
+        /// </overloads>
+        /// <summary>
+        /// Applies a named filter to this one-to-many.
+        /// </summary>
+        /// <param name="condition">The condition to apply</param>
+        /// <typeparam name="TFilter">
+        /// The type of a <see cref="FilterDefinition"/> implementation
+        /// defining the filter to apply.
+        /// </typeparam>
+        public MapBuilder<TKey, TValue> ApplyFilter<TFilter>(string condition) where TFilter : FilterDefinition, new()
+        {
+            return ApplyFilter(new TFilter().Name, condition);
+        }
+
+        /// <summary>
+        /// Applies a named filter to this one-to-many.
+        /// </summary>
+        /// <typeparam name="TFilter">
+        /// The type of a <see cref="FilterDefinition"/> implementation
+        /// defining the filter to apply.
+        /// </typeparam>
+        public MapBuilder<TKey, TValue> ApplyFilter<TFilter>() where TFilter : FilterDefinition, new()
+        {
+            return ApplyFilter<TFilter>(null);
         }
 
         /// <summary>

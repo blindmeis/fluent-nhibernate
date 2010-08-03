@@ -14,7 +14,7 @@ namespace FluentNHibernate.Mapping
 {
     public class ManyToManyPart<TChild> : ToManyBase<ManyToManyPart<TChild>, TChild, ManyToManyMapping>
     {
-        private readonly IList<FilterPart> childFilters = new List<FilterPart>();
+        private readonly IList<FilterMapping> childFilters = new List<FilterMapping>();
         private readonly Type entity;
         private readonly FetchTypeExpression<ManyToManyPart<TChild>> fetch;
         private readonly NotFoundExpression<ManyToManyPart<TChild>> notFound;
@@ -234,8 +234,8 @@ namespace FluentNHibernate.Mapping
 
             relationshipMapping.As<ManyToManyMapping>(x =>
             {
-                foreach (var filterPart in childFilters)
-                    x.ChildFilters.Add(filterPart.GetFilterMapping());
+                foreach (var filterMapping in childFilters)
+                    x.ChildFilters.Add(filterMapping);
             });
 
             return relationshipMapping;
@@ -282,8 +282,11 @@ namespace FluentNHibernate.Mapping
         /// <param name="condition">The condition to apply</param>
         public ManyToManyPart<TChild> ApplyChildFilter(string name, string condition)
         {
-            var part = new FilterPart(name, condition);
-            childFilters.Add(part);
+            var filterMapping = new FilterMapping();
+            var builder = new FilterBuilder(filterMapping);
+            builder.Name(name);
+            builder.Condition(condition);
+            childFilters.Add(filterMapping);
             return this;
         }
 
@@ -312,9 +315,7 @@ namespace FluentNHibernate.Mapping
         /// </typeparam>
         public ManyToManyPart<TChild> ApplyChildFilter<TFilter>(string condition) where TFilter : FilterDefinition, new()
         {
-            var part = new FilterPart(new TFilter().Name, condition);
-            childFilters.Add(part);
-            return this;
+            return ApplyChildFilter(new TFilter().Name, condition);
         }
 
         /// <summary>

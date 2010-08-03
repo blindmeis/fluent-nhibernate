@@ -7,7 +7,7 @@ using FluentNHibernate.MappingModel.Collections;
 
 namespace FluentNHibernate.Mapping
 {
-    public class PassThroughMappingProvider : IMappingProvider, ICollectionMappingProvider, IManyToOneMappingProvider, ICompositeElementMappingProvider, IPropertyMappingProvider
+    public class PassThroughMappingProvider : IMappingProvider, ICollectionMappingProvider, IManyToOneMappingProvider, ICompositeElementMappingProvider, IPropertyMappingProvider, IFilterMappingProvider
     {
         private readonly object mapping;
 
@@ -49,6 +49,11 @@ namespace FluentNHibernate.Mapping
         public PropertyMapping GetPropertyMapping()
         {
             return (PropertyMapping)mapping;
+        }
+
+        public FilterMapping GetFilterMapping()
+        {
+            return (FilterMapping)mapping;
         }
     }
 }

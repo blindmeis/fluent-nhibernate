@@ -66,9 +66,10 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
             return new ModelTester<VersionPart, VersionMapping>(() => new VersionPart(typeof(VersionTarget), ReflectionHelper.GetMember<VersionTarget>(x => x.VersionNumber)), x => ((IVersionMappingProvider)x).GetVersionMapping());
         }
 
-        protected ModelTester<CachePart, CacheMapping> Cache()
+        protected ModelTester<CacheBuilder, CacheMapping> Cache()
         {
-            return new ModelTester<CachePart, CacheMapping>(() => new CachePart(typeof(CachedRecord)), x => ((ICacheMappingProvider)x).GetCacheMapping());
+            var mapping = new CacheMapping();
+            return new ModelTester<CacheBuilder, CacheMapping>(() => new CacheBuilder(mapping, typeof(CachedRecord)), x => mapping);
         }
 
         protected ModelTester<IdentityPart, IdMapping> Id()

@@ -406,10 +406,12 @@
     <Compile Include="MappingModel\Output\XmlCompositeIndexWriter.cs" />
     <Compile Include="MappingModel\Output\XmlNaturalIdWriter.cs" />
     <Compile Include="Mapping\Access.cs" />
+    <Compile Include="Mapping\Builders\CacheBuilder.cs" />
     <Compile Include="Mapping\Builders\CompositeElementBuilder.cs" />
     <Compile Include="Mapping\Builders\CompositeIndexBuilder.cs" />
     <Compile Include="Mapping\Builders\ElementBuilder.cs" />
     <Compile Include="Mapping\Builders\FetchTypeBuilder.cs" />
+    <Compile Include="Mapping\Builders\FilterBuilder.cs" />
     <Compile Include="Mapping\Builders\IndexBuilder.cs" />
     <Compile Include="Mapping\Builders\KeyBuilder.cs" />
     <Compile Include="Mapping\Builders\ManyToManyBuilder.cs" />
@@ -452,7 +454,6 @@
     <Compile Include="Mapping\ComponentMap.cs" />
     <Compile Include="Mapping\ReferenceComponentPart.cs" />
     <Compile Include="Mapping\FilterDefinition.cs" />
-    <Compile Include="Mapping\FilterPart.cs" />
     <Compile Include="Mapping\IFilterDefinition.cs" />
     <Compile Include="Mapping\KeyManyToOnePart.cs" />
     <Compile Include="Mapping\KeyPropertyPart.cs" />
@@ -480,7 +481,6 @@
     <Compile Include="MappingModel\TypeReference.cs" />
     <Compile Include="Mapping\GeneratorBuilder.cs" />
     <Compile Include="Mapping\Providers\IAnyMappingProvider.cs" />
-    <Compile Include="Mapping\Providers\ICacheMappingProvider.cs" />
     <Compile Include="Mapping\Providers\IComponentMappingProvider.cs" />
     <Compile Include="Mapping\Providers\IIdentityMappingProvider.cs" />
     <Compile Include="Mapping\Providers\IJoinMappingProvider.cs" />
@@ -642,7 +642,6 @@
     </Compile>
     <Compile Include="MappingModel\Output\XmlImportWriter.cs" />
     <Compile Include="Mapping\Attributes.cs" />
-    <Compile Include="Mapping\CachePart.cs" />
     <Compile Include="Conventions\UserTypeConvention.cs" />
     <Compile Include="Conventions\AttributePropertyConvention.cs" />
     <Compile Include="Conventions\IClassConvention.cs" />
