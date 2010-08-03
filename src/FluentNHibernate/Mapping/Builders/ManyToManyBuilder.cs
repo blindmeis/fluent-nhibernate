@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using FluentNHibernate.MappingModel;
 using FluentNHibernate.MappingModel.Collections;
 
@@ -8,10 +9,24 @@ namespace FluentNHibernate.Mapping.Builders
     {
         readonly ManyToManyMapping mapping;
         readonly AttributeStore sharedColumnAttributes = new AttributeStore();
+        bool nextBool = true;
 
         public ManyToManyBuilder(ManyToManyMapping mapping)
         {
             this.mapping = mapping;
+        }
+
+        /// <summary>
+        /// Inverts the next boolean operation
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public ManyToManyBuilder Not
+        {
+            get
+            {
+                nextBool = !nextBool;
+                return this;
+            }
         }
 
         /// <summary>
@@ -42,6 +57,90 @@ namespace FluentNHibernate.Mapping.Builders
         public void Type(string type)
         {
             mapping.Class = new TypeReference(type);
+        }
+
+        /// <summary>
+        /// Specifies the entity-name for the relationship
+        /// </summary>
+        /// <param name="entityName">Entity name</param>
+        public void EntityName(string entityName)
+        {
+            mapping.EntityName = entityName;
+        }
+
+        /// <summary>
+        /// Specifies the formula for the relationship
+        /// </summary>
+        /// <param name="formula">Formula</param>
+        public void Formula(string formula)
+        {
+            mapping.Formula = formula;
+        }
+
+        /// <summary>
+        /// Specifies the not-found behaviour
+        /// </summary>
+        public NotFoundBuilder NotFound
+        {
+            get { return new NotFoundBuilder(value => mapping.NotFound = value);}
+        }
+
+        /// <summary>
+        /// Specifies the fetch behaviour
+        /// </summary>
+        public FetchTypeBuilder Fetch
+        {
+            get { return new FetchTypeBuilder(value => mapping.Fetch = value);}
+        }
+
+        /// <summary>
+        /// Specifies whether this relationship is lazy
+        /// </summary>
+        public void Lazy()
+        {
+            mapping.Lazy = nextBool;
+            nextBool = true;
+        }
+
+        /// <summary>
+        /// Specifies the foreign key constraint
+        /// </summary>
+        public void ForeignKey(string constraint)
+        {
+            mapping.ForeignKey = constraint;
+        }
+
+        /// <summary>
+        /// Specifies whether this relationship is unique
+        /// </summary>
+        public void Unique()
+        {
+            mapping.Unique = nextBool;
+            nextBool = true;
+        }
+
+        /// <summary>
+        /// Specifies the where clause
+        /// </summary>
+        public void Where(string where)
+        {
+            mapping.Where = where;
+        }
+
+        /// <summary>
+        /// Specifies the order by clause
+        /// </summary>
+        public void OrderBy(string orderBy)
+        {
+            mapping.OrderBy = orderBy;
+        }
+
+        /// <summary>
+        /// Specifies the property ref
+        /// </summary>
+        public void PropertyRef(string propertyRef)
+        {
+            mapping.ChildPropertyRef = propertyRef;
         }
 
         /// <summary>

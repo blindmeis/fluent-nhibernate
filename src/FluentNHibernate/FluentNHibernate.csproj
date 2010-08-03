@@ -409,6 +409,7 @@
     <Compile Include="Mapping\Builders\CompositeElementBuilder.cs" />
     <Compile Include="Mapping\Builders\CompositeIndexBuilder.cs" />
     <Compile Include="Mapping\Builders\ElementBuilder.cs" />
+    <Compile Include="Mapping\Builders\FetchTypeBuilder.cs" />
     <Compile Include="Mapping\Builders\IndexBuilder.cs" />
     <Compile Include="Mapping\Builders\KeyBuilder.cs" />
     <Compile Include="Mapping\Builders\ManyToManyBuilder.cs" />

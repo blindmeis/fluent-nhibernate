@@ -89,6 +89,12 @@ namespace FluentNHibernate.MappingModel.Collections
             set { attributes.Set(x => x.Lazy, value); }
         }
 
+        public bool Unique
+        {
+            get { return attributes.Get(x => x.Unique); }
+            set { attributes.Set(x => x.Unique, value); }
+        }
+
         public string EntityName
         {
             get { return attributes.Get(x => x.EntityName); }
@@ -110,6 +116,12 @@ namespace FluentNHibernate.MappingModel.Collections
         {
             get { return attributes.Get(x => x.ChildPropertyRef); }
             set { attributes.Set(x => x.ChildPropertyRef, value); }
+        }
+
+        public string Formula
+        {
+            get { return attributes.Get(x => x.Formula); }
+            set { attributes.Set(x => x.Formula, value); }
         }
 
         public IDefaultableEnumerable<ColumnMapping> Columns
