@@ -262,6 +262,22 @@ namespace FluentNHibernate.Testing.FluentInterfaceTests
         }
 
         [Test]
+        public void KeyUniqueShouldSetModelValue()
+        {
+            OneToMany(x => x.BagOfChildren)
+                .Mapping(m => m.Key(ke => ke.Unique()))
+                .ModelShouldMatch(x => x.Key.Unique.ShouldBeTrue());
+        }
+
+        [Test]
+        public void KeyNotUniqueShouldSetModelValue()
+        {
+            OneToMany(x => x.BagOfChildren)
+                .Mapping(m => m.Key(ke => ke.Not.Unique()))
+                .ModelShouldMatch(x => x.Key.Unique.ShouldBeFalse());
+        }
+
+        [Test]
         public void PropertyRefShouldSetModelValue()
         {
             OneToMany(x => x.BagOfChildren)

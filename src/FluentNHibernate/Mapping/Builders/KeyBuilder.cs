@@ -76,6 +76,15 @@ namespace FluentNHibernate.Mapping.Builders
         }
 
         /// <summary>
+        /// Specifies that the foreign key is unique.
+        /// </summary>
+        public void Unique()
+        {
+            mapping.Unique = nextBool;
+            nextBool = true;
+        }
+
+        /// <summary>
         /// Specify that the key is nullable.
         /// </summary>
         public void Nullable()
