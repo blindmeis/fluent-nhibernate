@@ -14,7 +14,8 @@ namespace FluentNHibernate.Mapping.Builders
         }
 
         /// <summary>
-        /// Specifies that this index is a many-to-many index.
+        /// Specifies that this index is a many-to-many index. Note: not all methods are available
+        /// for many-to-many indexes.
         /// </summary>
         public void AsManyToMany()
         {
@@ -22,7 +23,7 @@ namespace FluentNHibernate.Mapping.Builders
         }
 
         /// <summary>
-        /// Specifies that this index is a one-to-many index. Note: some methods aren't available
+        /// Specifies that this index is a one-to-many index. Note: not all methods are available
         /// for one-to-many indexes.
         /// </summary>
         public void AsOneToMany()
@@ -81,6 +82,24 @@ namespace FluentNHibernate.Mapping.Builders
         public void ForeignKey(string constraint)
         {
             mapping.ForeignKey = constraint;
+        }
+
+        /// <summary>
+        /// Specify the index column length
+        /// </summary>
+        /// <param name="length">Column length</param>
+        public void Length(int length)
+        {
+            mapping.Length = length;
+        }
+
+        /// <summary>
+        /// Specify the index entity-name
+        /// </summary>
+        /// <param name="entityName">Entity name</param>
+        public void EntityName(string entityName)
+        {
+            mapping.EntityName = entityName;
         }
     }
 }
