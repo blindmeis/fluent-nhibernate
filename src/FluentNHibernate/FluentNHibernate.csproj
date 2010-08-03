@@ -628,7 +628,6 @@
     <Compile Include="Mapping\ComponentPartBase.cs" />
     <Compile Include="Mapping\DiscriminatorPart.cs" />
     <Compile Include="Mapping\DiscriminatorValue.cs" />
-    <Compile Include="Mapping\ElementPart.cs" />
     <Compile Include="Mapping\HibernateMappingPart.cs" />
     <Compile Include="MappingModel\ImportMapping.cs" />
     <Compile Include="MappingModel\Output\XmlHibernateMappingWriter.cs">

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using FluentNHibernate.MappingModel;
 using FluentNHibernate.MappingModel.Collections;
 
@@ -7,10 +8,24 @@ namespace FluentNHibernate.Mapping.Builders
     public class ElementBuilder
     {
         readonly ElementMapping mapping;
+        bool nextBool = true;
 
         public ElementBuilder(ElementMapping mapping)
         {
             this.mapping = mapping;
+        }
+
+        /// <summary>
+        /// Inverts the next boolean operation
+        /// </summary>
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public ElementBuilder Not
+        {
+            get
+            {
+                nextBool = !nextBool;
+                return this;
+            }
         }
 
         /// <summary>
@@ -77,6 +92,55 @@ namespace FluentNHibernate.Mapping.Builders
         public void Formula(string formula)
         {
             mapping.Formula = formula;
+        }
+
+        /// <summary>
+        /// Specify the precision for decimal types
+        /// </summary>
+        /// <param name="precision">Precision</param>
+        public void Precision(int precision)
+        {
+            mapping.Precision = precision;
+        }
+
+        /// <summary>
+        /// Specify the scale for decimal types
+        /// </summary>
+        /// <param name="scale">Scale</param>
+        public void Scale(int scale)
+        {
+            mapping.Scale = scale;
+        }
+
+        /// <summary>
+        /// Specify the precision and scale for decimal types
+        /// </summary>
+        /// <param name="precision">Precision</param>
+        /// <param name="scale">Scale</param>
+        public void PrecisionAndScale(int precision, int scale)
+        {
+            Precision(precision);
+            Scale(scale);
+        }
+
+        /// <summary>
+        /// Specifies that the element is nullable (or not, if the <see cref="Not"/>
+        /// switch is used)
+        /// </summary>
+        public void Nullable()
+        {
+            mapping.NotNull = !nextBool;
+            nextBool = true;
+        }
+
+        /// <summary>
+        /// Specifies that the element should be unique (or not, if the <see cref="Not"/>
+        /// switch is used)
+        /// </summary>
+        public void Unique()
+        {
+            mapping.Unique = nextBool;
+            nextBool = true;
         }
     }
 }

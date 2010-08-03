@@ -48,6 +48,30 @@ namespace FluentNHibernate.MappingModel.Collections
             set { attributes.Set(x => x.Length, value); }
         }
 
+        public int Precision
+        {
+            get { return attributes.Get(x => x.Precision); }
+            set { attributes.Set(x => x.Precision, value); }
+        }
+
+        public int Scale
+        {
+            get { return attributes.Get(x => x.Scale); }
+            set { attributes.Set(x => x.Scale, value); }
+        }
+
+        public bool NotNull
+        {
+            get { return attributes.Get(x => x.NotNull); }
+            set { attributes.Set(x => x.NotNull, value); }
+        }
+
+        public bool Unique
+        {
+            get { return attributes.Get(x => x.Unique); }
+            set { attributes.Set(x => x.Unique, value); }
+        }
+
         IDefaultableEnumerable<ColumnMapping> IHasColumnMappings.Columns
         {
             get { return columns; }
