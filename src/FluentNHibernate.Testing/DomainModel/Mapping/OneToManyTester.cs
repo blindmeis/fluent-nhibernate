@@ -24,9 +24,13 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         public IList<ChildObject> BagOfChildren;
     }
 
-    public class OneToManyTarget
+    public abstract class Entity
     {
         public virtual int Id { get; set; }
+    }
+
+    public class OneToManyTarget : Entity
+    {
         public virtual ISet<ChildObject> SetOfChildren { get; set; }
         public virtual HashSet<ChildObject> HashSetOfChildren { get; set; }
         public virtual IList<ChildObject> BagOfChildren { get; set; }

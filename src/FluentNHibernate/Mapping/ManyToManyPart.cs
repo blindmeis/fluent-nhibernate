@@ -18,10 +18,7 @@ namespace FluentNHibernate.Mapping
         private readonly Type entity;
         private readonly FetchTypeExpression<ManyToManyPart<TChild>> fetch;
         private readonly NotFoundExpression<ManyToManyPart<TChild>> notFound;
-        private IndexManyToManyPart manyToManyIndex;
         private readonly Type childType;
-        private Type valueType;
-        private bool isTernary;
         readonly AttributeStore sharedColumnAttributes = new AttributeStore();
 
         public ManyToManyPart(Type entity, Member property)
@@ -97,126 +94,6 @@ namespace FluentNHibernate.Mapping
             get { return fetch; }
         }
 
-        private void EnsureDictionary()
-        {
-            if (!typeof(IDictionary).IsAssignableFrom(childType))
-                throw new ArgumentException(member.Name + " must be of type IDictionary to be used in a non-generic ternary association. Type was: " + childType);
-        }
-
-        private void EnsureGenericDictionary()
-        {
-            if (!(childType.IsGenericType && childType.GetGenericTypeDefinition() == typeof(IDictionary<,>)))
-                throw new ArgumentException(member.Name + " must be of type IDictionary<> to be used in a ternary assocation. Type was: " + childType);
-        }
-
-        public ManyToManyPart<TChild> AsTernaryAssociation()
-        {
-            EnsureGenericDictionary();
-
-            var indexType = typeof(TChild).GetGenericArguments()[0];
-            var valueType = typeof(TChild).GetGenericArguments()[1];
-
-            return AsTernaryAssociation(indexType.Name + "_id", valueType.Name + "_id");
-        }
-
-        public ManyToManyPart<TChild> AsTernaryAssociation(string indexColumn, string valueColumn)
-        {
-            return AsTernaryAssociation(indexColumn, valueColumn, x => {});
-        }
-
-        public ManyToManyPart<TChild> AsTernaryAssociation(string indexColumn, string valueColumn, Action<IndexManyToManyPart> indexAction)
-        {
-            EnsureGenericDictionary();
-
-            var indexType = typeof(TChild).GetGenericArguments()[0];
-            var valueType = typeof(TChild).GetGenericArguments()[1];
-
-            manyToManyIndex = new IndexManyToManyPart(typeof(ManyToManyPart<TChild>));
-            manyToManyIndex.Column(indexColumn);
-            manyToManyIndex.Type(indexType);
-
-            if (indexAction != null)
-                indexAction(manyToManyIndex);
-
-            ChildKeyColumn(valueColumn);
-            this.valueType = valueType;
-
-            isTernary = true;
-
-            return this;
-        }
-
-        public ManyToManyPart<TChild> AsTernaryAssociation(Type indexType, Type valueType)
-        {
-            return AsTernaryAssociation(indexType, indexType.Name + "_id", valueType, valueType.Name + "_id");
-        }
-
-        public ManyToManyPart<TChild> AsTernaryAssociation(Type indexType, string indexColumn, Type valueType, string valueColumn)
-        {
-            return AsTernaryAssociation(indexType, indexColumn, valueType, valueColumn, x => {});
-        }
-
-        public ManyToManyPart<TChild> AsTernaryAssociation(Type indexType, string indexColumn, Type valueType, string valueColumn, Action<IndexManyToManyPart> indexAction)
-        {
-            EnsureDictionary();
-
-            manyToManyIndex = new IndexManyToManyPart(typeof(ManyToManyPart<TChild>));
-            manyToManyIndex.Column(indexColumn);
-            manyToManyIndex.Type(indexType);
-
-            if (indexAction != null)
-                indexAction(manyToManyIndex);
-
-            ChildKeyColumn(valueColumn);
-            this.valueType = valueType;
-
-            isTernary = true;
-
-            return this;
-        }
-
-        public ManyToManyPart<TChild> AsSimpleAssociation()
-        {
-            EnsureGenericDictionary();
-
-            var indexType = typeof(TChild).GetGenericArguments()[0];
-            var valueType = typeof(TChild).GetGenericArguments()[1];
-
-            return AsSimpleAssociation(indexType.Name + "_id", valueType.Name + "_id");
-        }
-
-        public ManyToManyPart<TChild> AsSimpleAssociation(string indexColumn, string valueColumn)
-        {
-            EnsureGenericDictionary();
-
-            var indexType = typeof(TChild).GetGenericArguments()[0];
-            var valueType = typeof(TChild).GetGenericArguments()[1];
-
-            indexMapping = new IndexMapping();
-            var builder = new IndexBuilder(indexMapping);
-            builder.Column(indexColumn);
-            builder.Type(indexType);
-
-            ChildKeyColumn(valueColumn);
-            this.valueType = valueType;
-
-            isTernary = true;
-
-            return this;
-        }
-
-        public ManyToManyPart<TChild> AsEntityMap()
-        {
-            // The argument to AsMap will be ignored as the ternary association will overwrite the index mapping for the map.
-            // Therefore just pass null.
-            return AsMap(null).AsTernaryAssociation();
-        }
-
-        public ManyToManyPart<TChild> AsEntityMap(string indexColumn, string valueColumn)
-        {
-            return AsMap(null).AsTernaryAssociation(indexColumn, valueColumn);
-        }
-
         public Type ChildType
         {
             get { return typeof(TChild); }
@@ -229,9 +106,6 @@ namespace FluentNHibernate.Mapping
 
         protected override ICollectionRelationshipMapping GetRelationship()
         {
-            if (isTernary && valueType != null)
-                relationshipMapping.Class = new TypeReference(valueType);
-
             relationshipMapping.As<ManyToManyMapping>(x =>
             {
                 foreach (var filterMapping in childFilters)
@@ -346,10 +220,6 @@ namespace FluentNHibernate.Mapping
             // HACK: Index only on list and map - shouldn't have to do this!
             if (indexMapping != null && collection is IIndexedCollectionMapping)
                 ((IIndexedCollectionMapping)collection).Index = indexMapping;
-
-            // HACK: shouldn't have to do this!
-            if (manyToManyIndex != null && collection is MapMapping)
-                ((MapMapping)collection).Index = manyToManyIndex.GetIndexMapping();
 
             return collection;
         }

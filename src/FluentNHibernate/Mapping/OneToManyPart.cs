@@ -12,10 +12,7 @@ namespace FluentNHibernate.Mapping
         private readonly Type entity;
         private readonly CollectionCascadeExpression<OneToManyPart<TChild>> cascade;
         private readonly NotFoundExpression<OneToManyPart<TChild>> notFound;
-        private IndexManyToManyPart manyToManyIndex;
         private readonly Type childType;
-        private Type valueType;
-        private bool isTernary;
 
         public OneToManyPart(Type entity, Member property)
             : this(entity, property, property.PropertyType)
@@ -53,55 +50,6 @@ namespace FluentNHibernate.Mapping
         public new CollectionCascadeExpression<OneToManyPart<TChild>> Cascade
         {
             get { return cascade; }
-        }
-
-        /// <summary>
-        /// Specify that this is a ternary association
-        /// </summary>
-        public OneToManyPart<TChild> AsTernaryAssociation()
-        {
-            var keyType = childType.GetGenericArguments()[0];
-            return AsTernaryAssociation(keyType.Name + "_id");
-        }
-
-        /// <summary>
-        /// Specify that this is a ternary association
-        /// </summary>
-        /// <param name="indexColumnName">Index column</param>
-        public OneToManyPart<TChild> AsTernaryAssociation(string indexColumnName)
-        {
-            EnsureGenericDictionary();
-
-            var keyType = childType.GetGenericArguments()[0];
-            var valType = childType.GetGenericArguments()[1];
-
-            manyToManyIndex = new IndexManyToManyPart(typeof(ManyToManyPart<TChild>));
-            manyToManyIndex.Column(indexColumnName);
-            manyToManyIndex.Type(keyType);
-
-            valueType = valType;
-            isTernary = true;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Specify this as an entity map
-        /// </summary>
-        public OneToManyPart<TChild> AsEntityMap()
-        {
-            // The argument to AsMap will be ignored as the ternary association will overwrite the index mapping for the map.
-            // Therefore just pass null.
-            return AsMap(null).AsTernaryAssociation();
-        }
-
-        /// <summary>
-        /// Specify this as an entity map
-        /// </summary>
-        /// <param name="indexColumnName">Index column</param>
-        public OneToManyPart<TChild> AsEntityMap(string indexColumnName)
-        {
-            return AsMap(null).AsTernaryAssociation(indexColumnName);
         }
 
         /// <summary>
@@ -199,29 +147,9 @@ namespace FluentNHibernate.Mapping
             return this;
         }
 
-        protected override ICollectionMapping GetCollectionMapping()
-        {
-            var collection = base.GetCollectionMapping();
-
-            // HACK: shouldn't have to do this!
-            if (manyToManyIndex != null && collection is MapMapping)
-                ((MapMapping)collection).Index = manyToManyIndex.GetIndexMapping();
-
-            return collection;
-        }
-
         protected override ICollectionRelationshipMapping GetRelationship()
         {
-            if (isTernary && valueType != null)
-                relationshipMapping.Class = new TypeReference(valueType);
-
             return relationshipMapping;
-        }
-
-        void EnsureGenericDictionary()
-        {
-            if (!(childType.IsGenericType && childType.GetGenericTypeDefinition() == typeof(IDictionary<,>)))
-                throw new ArgumentException(member.Name + " must be of type IDictionary<> to be used in a ternary assocation. Type was: " + childType);
         }
     }
 }

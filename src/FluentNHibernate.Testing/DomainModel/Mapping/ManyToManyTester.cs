@@ -19,9 +19,8 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
     //    - Any time you have to MODIFY a test for many-to-many THERE, move it HERE, FIRST.
     // Thanks!  10-NOV-2008 Chad Myers
 
-    public class ManyToManyTarget
+    public class ManyToManyTarget : Entity
     {
-        public virtual int Id { get; set; }
         public virtual ISet<ChildObject> SetOfChildren { get; set; }
         public virtual IList<ChildObject> BagOfChildren { get; set; }
         public virtual IList<ChildObject> ListOfChildren { get; set; }
@@ -148,9 +147,9 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         {
             new MappingTester<ManyToManyTarget>()
                 .ForMapping(map =>
-                            map.HasManyToMany(x => x.SetOfChildren)
-                                .Cache.ReadWrite())
-                .Element("class/set/cache").ShouldNotBeNull();
+                    map.HasManyToMany(x => x.SetOfChildren)
+                        .Cache.ReadWrite())
+                .Element("class/set/cache").Exists();
         }
 
         [Test]
@@ -204,9 +203,8 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         {
             new MappingTester<OneToManyTarget>()
                 .ForMapping(map =>
-                            map.HasManyToMany(x => x.SetOfChildren)
-                            .AsMap("indexColumn"))
-                .Element("class/map/index").ShouldNotBeNull();
+                    map.HasManyToMany(x => x.MapOfChildren))
+                .Element("class/map/index").Exists();
         }
 
         [Test]
@@ -214,11 +212,10 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
         {
             new MappingTester<OneToManyTarget>()
                 .ForMapping(map =>
-                            map.HasManyToMany(x => x.SetOfChildren)
-                            .AsMap("indexColumn")
-                            .ParentKeyColumn("ParentID")
-                            .ChildKeyColumn("ChildID")
-                            .Cache.ReadWrite())
+                    map.HasManyToMany(x => x.MapOfChildren)
+                        .Key("ParentID")
+                        .ManyToMany("ChildID")
+                        .Cache(x => x.ReadWrite()))
                 .Element("class/map/index").ShouldBeInParentAtPosition(2);
         }
 

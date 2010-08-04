@@ -131,6 +131,11 @@ namespace FluentNHibernate.Testing.DomainModel.Mapping
             return this;
         }
 
+        public virtual MappingTester<T> ShouldNotBeNull()
+        {
+            return Exists();
+        }
+
         public virtual MappingTester<T> DoesntExist()
         {
             Assert.IsNull(currentElement);
