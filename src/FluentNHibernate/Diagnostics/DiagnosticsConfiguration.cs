@@ -15,7 +15,7 @@ namespace FluentNHibernate.Diagnostics
 
         public DiagnosticsConfiguration Enable()
         {
-            setLogger(new DefaultDiagnosticsLogger());
+            setLogger(new DefaultDiagnosticLogger(null));
             return this;
         }
 

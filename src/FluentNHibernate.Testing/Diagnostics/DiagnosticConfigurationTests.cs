@@ -16,7 +16,7 @@ namespace FluentNHibernate.Testing.Diagnostics
             new DiagnosticsConfiguration(null, l => logger = l)
                 .Enable();
 
-            logger.ShouldBeOfType<DefaultDiagnosticsLogger>();
+            logger.ShouldBeOfType<DefaultDiagnosticLogger>();
         }
 
         [Test]
@@ -46,7 +46,6 @@ namespace FluentNHibernate.Testing.Diagnostics
         public void output_to_console_should_register_console_listener()
         {
             var despatcher = Mock<IDiagnosticMessageDespatcher>.Create();
-            var listener = Stub<IDiagnosticListener>.Create();
 
             new DiagnosticsConfiguration(despatcher, l => { })
                 .OutputToConsole();

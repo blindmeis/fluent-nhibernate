@@ -109,9 +109,10 @@
     <Compile Include="Conventions\Instances\IKeyPropertyInstance.cs" />
     <Compile Include="Conventions\Instances\KeyPropertyInstance.cs" />
     <Compile Include="Diagnostics\ConsoleOutputListener.cs" />
-    <Compile Include="Diagnostics\DefaultDiagnosticsDespatcher.cs" />
+    <Compile Include="Diagnostics\DefaultDiagnosticMessageDespatcher.cs" />
+    <Compile Include="Diagnostics\DiagnosticResults.cs" />
     <Compile Include="Diagnostics\DiagnosticsConfiguration.cs" />
-    <Compile Include="Diagnostics\DefaultDiagnosticsLogger.cs" />
+    <Compile Include="Diagnostics\DefaultDiagnosticLogger.cs" />
     <Compile Include="Diagnostics\IDiagnosticListener.cs" />
     <Compile Include="Diagnostics\IDiagnosticLogger.cs" />
     <Compile Include="Diagnostics\IDiagnosticMessageDespatcher.cs" />

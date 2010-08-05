@@ -10,5 +10,10 @@ namespace FluentNHibernate.Diagnostics
         {
             this.receiveMessage = receiveMessage;
         }
+
+        public void Receive(DiagnosticResults results)
+        {
+            
+        }
     }
 }

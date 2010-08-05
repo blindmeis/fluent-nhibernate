@@ -33,7 +33,7 @@ namespace FluentNHibernate
         private ValidationVisitor validationVisitor;
         public PairBiDirectionalManyToManySidesDelegate BiDirectionalManyToManyPairer { get; set; }
 
-        IDiagnosticMessageDespatcher diagnosticDespatcher = new DefaultDiagnosticsDespatcher();
+        IDiagnosticMessageDespatcher diagnosticDespatcher = new DefaultDiagnosticMessageDespatcher();
         IDiagnosticLogger log;
 
         public PersistenceModel(IConventionFinder conventionFinder)
