@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Xml;
 using FluentNHibernate.Conventions;
+using FluentNHibernate.Diagnostics;
 using FluentNHibernate.Mapping;
 using FluentNHibernate.Mapping.Providers;
 using FluentNHibernate.MappingModel;
@@ -32,6 +33,9 @@ namespace FluentNHibernate
         private ValidationVisitor validationVisitor;
         public PairBiDirectionalManyToManySidesDelegate BiDirectionalManyToManyPairer { get; set; }
 
+        IDiagnosticMessageDespatcher diagnosticDespatcher = new DefaultDiagnosticsDespatcher();
+        IDiagnosticLogger log;
+
         public PersistenceModel(IConventionFinder conventionFinder)
         {
             BiDirectionalManyToManyPairer = (c,o,w) => {};
@@ -50,6 +54,16 @@ namespace FluentNHibernate
         public PersistenceModel()
             : this(new DefaultConventionFinder())
         {}
+
+        public DiagnosticsConfiguration Diagnostics
+        {
+            get { return new DiagnosticsConfiguration(diagnosticDespatcher, SetLogger); }
+        }
+
+        void SetLogger(IDiagnosticLogger logger)
+        {
+            log = logger;
+        }
 
         protected void AddMappingsFromThisAssembly()
         {
