@@ -6,9 +6,9 @@ namespace FluentNHibernate.Diagnostics
 {
     public class DiagnosticResults
     {
-        public DiagnosticResults(IEnumerable<Type> classMaps)
+        public DiagnosticResults(IEnumerable<Type> fluentMappings)
         {
-            FluentMappings = classMaps.ToArray();
+            FluentMappings = fluentMappings.ToArray();
         }
 
         public IEnumerable<Type> FluentMappings { get; private set; }

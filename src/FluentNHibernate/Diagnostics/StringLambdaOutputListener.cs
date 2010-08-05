@@ -4,16 +4,24 @@ namespace FluentNHibernate.Diagnostics
 {
     public class StringLambdaOutputListener : IDiagnosticListener
     {
-        readonly Action<string> receiveMessage;
+        readonly Action<string> raiseMessage;
+        IDiagnosticResultsFormatter outputFormatter = new DefaultOutputFormatter();
 
-        public StringLambdaOutputListener(Action<string> receiveMessage)
+        public StringLambdaOutputListener(Action<string> raiseMessage)
         {
-            this.receiveMessage = receiveMessage;
+            this.raiseMessage = raiseMessage;
         }
 
         public void Receive(DiagnosticResults results)
         {
-            
+            var output = outputFormatter.Format(results);
+
+            raiseMessage(output);
+        }
+
+        public void SetFormatter(IDiagnosticResultsFormatter formatter)
+        {
+            outputFormatter = formatter;
         }
     }
 }
