@@ -33,7 +33,7 @@ namespace FluentNHibernate
         private ValidationVisitor validationVisitor;
         public PairBiDirectionalManyToManySidesDelegate BiDirectionalManyToManyPairer { get; set; }
 
-        readonly IDiagnosticMessageDespatcher diagnosticDespatcher = new DefaultDiagnosticMessageDespatcher();
+        IDiagnosticMessageDespatcher diagnosticDespatcher = new DefaultDiagnosticMessageDespatcher();
         IDiagnosticLogger log = new NullDiagnosticsLogger();
 
         public PersistenceModel(IConventionFinder conventionFinder)
@@ -55,12 +55,7 @@ namespace FluentNHibernate
             : this(new DefaultConventionFinder())
         {}
 
-        public DiagnosticsConfiguration Diagnostics
-        {
-            get { return new DiagnosticsConfiguration(diagnosticDespatcher, SetLogger); }
-        }
-
-        void SetLogger(IDiagnosticLogger logger)
+        public void SetLogger(IDiagnosticLogger logger)
         {
             log = logger;
         }

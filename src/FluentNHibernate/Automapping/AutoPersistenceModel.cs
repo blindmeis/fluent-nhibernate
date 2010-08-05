@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using FluentNHibernate.Automapping.Alterations;
 using FluentNHibernate.Cfg;
+using FluentNHibernate.Diagnostics;
 using FluentNHibernate.Mapping;
 using FluentNHibernate.MappingModel;
 

@@ -14,10 +14,10 @@ namespace FluentNHibernate.Testing.Diagnostics
 
             output.ShouldEqual(
                 "Fluent Mappings\r\n" +
-                "---------------\r\n" +
-                "Types discovered:\r\n" +
-                typeof(One).Name + " | " + typeof(One).AssemblyQualifiedName + "\r\n" +
-                typeof(Two).Name + " | " + typeof(Two).AssemblyQualifiedName + "\r\n");
+                "---------------\r\n\r\n" +
+                "Types discovered:\r\n\r\n" +
+                "  " + typeof(One).Name + " | " + typeof(One).AssemblyQualifiedName + "\r\n" +
+                "  " + typeof(Two).Name + " | " + typeof(Two).AssemblyQualifiedName + "\r\n");
         }
 
         class One { }

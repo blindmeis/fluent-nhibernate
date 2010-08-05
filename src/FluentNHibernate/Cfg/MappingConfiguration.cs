@@ -1,4 +1,5 @@
 using System;
+using FluentNHibernate.Diagnostics;
 using NHibernate.Cfg;
 
 namespace FluentNHibernate.Cfg
@@ -51,6 +52,18 @@ namespace FluentNHibernate.Cfg
         /// <param name="cfg">NHibernate Configuration instance</param>
         public void Apply(Configuration cfg)
         {
+            Apply(cfg, new NullDiagnosticsLogger());
+        }
+
+        /// <summary>
+        /// Applies any mappings to the NHibernate Configuration
+        /// </summary>
+        /// <param name="logger">Diagnostics logger</param>
+        /// <param name="cfg">NHibernate Configuration instance</param>
+        public void Apply(Configuration cfg, IDiagnosticLogger logger)
+        {
+            FluentMappings.PersistenceModel.SetLogger(logger);
+
             if (mergeMappings)
             {
                 foreach (var model in AutoMappings)

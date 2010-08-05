@@ -12,7 +12,9 @@ namespace FluentNHibernate.Diagnostics
             var sb = new StringBuilder();
 
             Title(sb, "Fluent Mappings");
+            sb.AppendLine();
             sb.AppendLine("Types discovered:");
+            sb.AppendLine();
 
             var fluentMappings = results.FluentMappings
                 .OrderBy(x => x.Name)
@@ -34,6 +36,7 @@ namespace FluentNHibernate.Diagnostics
 
             for (var row = 0; row < rowCount; row++)
             {
+                sb.Append("  ");
                 for (var i = 0; i < columns.Length; i++)
                 {
                     var column = columns[i];

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FluentNHibernate.Cfg.Db;
+using FluentNHibernate.Diagnostics;
 using NHibernate;
 using NHibernate.Cfg;
 
@@ -20,6 +21,8 @@ namespace FluentNHibernate.Cfg
         private bool dbSet;
         private bool mappingsSet;
         private readonly IList<Action<Configuration>> configAlterations = new List<Action<Configuration>>();
+        readonly IDiagnosticMessageDespatcher despatcher = new DefaultDiagnosticMessageDespatcher();
+        IDiagnosticLogger logger = new NullDiagnosticsLogger();
 
         internal FluentConfiguration()
             : this(new Configuration())
@@ -34,6 +37,15 @@ namespace FluentNHibernate.Cfg
         internal Configuration Configuration
         {
             get { return cfg; }
+        }
+
+        public FluentConfiguration Diagnostics(Action<DiagnosticsConfiguration> diagnosticsSetup)
+        {
+            var diagnosticsCfg = new DiagnosticsConfiguration(despatcher, new_logger => logger = new_logger);
+
+            diagnosticsSetup(diagnosticsCfg);
+
+            return this;
         }
 
         /// <summary>
@@ -107,7 +119,7 @@ namespace FluentNHibernate.Cfg
 		{
 			try
 			{
-				mappingCfg.Apply(Configuration);
+				mappingCfg.Apply(Configuration, logger);
 
 				foreach (var configAlteration in configAlterations)
 					configAlteration(Configuration);

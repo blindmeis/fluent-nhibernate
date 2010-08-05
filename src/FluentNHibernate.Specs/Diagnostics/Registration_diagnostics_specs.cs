@@ -10,10 +10,11 @@ namespace FluentNHibernate.Specs.Diagnostics
     {
         Establish context = () =>
         {
+            var despatcher = new DefaultDiagnosticMessageDespatcher();
+            despatcher.RegisterListener(new StubListener(x => results = x));
+
             model = new FluentNHibernate.PersistenceModel();
-            model.Diagnostics
-                .Enable()
-                .RegisterListener(new StubListener(x => results = x));
+            model.SetLogger(new DefaultDiagnosticLogger(despatcher));
         };
 
         Because of = () =>
