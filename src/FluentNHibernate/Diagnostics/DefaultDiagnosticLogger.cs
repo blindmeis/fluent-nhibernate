@@ -28,7 +28,7 @@ namespace FluentNHibernate.Diagnostics
             return new DiagnosticResults(classMaps);
         }
 
-        public void ClassMapDiscovered(Type type)
+        public void FluentMappingDiscovered(Type type)
         {
             isDirty = true;
             classMaps.Add(type);

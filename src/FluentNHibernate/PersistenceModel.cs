@@ -33,8 +33,8 @@ namespace FluentNHibernate
         private ValidationVisitor validationVisitor;
         public PairBiDirectionalManyToManySidesDelegate BiDirectionalManyToManyPairer { get; set; }
 
-        IDiagnosticMessageDespatcher diagnosticDespatcher = new DefaultDiagnosticMessageDespatcher();
-        IDiagnosticLogger log;
+        readonly IDiagnosticMessageDespatcher diagnosticDespatcher = new DefaultDiagnosticMessageDespatcher();
+        IDiagnosticLogger log = new NullDiagnosticsLogger();
 
         public PersistenceModel(IConventionFinder conventionFinder)
         {
@@ -130,13 +130,22 @@ namespace FluentNHibernate
             var mapping = type.InstantiateUsingParameterlessConstructor();
 
             if (mapping is IMappingProvider)
+            {
+                log.FluentMappingDiscovered(type);
                 Add((IMappingProvider)mapping);
+            }
             else if (mapping is IIndeterminateSubclassMappingProvider)
+            {
+                log.FluentMappingDiscovered(type);
                 Add((IIndeterminateSubclassMappingProvider)mapping);
+            }
             else if (mapping is IFilterDefinition)
                 Add((IFilterDefinition)mapping);
             else if (mapping is IExternalComponentMappingProvider)
+            {
+                log.FluentMappingDiscovered(type);
                 Add((IExternalComponentMappingProvider)mapping);
+            }
             else
                 throw new InvalidOperationException("Unsupported mapping type '" + type.FullName + "'");
         }
@@ -156,6 +165,8 @@ namespace FluentNHibernate
                 BuildSeparateMappings(hbms.Add);
 
             ApplyVisitors(hbms);
+
+            log.Flush();
 
             return hbms;
         }

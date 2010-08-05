@@ -8,9 +8,9 @@ namespace FluentNHibernate.Diagnostics
     {
         public DiagnosticResults(IEnumerable<Type> classMaps)
         {
-            ClassMaps = classMaps.ToArray();
+            FluentMappings = classMaps.ToArray();
         }
 
-        public IEnumerable<Type> ClassMaps { get; private set; }
+        public IEnumerable<Type> FluentMappings { get; private set; }
     }
 }

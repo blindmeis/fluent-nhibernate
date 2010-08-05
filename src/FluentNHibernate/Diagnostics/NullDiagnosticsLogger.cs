@@ -7,7 +7,7 @@ namespace FluentNHibernate.Diagnostics
         public void Flush()
         {}
 
-        public void ClassMapDiscovered(Type type)
+        public void FluentMappingDiscovered(Type type)
         {}
     }
 }

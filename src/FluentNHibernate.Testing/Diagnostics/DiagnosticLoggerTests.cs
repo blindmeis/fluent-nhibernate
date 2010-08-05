@@ -26,7 +26,7 @@ namespace FluentNHibernate.Testing.Diagnostics
             var despatcher = Mock<IDiagnosticMessageDespatcher>.Create();
             var logger = new DefaultDiagnosticLogger(despatcher);
 
-            logger.ClassMapDiscovered(typeof(SomeClassMap));
+            logger.FluentMappingDiscovered(typeof(SomeClassMap));
             logger.Flush();
 
             despatcher.AssertWasCalled(x => x.Publish(Arg<DiagnosticResults>.Is.Anything));
@@ -38,7 +38,7 @@ namespace FluentNHibernate.Testing.Diagnostics
             var despatcher = Mock<IDiagnosticMessageDespatcher>.Create();
             var logger = new DefaultDiagnosticLogger(despatcher);
 
-            logger.ClassMapDiscovered(typeof(SomeClassMap));
+            logger.FluentMappingDiscovered(typeof(SomeClassMap));
             logger.Flush();
 
             DiagnosticResults result = null;
@@ -49,7 +49,7 @@ namespace FluentNHibernate.Testing.Diagnostics
                     return true;
                 }));
 
-            result.ClassMaps.ShouldContain(typeof(SomeClassMap));
+            result.FluentMappings.ShouldContain(typeof(SomeClassMap));
         }
 
         class SomeClassMap : ClassMap<SomeClass> { }
